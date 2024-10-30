@@ -1,16 +1,16 @@
-import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+// import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 
 
-const router = createBrowserRouter([
+// const router = createBrowserRouter([
    
-])
+// ])
 
-function AppRoute(){
-    return(
-        <div>
-        <RouterProvider router={router}/>
-        </div>
-    )
-}
+// function AppRoute(){
+//     return(
+//         <div>
+//         <RouterProvider router={router}/>
+//         </div>
+//     )
+// }
 
-export default AppRoute
+// export default AppRoute
