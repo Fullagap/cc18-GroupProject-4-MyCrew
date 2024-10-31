@@ -12,15 +12,20 @@ export default function HomeAdmin() {
       homeAdmin
       <div className="flex">
 
-        <Link to="/admin/employee-management">
-          <div className="flex flex-col items-center ">
+ 
+        <Link to="/admin/employee-management" 
+        className="border rounded-xl bg-[#F3F8FF] p-4" 
+        >
+          <div className="flex flex-col items-center">
           <MdManageAccounts className="text-4xl" />
             <p className="text-center">Employee<br />Management</p>
           </div>
         </Link>
-
-        <Link to="/admin/calendar-management">
-          <div className="flex flex-col items-center ">
+ 
+        <Link to="/admin/calendar-management"
+        className="border rounded-xl bg-[#F3F8FF] p-4"
+        >
+          <div className="flex flex-col items-center">
           <LuCalendarClock className="text-4xl" />
             <p className="text-center">Calendar<br />Management</p>
           </div>
@@ -30,15 +35,19 @@ export default function HomeAdmin() {
       
       <div className="flex">
 
-        <Link to="/admin/request-management">
-          <div className="flex flex-col items-center ">
+        <Link to="/admin/request-management"
+        className="border rounded-xl bg-[#F3F8FF] p-4"
+        >
+          <div className="flex flex-col items-center">
           <VscGitPullRequestGoToChanges className="text-4xl" />
             <p className="text-center">Request<br />Management</p>
           </div>
         </Link>
 
-        <Link to="/admin/payroll">
-          <div className="flex flex-col items-center ">
+        <Link to="/admin/payroll"
+        className="border rounded-xl bg-[#F3F8FF] p-4"
+        >
+          <div className="flex flex-col items-center">
           <TbReportMoney className="text-4xl" />
             <p className="text-center">Payroll</p>
           </div>
