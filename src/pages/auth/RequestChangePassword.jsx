@@ -1,30 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../stroes/authSrore';
 
 const RequestChangePassword = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const actionRequestChangePassword = useAuthStore((state) => state.actionRequestChangePassword); 
 
     const handleRequestChangePassword = async (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('http://localhost:8890/auth/request-change-password', {
-                method: 'PATCH', 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                alert(data.msg);
-                navigate('/change-password'); 
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
+        const response = await actionRequestChangePassword(email); 
+        
+        if (response) {
+            navigate('/'); 
         }
     };
 

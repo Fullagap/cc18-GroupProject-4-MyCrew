@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Login /> },
       { path: "request-change-password", element: <RequestChangePassword /> },
-      { path: "change-password", element: <ChangePassword /> },
+      { path: "change-password/:token", element: <ChangePassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile /> },
       { path: "calendar", element: <Calendar /> },
