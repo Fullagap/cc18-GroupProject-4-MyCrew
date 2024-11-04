@@ -5,10 +5,20 @@ import { LuCalendarDays } from "react-icons/lu";
 import { GrWorkshop } from "react-icons/gr";
 import { FaFileCircleQuestion, FaLocationDot } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import useAuthStore from "../../stroes/authSrore";
 
 // const user = useAuthStore((state) => state.user);
 
 const UserSidebar = () => {
+
+  const navigate = useNavigate();
+  const actionLogout = useAuthStore((state) => state.actionLogout);
+  const user = useAuthStore((state) => state.user)
+
+  const hdlLogout = () => {
+    actionLogout();
+    navigate("/");
+  }
 
   const classLink =
     "flex justify-center hover:bg-[#2453CA] hover:scale-105 hover:duration-200 active:bg-green-400 rounded-xl px-3 py-2 gap-2";
@@ -26,7 +36,7 @@ const UserSidebar = () => {
       <div className="flex-1 py-4">
         <Link className={classLink} to="/attendance">
           <div className="flex flex-col items-center ">
-            <FaLocationDot className="text-4xl"/>
+            <FaLocationDot className="text-4xl" />
             <p>Attendance</p>
           </div>
         </Link>
@@ -72,9 +82,12 @@ const UserSidebar = () => {
           </Link>
         )}
 
-        <button className={classLink}>
-          Logout
-        </button>
+        {user && (
+          <button onClick={hdlLogout} className={classLink}>
+            Logout
+          </button>
+        )}
+
       </div>
     </div>
   );
