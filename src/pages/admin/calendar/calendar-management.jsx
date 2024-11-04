@@ -50,13 +50,14 @@ export default function CalendarManagement() {
   }));
   
   const [events, setEvents] = useState(event)
-  const [check,setCheck] = useState(false)
+  const [checkAdd,setCheckAdd] = useState(false)
+  const [checkEdit,setCheckEdit] = useState(false)
 
   return (
     <div className="flex p-8">
       Admin
       <div className="border rounded-xl bg-[#F3F8FF] p-8 w-[50%]">
-        <CalendarAdminComp events={events} setEvents={setEvents} check={check} setCheck={setCheck}/>
+        <CalendarAdminComp events={events} setEvents={setEvents} checkAdd={checkAdd} setCheckAdd={setCheckAdd} checkEdit={checkEdit} setCheckEdit={setCheckEdit}/>
       </div>
     </div>
   );

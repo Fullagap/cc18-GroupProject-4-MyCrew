@@ -3,9 +3,12 @@ import FullCalendar from "@fullcalendar/react"; // Import FullCalendar
 import dayGridPlugin from "@fullcalendar/daygrid"; // Import Day Grid plugin
 import interactionPlugin from "@fullcalendar/interaction";
 import EventModal from "../../user/calendar-comp/event-modal";
+import useCalendarStore from "../../../store/calendar-store";
 
 
-export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
+export default function CalendarAdminComp({events,setEvents,checkAdd,setCheckAdd,checkEdit,setCheckEdit}) {
+  const addSession = useCalendarStore((state)=>state.addSession)
+  const updateSession = useCalendarStore((state)=>state.updateSession)
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,9 +16,8 @@ export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
   const [form,setForm] = useState([])
   
   useEffect(() => {
-    if (check) {
+    if (checkAdd) {
       const newEvents = events.map((event) => ({
-        // ...event, // กระจายค่าคุณสมบัติเดิมทั้งหมดจาก item
         id: event.id.toString() || "", 
         targetDate: event.start,     
         description: event.title,
@@ -23,10 +25,27 @@ export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
         attendanceLimit: "50"      
       }));
       setForm(newEvents);
-      console.log('ข้อมูลที่เตรียมแปลงกลับ:', newEvents);
-      setCheck(false);
+      console.log('ข้อมูลที่เตรียมแปลงกลับ ไป add:', newEvents);
+      addSession(newEvents)
+      setCheckAdd(false);
     }
-  }, [check]);
+  }, [checkAdd]);
+  
+  useEffect(() => {
+    if (checkEdit) {
+      const newEvents = events.map((event) => ({
+        id: event.id.toString() || "", 
+        targetDate: event.start,     
+        description: event.title,
+        eventType: "HOLIDAY",
+        attendanceLimit: "50"      
+      }));
+      setForm(newEvents);
+      console.log('ข้อมูลที่เตรียมแปลงกลับ ไป edit:', newEvents);
+      updateSession(newEvents)
+      setCheckEdit(false);
+    }
+  }, [checkEdit]);
 
 
  const handleDateClick = (info) => {
@@ -48,15 +67,16 @@ export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
           event.id === updatedEvent.id ? updatedEvent : event
     )
   );
-   
+  setCheckEdit(true)
     } else {
       setEvents((prevEvents) => [
         ...prevEvents,
         { ...updatedEvent, id: (events.length + 1).toString() }, //อย่าลืมเอา ID ออก
       ]);
+      setCheckAdd(true)
     }
     setIsModalOpen(false);
-    setCheck(true)
+    
   };
 
   return (
