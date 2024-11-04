@@ -6,3 +6,4 @@ export const positionDepartment =(id)=> axios.get(`/admin/department-position/${
 export const EmployeeInDepartment =(id)=> axios.get(`/admin/department-employees/${id}`)
 export const allEmployees =()=> axios.get(`/admin/All-employees`)
 export const editEmployeesInfo =(id,form)=> axios.patch(`/admin/update-user/${id}`,form)
+export const allLeader =()=> axios.get('/admin/leader')

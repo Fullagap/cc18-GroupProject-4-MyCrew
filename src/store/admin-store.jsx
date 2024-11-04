@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {allEmployees, department, EmployeeInDepartment, positionDepartment} from "../api/admin";
+import {allEmployees, allLeader, department, EmployeeInDepartment, positionDepartment} from "../api/admin";
 
 
 
@@ -10,6 +10,7 @@ const adminStore = create((set) => ({
     positions:[],
     employees:[],
     allEmployees:[],
+    leader:[],
     employeeDepartment: async () => {
         try {
             const resp = await department()
@@ -43,7 +44,16 @@ const adminStore = create((set) => ({
             const resp = await allEmployees()
             set({allEmployees:resp.data})
         } catch (err) {
-            
+            console.log(err)
+        }
+    },
+    getLeader: async()=>{
+        try {
+            const resp = await allLeader()
+            // console.log(resp,"------------------")
+            set({leader:resp.data})
+        } catch (err) {
+            console.log(err)
         }
     }
 

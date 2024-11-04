@@ -8,7 +8,7 @@ import { register } from '../../../api/admin'
 
 export default function EditEmployee() {
 
-    const {employees,employeeInEachDepartment,positions,positionInDepartment,departments,employeeDepartment}= adminStore()
+    const {employees,employeeInEachDepartment,positions,positionInDepartment,departments,employeeDepartment,getLeader,leader}= adminStore()
 
     const [form, setForm] = useState({
         firstName: "",
@@ -49,7 +49,11 @@ export default function EditEmployee() {
 
     useEffect(() => {
         employeeDepartment()
+        getLeader()
+
     }, [])
+
+    // console.log("---------------------",leader.Department.departmentName)
 
     const hdlOnChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -147,6 +151,8 @@ export default function EditEmployee() {
                                 onChange={hdlOnChange}
                             >
                                 <option disabled value="">Please select</option>
+                                <option value={leader.id}> [{leader.position?.positionName}] {leader.firstName} {leader.lastName}</option>
+
                                 {employees.map((el) => (
                                     <option key={el.id} value={el.id}>
                                         [{el.position.positionName}] {el.firstName} {el.lastName}
