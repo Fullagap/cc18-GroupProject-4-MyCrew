@@ -1,34 +1,24 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import useAuthStore from '../../stroes/authSrore';
 
 const ChangePassword = () => {
     const [token, setToken] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const param = useParams()
-    console.log(param)
+    const { token: paramToken } = useParams(); 
+    const navigate = useNavigate();
+    const actionChangePassword = useAuthStore((state) => state.actionChangePassword); 
+
+    
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
-        try {
-            // แก้ไข URL ที่นี่ โดยแทนที่ PORT ด้วยหมายเลขพอร์ตที่ถูกต้อง
-            const response = await fetch('http://localhost:8890/auth/change-password', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ token, newPassword }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                alert(data.msg);
-                window.location.href = '/login'; // นำทางไปที่หน้า login
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert("An error occurred while changing password. Please try again."); // แสดงข้อความข้อผิดพลาดให้ผู้ใช้
+        const response = await actionChangePassword(paramToken, newPassword); 
+        if (response) {
+            alert(response.msg); 
+            navigate('/'); 
+        } else {
+            alert("Failed to change password."); 
         }
     };
 
@@ -42,7 +32,7 @@ const ChangePassword = () => {
                         <input
                             type="text"
                             id="token"
-                            value={param.token}
+                            value={paramToken} 
                             onChange={(e) => setToken(e.target.value)}
                             required
                             className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring focus:ring-[#F7AC25]"
