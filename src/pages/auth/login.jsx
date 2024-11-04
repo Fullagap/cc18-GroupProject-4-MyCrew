@@ -21,11 +21,11 @@ const Login = () => {
             const role = await actionLogin(form);
             
             roleRedirect(role);
-            toast.success("Login successful");
+            // toast.success("Login successful");
             
         } catch (error) {
             console.error('Error:', error);
-            toast.error("Login failed. Please try again.");
+            // toast.error("Login failed. Please try again.");
         }
     };
 

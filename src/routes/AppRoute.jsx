@@ -17,6 +17,8 @@ import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
 import LeaveRecord from "../pages/user/leave-record";
+import AllEmployees from "../pages/admin/employee/AllEmployees";
+import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +43,9 @@ const router = createBrowserRouter([
     element: <UserLayout />,
     children: [{ index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement/> },
+      { path: "all-employee", element: <AllEmployees/> },
       { path: "calendar-management", element: <CalendarManagement/> },
+      { path: "update-department", element: <DepartmentPosition/> },
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },

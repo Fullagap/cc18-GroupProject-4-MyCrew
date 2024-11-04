@@ -83,9 +83,19 @@ const UserSidebar = () => {
         )}
 
         {user && (
-          <button onClick={hdlLogout} className={classLink}>
-            Logout
-          </button>
+          <div>
+
+            <Link to={"/request-change-password"} className={classLink}>
+              <button  >
+                Change Password
+              </button>
+            </Link>
+            <button onClick={hdlLogout} className={classLink}>
+              Logout
+            </button>
+
+          </div>
+
         )}
 
       </div>
