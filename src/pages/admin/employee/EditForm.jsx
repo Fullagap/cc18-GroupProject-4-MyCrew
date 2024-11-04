@@ -16,7 +16,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="text"
               fullWidth
               value={selectedEmployee.email}
-              onChange={(e) => handleInputChange("email", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("email", e.target.value)} 
             />
             <TextField
               margin="dense"
@@ -24,13 +24,13 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="text"
               fullWidth
               value={selectedEmployee.phoneNumber}
-              onChange={(e) => handleInputChange("phoneNumber", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("phoneNumber", e.target.value)} 
             />
             <FormControl fullWidth margin="dense">
               <InputLabel>Department</InputLabel>
               <Select
                 value={selectedEmployee.departmentId || ""}
-                onChange={(e) => handleInputChange("departmentId", e.target.value)} // Specify the field name
+                onChange={(e) => handleInputChange("departmentId", e.target.value)} 
                 label="Department"
               >
                 {departments.map((el) => (
@@ -44,7 +44,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               <InputLabel>Position</InputLabel>
               <Select
                 value={selectedEmployee.positionId || ""}
-                onChange={(e) => handleInputChange("positionId", e.target.value)} // Specify the field name
+                onChange={(e) => handleInputChange("positionId", e.target.value)} 
                 label="Position"
               >
                 {positions.map((el) => (
@@ -58,8 +58,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               <InputLabel>Supervisor</InputLabel>
               <Select
                 value={selectedEmployee.supId || ""}
-                onChange={(e) => handleInputChange("supId", e.target.value)} // Specify the field name
-                label="Supervisor"
+                onChange={(e) => handleInputChange("supId", e.target.value)} 
               >
                 {employees.map((el) => (
                   <MenuItem key={el.id} value={el.id}>
@@ -74,7 +73,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="number"
               fullWidth
               value={selectedEmployee.WOPayAmount}
-              onChange={(e) => handleInputChange("WOPayAmount", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("WOPayAmount", e.target.value)} 
             />
             <TextField
               margin="dense"
@@ -82,7 +81,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="number"
               fullWidth
               value={selectedEmployee.sickLeaveAmount}
-              onChange={(e) => handleInputChange("sickLeaveAmount", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("sickLeaveAmount", e.target.value)}
             />
             <TextField
               margin="dense"
@@ -90,7 +89,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="number"
               fullWidth
               value={selectedEmployee.annualLeaveAmount}
-              onChange={(e) => handleInputChange("annualLeaveAmount", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("annualLeaveAmount", e.target.value)} 
             />
             <TextField
               margin="dense"
@@ -98,7 +97,7 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
               type="number"
               fullWidth
               value={selectedEmployee.salary}
-              onChange={(e) => handleInputChange("salary", e.target.value)} // Specify the field name
+              onChange={(e) => handleInputChange("salary", e.target.value)} 
             />
           </>
         )}

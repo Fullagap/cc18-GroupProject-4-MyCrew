@@ -8,12 +8,8 @@ import { register } from '../../../api/admin'
 
 export default function EditEmployee() {
 
-    const employeeDepartment = adminStore((state) => state.employeeDepartment)
-    const departments = adminStore((state) => state.departments)
-    const positionInDepartment = adminStore((state) => state.positionInDepartment)
-    const positions = adminStore((state) => state.positions)
-    const employeeInEachDepartment = adminStore((state) => state.employeeInEachDepartment)
-    const employees = adminStore((state) => state.employees)
+    const {employees,employeeInEachDepartment,positions,positionInDepartment,departments,employeeDepartment}= adminStore()
+
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -56,7 +52,6 @@ export default function EditEmployee() {
     }, [])
 
     const hdlOnChange = (e) => {
-        // console.log(e.target.name, e.target.value)
         setForm({ ...form, [e.target.name]: e.target.value })
 
     }
@@ -71,9 +66,6 @@ export default function EditEmployee() {
             console.log(err)
         }
     }
-
-    // console.log("----------------------------", employees)
-    // employees.map((el)=>console.log("---------------",el))
 
 
     return (
@@ -180,13 +172,9 @@ export default function EditEmployee() {
                                 <option value="12">12 Days</option>
                             </select>
                         </div>
-                        {/* <div className="mb-3">
-                    <label className="block text-gray-700 text-sm">Without Pay leave:</label>
-                    <select className="border rounded w-full py-1 px-2 text-gray-700">
-                        <option>active</option>
-                    </select>
-                </div> */}
                     </div>
+
+                    {/* right side */}
                     <div>
                         <div className="mb-3">
                             <label className="block text-gray-700 text-sm">Lastname</label>

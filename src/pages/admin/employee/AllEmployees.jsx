@@ -1,24 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { MaterialReactTable } from "material-react-table";
-import { LinearProgress, Box, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { LinearProgress, Box, Typography, IconButton, Dialog, DialogActions,DialogTitle,Button} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import adminStore from '../../../store/admin-store';
 import { editEmployeesInfo } from '../../../api/admin';
 import EditForm from './EditForm';
+import { useNavigate } from 'react-router-dom';
 
 const AllEmployees = () => {
-    const getAllEmployees = adminStore((state) => state.getAllEmployees);
-    const allEmployees = adminStore((state) => state.allEmployees);
-    const employeeDepartment = adminStore((state) => state.employeeDepartment);
-    const departments = adminStore((state) => state.departments);
-    const positions = adminStore((state) => state.positions);
-    const employees = adminStore((state) => state.employees);
-    const positionInDepartment = adminStore((state) => state.positionInDepartment);
-    const employeeInEachDepartment = adminStore((state) => state.employeeInEachDepartment);
+ 
+    const {employeeInEachDepartment,positionInDepartment,employees,positions,departments,
+           employeeDepartment,allEmployees,getAllEmployees} = adminStore()
 
     const [loading, setLoading] = useState(true);
     const [openModal, setOpenModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,21 +46,21 @@ const AllEmployees = () => {
     const handleSaveChanges = async () => {
         try {
             const resp = await editEmployeesInfo(selectedEmployee.id, selectedEmployee);
-            console.log(resp);
-            await getAllEmployees();
-            setOpenModal(false);
+            console.log(resp)
+            await getAllEmployees()
+            setOpenModal(false)
         } catch (error) {
-            console.error("Error updating employee:", error);
+            console.log(error)
         }
     };
 
-    const handleInputChange = (field, value) => {
+    const handleInputChange = (name, value) => {
         setSelectedEmployee((prev) => ({
             ...prev,
-            [field]: value,
+            [name]: value,
         }));
 
-        if (field === "departmentId") {
+        if (name === "departmentId") {
             positionInDepartment(value);
             employeeInEachDepartment(value);
         }
@@ -79,7 +76,7 @@ const AllEmployees = () => {
             { header: "Department", accessorKey: "Department.departmentName", size: 150 },
             { header: "Position", accessorKey: "position.positionName", size: 150 },
             {
-                header: "Actions",
+                header: "Edit",
                 Cell: ({ row }) => (
                     <IconButton onClick={() => handleEditClick(row.original)}>
                         <EditIcon />
@@ -96,12 +93,20 @@ const AllEmployees = () => {
             {loading && (
                 <LinearProgress sx={{ position: 'absolute', top: 0, width: '100%' }} />
             )}
+            <Button 
+                variant="contained" 
+                color="primary"
+                onClick={() => navigate('/admin/edit-employee')} 
+                sx={{ mb: 2,mt:2 }}
+            >
+                Register New Employee
+            </Button>
             <MaterialReactTable
                 columns={columns}
                 data={allEmployees || []}
                 enableStickyHeader
                 initialState={{
-                    pagination: { pageSize: allEmployees.length || 10 },
+                    pagination: { pageSize: 10 },
                 }}
                 muiTableContainerProps={{
                     sx: { overflowX: 'auto' },
@@ -115,7 +120,8 @@ const AllEmployees = () => {
 
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>Edit Employee</DialogTitle>
-                <EditForm  selectedEmployee={selectedEmployee} departments={departments} positions={positions} employees={employees} handleInputChange={handleInputChange}/>
+                <EditForm  selectedEmployee={selectedEmployee} departments={departments} 
+                positions={positions} employees={employees} handleInputChange={handleInputChange}/>
 
                 <DialogActions>
                     <Button onClick={handleCloseModal} color="secondary">

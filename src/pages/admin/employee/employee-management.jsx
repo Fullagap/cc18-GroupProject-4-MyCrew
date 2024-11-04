@@ -31,7 +31,7 @@ function EmployeeManagement() {
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-4 hover:scale-105">
 
-          <BsPeople className="text-6xl mb-4" />
+          <BsPeople className="text-6xl mb-4 mt-2" />
 
           <h2 className="text-3xl font-bold mb-4">View All Employees</h2>
           <button 
