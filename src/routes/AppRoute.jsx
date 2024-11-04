@@ -16,6 +16,7 @@ import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
+import LeaveRecord from "../pages/user/leave-record";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile /> },
       { path: "calendar", element: <Calendar /> },
+      { path: "calendar/leave-record", element: <LeaveRecord/> },
       { path: "job", element: <Job /> },
       { path: "request", element: <Request /> },
       { path: "unauthorized", element: <Unauthorized /> },
