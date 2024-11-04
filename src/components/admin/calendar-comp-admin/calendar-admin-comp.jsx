@@ -12,27 +12,12 @@ export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
   const [isEditing, setIsEditing] = useState(false);
   const [form,setForm] = useState([])
   
-//  useEffect(() => {
-//   if (check) {
-//     const newForm = events.map((event) => ({
-//       id: parseInt(event.id) || "", // แปลง id เป็นตัวเลข
-//       targetDate: event.start,      // ใช้ start เป็น targetDate
-//       description: event.title,     // ใช้ title เป็น description
-//       attendanceLimit: 50,          // กำหนดค่าเริ่มต้น
-//       createUserId: 1,
-//     }));
-//     setForm(newForm);
-//     console.log('ข้อมูลที่เตรียมส่งไป:', newForm);
-//     setCheck(false);
-//     }
-//   }, [check]);
-
   useEffect(() => {
     if (check) {
       const newEvents = events.map((event) => ({
         // ...event, // กระจายค่าคุณสมบัติเดิมทั้งหมดจาก item
-        id: event.id.toString() || "", // แปลง id กลับเป็น string
-        targetDate: event.start,       // ใช้ targetDate เป็น start
+        id: event.id.toString() || "", 
+        targetDate: event.start,     
         description: event.title,
         eventType: "HOLIDAY",
         attendanceLimit: "50"      
@@ -45,7 +30,7 @@ export default function CalendarAdminComp({events,setEvents,check,setCheck}) {
 
 
  const handleDateClick = (info) => {
-    setSelectedEvent({ start: info.dateStr, title: "" }); // ตั้งค่าเริ่มต้น
+    setSelectedEvent({ start: info.dateStr, title: "" });
     setIsEditing(false);
     setIsModalOpen(true);
   };

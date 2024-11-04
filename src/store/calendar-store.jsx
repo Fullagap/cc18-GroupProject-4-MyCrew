@@ -1,46 +1,33 @@
-import React from 'react'
+import React from "react";
 import { create } from "zustand";
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from "zustand/middleware";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getSessionApi } from "../api/calendar-api";
 
+const useCalendarStore = create(
+  persist(
+    (set, get) => ({
+      session: null,
 
-const useCalendarStore = create(persist((set, get) => ({
-//     AddSnake: async (form,token)=>{
-//     try{
-//       const res = await apiAddSnake(form,token)
-//       toast(res.data.message)
-//     }catch(err){
-//       // console.log(err)
-//         toast.error(err.response.data.message);
-//     }
-//   },
+      getSession: async () => {
+        try {
+          const res = await getSessionApi();
+          console.log('res', res)
+          set({ session: res.data });
+          toast(res.data.message);
+        } catch (err) {
+          console.log(err);
+          // toast.error(err?.response?.data?.message || 'Failed to get session');
+        }
+      },
+    }),
 
-//   UpdateSnake: async (snakeId,form,token)=>{
-//     try{
-//       console.log('form UpdateSnake Store', snakeId,form,token)
-//       const res = await apiUpdateSnake(snakeId,form,token)
-//       toast(res.data.message)
-//     }catch(err){
-//       // console.log(err)
-//         toast.error(err.response.data.message);
-//     }
-//   },
-
-//   DeleteSnake: async (snakeId,token)=>{
-//     try{
-//       const res = await apiDeleteSnake(snakeId,token)
-//       toast(res.data.message)
-//     }catch(err){
-//       // console.log(err)
-//         toast.error(err.response.data.message);
-//     }
-//   }
-}),
-
-{
-  name: "calendar-store",
-  storage: createJSONStorage(() => localStorage),
-}
-)
+    {
+      name: "calendar-store",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
 );
 
 export default useCalendarStore;
