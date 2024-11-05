@@ -12,7 +12,6 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-<<<<<<< HEAD
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
     "@mui/styled-engine-sc": "^6.1.6",
@@ -20,10 +19,6 @@
     "@react-pdf/renderer": "^4.0.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
-=======
-    "@mui/material": "^6.1.6",
-    "axios": "^1.7.7",
->>>>>>> dev
     "material-react-table": "^3.0.1",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
