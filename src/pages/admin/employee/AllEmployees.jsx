@@ -5,6 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import adminStore from '../../../store/admin-store';
 import { editEmployeesInfo } from '../../../api/admin';
 import { LuUserSquare2 } from "react-icons/lu";
+import { CiCirclePlus } from "react-icons/ci";
+import { FaRegEdit } from "react-icons/fa";
 import EditForm from './EditForm';
 import { useNavigate } from 'react-router-dom';
 
@@ -75,7 +77,7 @@ const AllEmployees = () => {
             // { header: "Phone Number", accessorKey: "phoneNumber", size: 130, enableHiding: true },
             { header: "Department", accessorKey: "Department.departmentName", size: 150 },
             { header: "Position", accessorKey: "position.positionName", size: 150 },
-            { header: "Salary", accessorKey: "salary", size: 180},
+            { header: "Salary", accessorKey: "salary", size: 180 },
             {
                 header: "Edit",
                 Cell: ({ row }) => (
@@ -97,20 +99,41 @@ const AllEmployees = () => {
 
             {/* Header with icon and title */}
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                <LuUserSquare2 style={{ fontSize: '24px', marginRight: '8px', color: '#3f51b5' }} />
+                <LuUserSquare2 style={{ fontSize: '35px', marginRight: '8px', color: '#3f51b5', mb: 2 }} />
                 <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333' }}>
                     All Employees List
                 </Typography>
             </Box>
 
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => navigate('/admin/edit-employee')}
-                sx={{ mb: 2, }}
-            >
-                Register New Employee
-            </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => navigate('/admin/edit-employee')}
+                    sx={{ display: 'flex', alignItems: 'center', fontSize: '15px' }}
+                >
+                    <CiCirclePlus style={{ fontSize: '2.5em', marginRight: '0.2em', color: 'inherit' }} />
+                    Add New Employee
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => navigate('/admin/update-department')}
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '15px',
+                        backgroundColor: '#03AC13',
+                        '&:hover': {
+                            backgroundColor: 'darkgreen'
+                        },
+                    }}
+                >
+                    <FaRegEdit  style={{ fontSize: '2em', marginRight: '0.2em', color: 'inherit' }} />
+                    Manage Department
+                </Button>
+            </Box>
+
+
             <MaterialReactTable
                 columns={columns}
                 data={allEmployees || []}
