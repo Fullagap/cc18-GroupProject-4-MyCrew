@@ -16,6 +16,7 @@ import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
+import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
 
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       { path: "request-change-password", element: <RequestChangePassword /> },
       { path: "change-password/:token", element: <ChangePassword /> },
       { path: "attendance", element: <Attendance /> },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <Profile info={true} /> },
+      { path: "profile/leave-chart", element: <Profile chart={true} />},
+      { path: "profile/req-status", element: <Profile req={true}/> },
+      { path: "profile/doccon", element: <Profile dcc={true}/> },
+      { path: "profile/doccon/payslip", element: <PaySlipPage /> },
       { path: "calendar", element: <Calendar /> },
       { path: "job", element: <Job /> },
       { path: "request", element: <Request /> },
@@ -49,6 +54,7 @@ const router = createBrowserRouter([
       { path: "edit-employee", element: <EditEmployee/> },
     ],
   },
+  
 ]);
 
 function AppRoute() {
@@ -60,4 +66,3 @@ function AppRoute() {
 }
 
 export default AppRoute;
-
