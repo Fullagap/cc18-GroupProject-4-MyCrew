@@ -16,12 +16,9 @@ import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
-<<<<<<< HEAD
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
-=======
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
->>>>>>> dev
 
 const router = createBrowserRouter([
   {
@@ -47,15 +44,6 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <UserLayout />,
-<<<<<<< HEAD
-    children: [
-      { index: true, element: <HomeAdmin /> },
-      { path: "employee-management", element: <EmployeeManagement /> },
-      { path: "calendar-management", element: <CalendarManagement /> },
-      { path: "request-management", element: <RequestManagement /> },
-      { path: "payroll", element: <Payroll /> },
-      { path: "edit-employee", element: <EditEmployee /> },
-=======
     children: [{ index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement/> },
       { path: "all-employee", element: <AllEmployees/> },
@@ -64,7 +52,6 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
->>>>>>> dev
     ],
   },
   
