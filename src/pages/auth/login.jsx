@@ -1,30 +1,39 @@
 import React, { useState } from 'react';
+import useAuthStore from '../../stroes/authSrore';
+import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const actionLogin = useAuthStore((state) => state.actionLogin);
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    });
 
-    const handleLogin = async (e) => {
+    const hdlOnchange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const hdlSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8890/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                
-                localStorage.setItem('token', data.token);
-                window.location.href = '/user'; 
-            } else {
-                alert(data.message);
-            }
+            const role = await actionLogin(form);
+            
+            roleRedirect(role);
+            // toast.success("Login successful");
+            
         } catch (error) {
             console.error('Error:', error);
+            // toast.error("Login failed. Please try again.");
+        }
+    };
+
+    const roleRedirect = (role) => {
+        if (role?.role === "USER") {
+            navigate("/user");
+        } else if (role?.role === "ADMIN") {
+            navigate("/admin");
         }
     };
 
@@ -34,13 +43,14 @@ const Login = () => {
                 <h2 className="text-[#082777] text-4xl font-bold mb-6 border-b-2 border-[#F7AC25] pb-2 text-center">
                     Login
                 </h2>
-                <form onSubmit={handleLogin} className="w-full">
+                <form onSubmit={hdlSubmit} className="w-full">
                     <div className="mb-4">
                         <label className="block text-[#082777] mb-1">Email:</label>
                         <input
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            name="email"
+                            value={form.email}
+                            onChange={hdlOnchange}
                             required
                             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#F7AC25]"
                         />
@@ -49,8 +59,9 @@ const Login = () => {
                         <label className="block text-[#082777] mb-1">Password:</label>
                         <input
                             type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={form.password}
+                            onChange={hdlOnchange}
                             required
                             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#F7AC25]"
                         />
@@ -63,9 +74,9 @@ const Login = () => {
                     </button>
                 </form>
                 <p className="mt-4 text-center">
-                    <a className="text-[#082777] underline" href="/request-change-password">
+                    <Link className="text-[#082777] underline" to="/request-change-password">
                         Forgot Password?
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

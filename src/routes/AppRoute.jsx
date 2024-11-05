@@ -16,7 +16,12 @@ import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
+<<<<<<< HEAD
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
+=======
+import AllEmployees from "../pages/admin/employee/AllEmployees";
+import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+>>>>>>> dev
 
 const router = createBrowserRouter([
   {
@@ -25,7 +30,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Login /> },
       { path: "request-change-password", element: <RequestChangePassword /> },
-      { path: "change-password", element: <ChangePassword /> },
+      { path: "change-password/:token", element: <ChangePassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} />},
@@ -42,6 +47,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <UserLayout />,
+<<<<<<< HEAD
     children: [
       { index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement /> },
@@ -49,6 +55,16 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement /> },
       { path: "payroll", element: <Payroll /> },
       { path: "edit-employee", element: <EditEmployee /> },
+=======
+    children: [{ index: true, element: <HomeAdmin /> },
+      { path: "employee-management", element: <EmployeeManagement/> },
+      { path: "all-employee", element: <AllEmployees/> },
+      { path: "calendar-management", element: <CalendarManagement/> },
+      { path: "update-department", element: <DepartmentPosition/> },
+      { path: "request-management", element: <RequestManagement/> },
+      { path: "payroll", element: <Payroll/> },
+      { path: "edit-employee", element: <EditEmployee/> },
+>>>>>>> dev
     ],
   },
   
