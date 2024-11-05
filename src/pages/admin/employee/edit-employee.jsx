@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import adminStore from '../../../store/admin-store'
 import { register } from '../../../api/admin'
+import useAuthStore from '../../../stroes/authSrore'
 
 
 
@@ -9,6 +10,9 @@ import { register } from '../../../api/admin'
 export default function EditEmployee() {
 
     const {employees,employeeInEachDepartment,positions,positionInDepartment,departments,employeeDepartment,getLeader,leader}= adminStore()
+    const token = useAuthStore((state)=>state.token)
+
+    // console.log("-------------",token)
 
     const [form, setForm] = useState({
         firstName: "",
@@ -24,7 +28,7 @@ export default function EditEmployee() {
         dateStart: "",
         annualLeaveAmount: "",
         sickLeaveAmount: "",
-        WOPayAmount: ""
+        personalLeaveAmount: ""
     })
 
     const initialState = {
@@ -41,19 +45,18 @@ export default function EditEmployee() {
         dateStart: "",
         annualLeaveAmount: "",
         sickLeaveAmount: "",
-        WOPayAmount: ""
+        personalLeaveAmount: ""
     }
 
 
 
 
     useEffect(() => {
-        employeeDepartment()
-        getLeader()
+        employeeDepartment(token)
+        getLeader(token)
 
     }, [])
 
-    // console.log("---------------------",leader.Department.departmentName)
 
     const hdlOnChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -63,7 +66,7 @@ export default function EditEmployee() {
     const hdlSubmit = async (e) => {
         e.preventDefault()
         try {
-            const resp = await register(form)
+            const resp = await register(form,token)
             console.log(resp)
             setForm(initialState)
         } catch (err) {
@@ -216,8 +219,8 @@ export default function EditEmployee() {
                                 onChange={(e) => {
                                     const departmentId = e.target.value;
                                     setForm({ ...form, departmentId });
-                                    positionInDepartment(departmentId);
-                                    employeeInEachDepartment(departmentId);
+                                    positionInDepartment(departmentId,token);
+                                    employeeInEachDepartment(departmentId,token);
                                 }}
                                 className="border rounded w-full py-1 px-2 text-gray-700"
                             >
@@ -255,10 +258,10 @@ export default function EditEmployee() {
                             </select>
                         </div>
                         <div className="mb-3">
-                            <label className="block text-gray-700 text-sm">Without Pay leave:</label>
+                            <label className="block text-gray-700 text-sm">Personal Leave :</label>
                             <select className="border rounded w-full py-1 px-2 text-gray-700"
-                                name="WOPayAmount"
-                                value={form.WOPayAmount}
+                                name="personalLeaveAmount"
+                                value={form.personalLeaveAmount}
                                 onChange={hdlOnChange}
                             >
                                 <option value="" disabled>Please select</option>

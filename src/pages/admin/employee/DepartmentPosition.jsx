@@ -3,18 +3,21 @@ import adminStore from '../../../store/admin-store';
 import { createDepartment, createPosition } from '../../../api/admin';
 import AddPosition from '../../../components/user/admin/AddPosition';
 import AddDepartment from '../../../components/user/admin/AddDepartment';
+import useAuthStore from '../../../stroes/authSrore';
 
 function DepartmentPosition() {
   const { departments, employeeDepartment, positionInDepartment, positions } = adminStore();
+  const token = useAuthStore((state)=>state.token)
+
   const [input, setInput] = useState({ departmentName: "" });
   const [positionInput, setPositionInput] = useState({ departmentId: "", positionName: "" });
 
   useEffect(() => {
-    employeeDepartment();
+    employeeDepartment(token);
   }, []);
 
   const hdlPosition = (id) => {
-    positionInDepartment(id);
+    positionInDepartment(id,token);
   };
 
   const hdlOnChange = (e) => {
@@ -27,8 +30,8 @@ function DepartmentPosition() {
 
   const hdlCreateDepartment = async () => {
     try {
-      const resp = await createDepartment(input);
-      employeeDepartment();
+      const resp = await createDepartment(input,token);
+      employeeDepartment(token);
       setInput({ departmentName: "" });
     } catch (err) {
       console.log(err);
@@ -37,8 +40,8 @@ function DepartmentPosition() {
 
   const hdlCreatePosition = async () => {
     try {
-      const resp = await createPosition(positionInput);
-      positionInDepartment(positionInput.departmentId);
+      const resp = await createPosition(positionInput,token);
+      positionInDepartment(positionInput.departmentId,token);
       setPositionInput({ departmentId: "", positionName: "" });
     } catch (err) {
       console.log(err);

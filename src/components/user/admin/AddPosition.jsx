@@ -29,9 +29,9 @@ function AddPosition({ hdlPositionOnChange, positionInput, departments, hdlCreat
             <button
                 className="bg-blue-600 text-white py-3 px-5 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center"
                 onClick={hdlCreatePosition}
-                style={{ minWidth: "60px" }} // Set a fixed width for alignment
+                style={{ minWidth: "60px" }} 
             >
-                <i className="fas fa-plus mr-2"></i> Add
+                Add
             </button>
         </div>
       <h3 className="text-xl font-semibold mb-4 text-gray-700">Position List</h3>

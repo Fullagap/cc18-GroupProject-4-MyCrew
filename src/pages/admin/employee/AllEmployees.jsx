@@ -9,12 +9,15 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 import EditForm from './EditForm';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../../stroes/authSrore';
 
 const AllEmployees = () => {
     const {
         employeeInEachDepartment, positionInDepartment, employees, positions, departments,
         employeeDepartment, allEmployees, getAllEmployees
     } = adminStore();
+
+    const token = useAuthStore((state)=>state.token)
 
     const [loading, setLoading] = useState(true);
     const [openModal, setOpenModal] = useState(false);
@@ -24,8 +27,8 @@ const AllEmployees = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await getAllEmployees();
-            await employeeDepartment();
+            await getAllEmployees(token);
+            await employeeDepartment(token);
             setLoading(false);
         };
         fetchData();
@@ -36,8 +39,8 @@ const AllEmployees = () => {
         setOpenModal(true);
 
         if (employee.departmentId) {
-            positionInDepartment(employee.departmentId);
-            employeeInEachDepartment(employee.departmentId);
+            positionInDepartment(employee.departmentId,token);
+            employeeInEachDepartment(employee.departmentId,token);
         }
     };
 
@@ -48,9 +51,9 @@ const AllEmployees = () => {
 
     const handleSaveChanges = async () => {
         try {
-            const resp = await editEmployeesInfo(selectedEmployee.id, selectedEmployee);
+            const resp = await editEmployeesInfo(selectedEmployee.id, selectedEmployee,token);
             console.log(resp);
-            await getAllEmployees();
+            await getAllEmployees(token);
             setOpenModal(false);
         } catch (error) {
             console.log(error);
@@ -64,8 +67,8 @@ const AllEmployees = () => {
         }));
 
         if (name === "departmentId") {
-            positionInDepartment(value);
-            employeeInEachDepartment(value);
+            positionInDepartment(value,token);
+            employeeInEachDepartment(value,token);
         }
     };
 

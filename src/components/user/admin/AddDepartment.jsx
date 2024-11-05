@@ -8,7 +8,7 @@ function AddDepartment({input,hdlOnChange,hdlCreateDepartment,departments,hdlPos
     <div className="flex items-center mb-6">
         <input
             type="text"
-            className="flex-grow p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Type department name"
             name="departmentName"
             value={input.departmentName}
@@ -18,7 +18,7 @@ function AddDepartment({input,hdlOnChange,hdlCreateDepartment,departments,hdlPos
             className="bg-blue-600 text-white p-4 ml-4 rounded-lg hover:bg-blue-700 transition duration-300"
             onClick={hdlCreateDepartment}
         >
-            <i className="fas fa-plus"></i> Add
+          Add
         </button>
     </div>
     <h3 className="text-xl font-semibold mb-4 text-gray-700">Department List</h3>
