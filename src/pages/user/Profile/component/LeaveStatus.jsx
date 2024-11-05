@@ -1,196 +1,33 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 import { Pagination } from "@mui/material";
-
-const data = [
-  {
-    id: 1,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 1,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 1,
-      leaveName: "annualLeave",
-    },
-  },
-  {
-    id: 2,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 3,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 4,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 5,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 6,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 7,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 8,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 9,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id: 10,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-  {
-    id:11 ,
-    userId: 2,
-    requestDate: "2024-11-01T09:14:54.121Z",
-    startDate: "2022-01-14T00:00:00.000Z",
-    endDate: "2022-01-14T00:00:00.000Z",
-    leaveTypeId: 2,
-    supId: 1,
-    status: "APPROVE",
-    description: null,
-    comment: null,
-    leaveCategory: {
-      id: 2,
-      leaveName: "sickLeave",
-    },
-  },
-];
+import useAuthStore from "../../../../stroes/authSrore";
+import axios from "../../../../config/axios";
 
 export default function LeaveStatus() {
+  const user = useAuthStore((state) => state.user);
+  const [leaveRecord, setLeaveRecord] = useState([]);
+
+  const getLeaveRecord = async () => {
+    const resp = await axios.get(`user/leave-record/${2}`);
+    setLeaveRecord(resp.data);
+    
+  };
+
+  useEffect(() => {
+    getLeaveRecord();
+  }, []);
   const columns = useMemo(
     () => [
       {
         header: "Item",
         accessorKey: "item",
-        accessorFn: (dataRow) => data.indexOf(dataRow) +1
+        accessorFn: (dataRow,index) => {
+          return (index + 1);
+        },
       },
       {
         header: "RequestDate",
@@ -224,12 +61,11 @@ export default function LeaveStatus() {
   //pass table options to useMaterialReactTable
   const table = useMaterialReactTable({
     columns,
-    data : data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: leaveRecord, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     initialState: {
-        expanded: true, //expand all rows by default
-        pagination: { pageIndex: 0, pageSize: 5 }, //set different default page size
-       
-      },
+      expanded: true, //expand all rows by default
+      pagination: { pageIndex: 0, pageSize: 5 }, //set different default page size
+    },
     muiTablePaperProps: {
       sx: {
         backgroundColor: "#F3F8FF",
@@ -255,11 +91,11 @@ export default function LeaveStatus() {
         backgroundColor: "#F3F8FF",
       },
     },
-    enableStickyHeader : true,
-    
+    enableStickyHeader: true,
+
     muiPaginationProps: {
-        rowsPerPageOptions: [5],
-      },
+      rowsPerPageOptions: [5],
+    },
     enableRowSelection: true, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature

@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import React from "react";
 
-export default function Profile() {
+export default function Profile({userInfo}) {
   return (
     <div className="w-1/3 rounded-3xl bg-[#F3F8FF]">
       <div className="justify-center flex mt-4">
@@ -23,10 +23,10 @@ export default function Profile() {
             <h3>SuperVisor   </h3>
           </div>
           <div className="w-2/3">
-            <h3>: XX</h3>
-            <h3>: XX</h3>
-            <h3>: XX</h3>
-            <h3>: XX</h3>
+            <h3>: {userInfo.id}</h3>
+            <h3>: {userInfo.departmentId}</h3>
+            <h3>: {userInfo.positionId}</h3>
+            <h3>: {userInfo.supId ?? "employee"}</h3>
           </div>
         </div>
       </div>
