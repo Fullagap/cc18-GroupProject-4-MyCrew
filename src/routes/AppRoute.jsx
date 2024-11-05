@@ -16,6 +16,7 @@ import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
+import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
       { path: "request-change-password", element: <RequestChangePassword /> },
       { path: "change-password", element: <ChangePassword /> },
       { path: "attendance", element: <Attendance /> },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <Profile info={true} /> },
+      { path: "profile/leave-chart", element: <Profile chart={true} />},
+      { path: "profile/req-status", element: <Profile req={true}/> },
+      { path: "profile/doccon", element: <Profile dcc={true}/> },
+      { path: "profile/doccon/payslip", element: <PaySlipPage /> },
       { path: "calendar", element: <Calendar /> },
       { path: "job", element: <Job /> },
       { path: "request", element: <Request /> },
@@ -37,14 +42,16 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <UserLayout />,
-    children: [{ index: true, element: <HomeAdmin /> },
-      { path: "employee-management", element: <EmployeeManagement/> },
-      { path: "calendar-management", element: <CalendarManagement/> },
-      { path: "request-management", element: <RequestManagement/> },
-      { path: "payroll", element: <Payroll/> },
-      { path: "edit-employee", element: <EditEmployee/> },
+    children: [
+      { index: true, element: <HomeAdmin /> },
+      { path: "employee-management", element: <EmployeeManagement /> },
+      { path: "calendar-management", element: <CalendarManagement /> },
+      { path: "request-management", element: <RequestManagement /> },
+      { path: "payroll", element: <Payroll /> },
+      { path: "edit-employee", element: <EditEmployee /> },
     ],
   },
+  
 ]);
 
 function AppRoute() {
@@ -56,4 +63,3 @@ function AppRoute() {
 }
 
 export default AppRoute;
-
