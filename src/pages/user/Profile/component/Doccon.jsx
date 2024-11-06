@@ -14,7 +14,7 @@ export default function Doccon() {
           <p className="text-center">
             PaySlip
             <br />
-            Request
+            Request.
           </p>
         </Link>
       </div>
