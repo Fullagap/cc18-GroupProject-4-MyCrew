@@ -1,12 +1,12 @@
-import Joi from 'joi'
+import Joi from 'joi';
 
 const registerSchema = Joi.object({
     email: Joi.string()
-        .email()  
+        .email({ tlds: { allow: false } })   
         .required()
         .messages({
             "string.empty": "Email is required",
-            "string.email": "Invalid email format"
+            "string.email": "Invalid email format",
         }),
     
     identicalNumber: Joi.string()
@@ -14,33 +14,32 @@ const registerSchema = Joi.object({
         .required()
         .messages({
             "string.empty": "Identity Card number is required",
-            "string.pattern.base": "Identity Card number must contain only numbers and be exactly 13 characters"
+            "string.pattern.base": "Id must contain only numbers and be exactly 13 characters",
         }),
+    
     phoneNumber: Joi.string()
         .pattern(/^\+?[0-9]{10,15}$/)
+        .required()
         .messages({
-            "string.pattern.base": "Phone number must be 10 to 15 digits and can start with +"
+            "string.empty": "Phone number is required",
+            "string.pattern.base": "Phone number must be 10 to 15 digits and can start with +",
         }),
  
     bookBank: Joi.string()
         .required()
         .messages({
-            "string.empty": "BookBank is required"
+            "string.empty": "BookBank is required",
         }),
  
     salary: Joi.number()
-        .positive() 
+        .positive()
+        .required()
         .messages({
             "number.base": "Salary must be a number",
-            "number.positive": "Salary must be a positive number"
-        })
- }).unknown(true);  // Allow unknown fields without throwing an error
+            "number.positive": "Salary must be a positive number",
+            "any.required": "Salary is required",
+        }),
+}).unknown(true);
  
- const validateSchema = (schema) => (req, res, next) => {
-     const { value, error } = schema.validate(req.body);
-     if (error) {
-         return createError(400, error.details[0].message);
-     }
-     req.input = value;
-     next();
- };
+
+export default registerSchema;
