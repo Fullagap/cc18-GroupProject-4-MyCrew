@@ -15,3 +15,11 @@ export const changeComment = (id,comment) => {
         comment
     });
 }
+
+export const addItem = (item) => {
+    return axios.post(`http://localhost:8890/createItem`, item);
+}
+
+export const checkAllItem = () => {
+    return axios.get(`http://localhost:8890/checkItem`);
+}

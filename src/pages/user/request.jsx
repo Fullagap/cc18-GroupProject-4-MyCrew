@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose } from "react-icons/md";
 import requestStore from "../../store/checkRequest";
 import { changeStatus, changeComment } from "../../api/checkRequest";
+import useAuthStore from "../../stroes/authSrore";
 
 const LeaveRequestTable = () => {
   const [expandedId, setExpandedId] = useState(null);
@@ -11,8 +12,11 @@ const LeaveRequestTable = () => {
   const checkRequest = requestStore((state) => state.checkRequest);
   const requests = requestStore((state) => state.requests);
 
+  const user = useAuthStore((state) => state.user);
+  console.log("user",user.id)
+
   useEffect(() => {
-    checkRequest(1).then(() => {
+    checkRequest(user.id).then(() => {
       const initialComments = {};
       requests.forEach((request) => {
         initialComments[request.id] = request.comment || "";  // Assuming 'comment' is a field in request
@@ -57,20 +61,20 @@ const LeaveRequestTable = () => {
   const handleApprove = async (id) => {
     await changeStatus(id, "APPROVE");
     await changeComment(id, comments[id]);
-    await checkRequest(1);
+    await checkRequest(user.id);
     setIsLoading(false);
   };
 
   const handleReject = async (id) => {
     await changeStatus(id, "REJECT");
     await changeComment(id, comments[id]);
-    await checkRequest(1);
+    await checkRequest(user.id);
     setIsLoading(false);
   };
 
   const handleBackToWaiting = async (id) => {
     await changeStatus(id, "WAITING");
-    await checkRequest(1);
+    await checkRequest(user.id);
     setIsLoading(false);
   };
 

@@ -7,6 +7,8 @@ import Profile from "../pages/user/profile";
 import Calendar from "../pages/user/calendar";
 import Job from "../pages/user/job";
 import Request from "../pages/user/request";
+import RequestSth from "../pages/user/requestSth";
+import RequestItem from "../pages/user/request/requestItem";
 import UserLayout from "../layout/user-layout";
 import HomeAdmin from "../pages/admin/home-admin";
 import EmployeeManagement from "../pages/admin/employee/employee-management";
@@ -18,6 +20,7 @@ import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+import ManageItem from "../pages/admin/item/manageItem";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,8 @@ const router = createBrowserRouter([
       { path: "calendar", element: <Calendar /> },
       { path: "job", element: <Job /> },
       { path: "request", element: <Request /> },
+      { path: "requestSth", element: <RequestSth /> },
+      { path: "requestItem", element: <RequestItem /> },
       { path: "unauthorized", element: <Unauthorized /> },
       { path: "*", element: <PageNotFound /> },
     ],
@@ -47,6 +52,7 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
+      { path: "manageItem", element: <ManageItem/> },
     ],
   },
 ]);

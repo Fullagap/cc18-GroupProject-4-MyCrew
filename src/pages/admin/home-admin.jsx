@@ -44,6 +44,15 @@ export default function HomeAdmin() {
           <TbReportMoney className="text-8xl" />
           <p className="text-center">Payroll</p>
         </Link>
+
+        <Link to="/admin/manageItem" className={classLink}>
+          <p className="text-center">
+            Item
+            <br />
+            Management
+          </p>
+        </Link>
+
       </div>
     </div>
   );
