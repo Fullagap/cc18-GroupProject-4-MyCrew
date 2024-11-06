@@ -35,7 +35,7 @@ export default function HomeAdmin() {
         </Link>
 
         <Link to="/admin/attendance-management" className={classLink}>
-          <FaMapLocationDot  className="text-8xl" />
+          <FaMapLocationDot  className="text-6xl  text-blue-600 group-hover:text-white" />
           <p className="text-center">
             Attendance
             <br />

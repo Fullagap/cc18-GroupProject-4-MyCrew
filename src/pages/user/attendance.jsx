@@ -191,7 +191,7 @@ const Attendance = () => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {locationData.map((item) => {
+              {locationData?.map((item) => {
                 return (
                   <MenuItem key={item.id} value={item.id}>
                     {item.siteName}
