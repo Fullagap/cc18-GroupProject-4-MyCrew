@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {allEmployees, allLeader, department, EmployeeInDepartment, positionDepartment} from "../api/admin";
+import {allEmployees, allLeader, department, EmployeeInDepartment, positionDepartment,createOfficeSiteLocation} from "../api/admin";
 
 
 
@@ -55,12 +55,15 @@ const adminStore = create((set) => ({
         } catch (err) {
             console.log(err)
         }
-    }
-
-    
-  
-
-
+    },
+    createSiteLocation:async(form)=>{
+        try{
+            const response = await createOfficeSiteLocation(form)
+            console.log(response)
+        }catch(err){
+            console.log(err)
+        }
+    },
 
 
 }))

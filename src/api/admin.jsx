@@ -7,3 +7,5 @@ export const EmployeeInDepartment =(id)=> axios.get(`/admin/department-employees
 export const allEmployees =()=> axios.get(`/admin/All-employees`)
 export const editEmployeesInfo =(id,form)=> axios.patch(`/admin/update-user/${id}`,form)
 export const allLeader =()=> axios.get('/admin/leader')
+export const createOfficeSiteLocation = (form) => axios.post('/admin/site-register',form)
+

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,50 +12,112 @@ import {
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+//mui for select
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 import userStore from "../../store/user-store";
+import MapComponent from "../../components/user/MapComponent";
 
 const Attendance = () => {
+  const [currentPosition, setCurrentPosition] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const [locationDetails, setLocationDetails] = useState(null);
-  const { createClockIn, response, createClockOut } = userStore();
+  const { createClockIn, createClockOut, getSiteLocationData } = userStore();
+  const [locationData, setLocationData] = useState([]);
+  const [location, setLocation] = useState("");
+  const [isWithinRadius, setIsWithinRadius] = useState(false);
+  const [currentDistance, setCurrentDistance] = useState(null);
 
-  const handleAttendance = async (type) => {
-    setLoading(true);
-    setError("");
-    setLocationDetails(null);
-
-    try {
-      const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
+  // Get current position with continuous updates
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setCurrentPosition([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setError(
+            "Unable to get your location. Please enable location services."
+          );
+        },
+        {
           enableHighAccuracy: true,
           timeout: 5000,
           maximumAge: 0,
-        });
-      });
+        }
+      );
 
-      const { latitude, longitude } = position.coords;
+      // Cleanup function to stop watching position
+      return () => navigator.geolocation.clearWatch(watchId);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const result = await getSiteLocationData();
+        setLocationData(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchLocationData();
+  }, []);
+
+  const handleChange = (event) => {
+    setLocation(event.target.value);
+    setLocationDetails(null); // Reset location details when changing office
+  };
+
+  const handleDistanceChange = (distance, withinRadius, allowedRadius) => {
+    setCurrentDistance(Math.round(distance));
+    setIsWithinRadius(withinRadius);
+    setLocationDetails({
+      distance: Math.round(distance),
+      allowedRadius: allowedRadius,
+    });
+  };
+
+  const handleAttendance = async (type) => {
+    if (!location) {
+      setError("Please select an office location");
+      return;
+    }
+    if (!isWithinRadius) {
+      setError("You must be within the allowed radius to clock in/out");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      const { latitude, longitude } = {
+        latitude: currentPosition[0],
+        longitude: currentPosition[1],
+      };
+
+      // const { latitude, longitude } = position.coords;
 
       // API call with location data
       let apiResponse;
 
       if (type === "in") {
-        apiResponse = await createClockIn(latitude, longitude);
+        apiResponse = await createClockIn(latitude, longitude, location);
       } else {
-        apiResponse = await createClockOut(latitude, longitude);
+        apiResponse = await createClockOut(latitude, longitude, location);
       }
-      console.log("api response", apiResponse);
-      console.log("here is latitude", latitude, longitude);
 
       if (apiResponse?.data?.ok) {
         setStatus(apiResponse.data.message);
-        if (apiResponse.data.location) {
-          setLocationDetails({
-            distance: apiResponse.data.location.distance,
-            allowedRadius: apiResponse.data.location.office.radius,
-          });
-        }
       } else {
         setError(apiResponse?.data?.message || "Failed to record attendance");
       }
@@ -78,6 +140,14 @@ const Attendance = () => {
 
   return (
     <Container maxWidth="sm" sx={{ pt: 4 }}>
+      <Box sx={{ mb: 2, height: "400px" }}>
+        <MapComponent
+          currentPosition={currentPosition}
+          officeLocations={locationData}
+          selectedOfficeId={location ? Number(location) : null}
+          onDistanceChange={handleDistanceChange}
+        />
+      </Box>
       <Card>
         <CardContent>
           <Typography variant="h5" component="h2" gutterBottom>
@@ -107,26 +177,41 @@ const Attendance = () => {
             )}
           </Box>
 
+          {/* select */}
+
+          <FormControl sx={{ m: 1, mb: 2, minWidth: 200 }} size="small">
+            <InputLabel id="demo-select-small-label">Location</InputLabel>
+            <Select
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              value={location}
+              label="location"
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {locationData.map((item) => {
+                return (
+                  <MenuItem key={item.id} value={item.id}>
+                    {item.siteName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+
           {/* Clock In/Out Buttons */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              "& button": { flex: 1 },
-            }}
-          >
+
+          <Box sx={{ display: "flex", gap: 2, "& button": { flex: 1 } }}>
             <Button
               variant="contained"
               color="primary"
               startIcon={
-                loading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : (
-                  <LoginIcon />
-                )
+                loading ? <CircularProgress size={20} /> : <LoginIcon />
               }
               onClick={() => handleAttendance("in")}
-              disabled={loading}
+              disabled={loading || !isWithinRadius || !location}
             >
               Clock In
             </Button>
@@ -135,14 +220,10 @@ const Attendance = () => {
               variant="contained"
               color="secondary"
               startIcon={
-                loading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : (
-                  <LogoutIcon />
-                )
+                loading ? <CircularProgress size={20} /> : <LogoutIcon />
               }
               onClick={() => handleAttendance("out")}
-              disabled={loading}
+              disabled={loading || !isWithinRadius || !location}
             >
               Clock Out
             </Button>
