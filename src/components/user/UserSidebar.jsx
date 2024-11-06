@@ -5,7 +5,8 @@ import { LuCalendarDays } from "react-icons/lu";
 import { GrWorkshop } from "react-icons/gr";
 import { FaFileCircleQuestion, FaLocationDot } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import useAuthStore from "../../stroes/authSrore";
+import useAuthStore from "../../store/authSrore";
+
 
 // const user = useAuthStore((state) => state.user);
 
@@ -85,7 +86,7 @@ const UserSidebar = () => {
         {user && (
           <div>
 
-            <Link to={"/request-change-password"} className={classLink}>
+            <Link to={"/reset-password"} className={classLink}>
               <button  >
                 Change Password
               </button>

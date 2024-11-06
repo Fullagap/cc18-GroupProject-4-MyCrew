@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useAuthStore from '../../stroes/authSrore';
+import useAuthStore from '../../store/authSrore';
 
 const ChangePassword = () => {
     const [token, setToken] = useState('');

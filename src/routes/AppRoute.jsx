@@ -18,6 +18,7 @@ import RequestChangePassword from "../pages/auth/RequestChangePassword";
 import ChangePassword from "../pages/auth/Changepassword";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+import ResetPassword from "../pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> },
       { path: "request-change-password", element: <RequestChangePassword /> },
       { path: "change-password/:token", element: <ChangePassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile /> },
       { path: "calendar", element: <Calendar /> },
