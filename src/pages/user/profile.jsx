@@ -1,7 +1,9 @@
 import React from 'react'
+import ProfilePage from './Profile/ProfilePage'
 
-export default function Profile() {
+export default function profile({info,chart,req,dcc}) {
+  console.log("profile",info,chart,req,dcc)
   return (
-    <div>Profile</div>
+    <ProfilePage info={info} chart={chart} req={req} dcc={dcc}/>
   )
 }
