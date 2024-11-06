@@ -45,3 +45,8 @@ export const createPosition =(positionInput,token)=> axios.post(`/admin/create-p
         Authorization: `Bearer ${token}`
     }
 })
+export const updateProfileImage =(form,token)=> axios.patch(`/admin/update-profile`,form,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
