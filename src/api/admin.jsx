@@ -45,3 +45,5 @@ export const createPosition =(positionInput,token)=> axios.post(`/admin/create-p
         Authorization: `Bearer ${token}`
     }
 })
+
+export const createOfficeSiteLocation = (form) => axios.post('/admin/site-register',form)
