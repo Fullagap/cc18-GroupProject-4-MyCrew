@@ -9,7 +9,11 @@ import { persist } from "zustand/middleware";
 const useAuthStore = create(persist((set, get) => ({
     token: null,
     user: null,
-
+// {user:{
+//   "id": 1,
+//   "email": "dummy@codecamp.com",
+//   "role": "ADMIN"
+// }}
 
 
     actionLogin: async (form) => {
