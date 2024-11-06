@@ -4,6 +4,7 @@ import { MdManageAccounts } from "react-icons/md";
 import { LuCalendarClock } from "react-icons/lu";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import { TbReportMoney } from "react-icons/tb";
+import { FaMapLocationDot } from "react-icons/fa6";
 
 export default function HomeAdmin() {
   const classLink =
@@ -31,6 +32,15 @@ export default function HomeAdmin() {
         <Link to="/admin/payroll" className={classLink}>
           <TbReportMoney className="text-6xl text-blue-600 group-hover:text-white" />
           <p className="text-center text-lg font-semibold">Payroll</p>
+        </Link>
+
+        <Link to="/admin/attendance-management" className={classLink}>
+          <FaMapLocationDot  className="text-8xl" />
+          <p className="text-center">
+            Attendance
+            <br />
+            Management
+          </p>
         </Link>
       </div>
     </div>

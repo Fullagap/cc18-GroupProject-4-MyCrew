@@ -19,6 +19,7 @@ import ChangePassword from "../pages/auth/Changepassword";
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+import AttendanceManagement from "../pages/admin/attendance/attendance-management";
 import ResetPassword from "../pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
+      { path: "attendance-management", element: <AttendanceManagement/> },
     ],
   },
   
