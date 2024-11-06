@@ -3,7 +3,7 @@ import adminStore from '../../../store/admin-store';
 import { createDepartment, createPosition } from '../../../api/admin';
 import AddPosition from '../../../components/user/admin/AddPosition';
 import AddDepartment from '../../../components/user/admin/AddDepartment';
-import useAuthStore from '../../../stroes/authSrore';
+import useAuthStore from '../../../store/authSrore';
 
 function DepartmentPosition() {
   const { departments, employeeDepartment, positionInDepartment, positions } = adminStore();

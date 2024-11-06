@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import axios from "../../../../../config/axios";
-import useAuthStore from "../../../../../stroes/authSrore";
+import useAuthStore from "../../../../../store/authSrore";
 export default function BarChart() {
   const user = useAuthStore((state) => state.user);
   const [userLeaveData, setUserLeaveData] = useState({});

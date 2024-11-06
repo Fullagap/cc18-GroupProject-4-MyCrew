@@ -9,7 +9,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 import EditForm from './EditForm';
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../../stroes/authSrore';
+import useAuthStore from '../../../store/authSrore';
 
 const AllEmployees = () => {
     const {

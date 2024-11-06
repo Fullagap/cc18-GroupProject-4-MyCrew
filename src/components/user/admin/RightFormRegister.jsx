@@ -1,5 +1,5 @@
 import React from 'react'
-import useAuthStore from '../../../stroes/authSrore';
+import useAuthStore from '../../../store/authSrore';;
 
 function RightFormRegister({errors,registerField,positionInDepartment,employeeInEachDepartment,departments}) {
     const token = useAuthStore((state) => state.token);

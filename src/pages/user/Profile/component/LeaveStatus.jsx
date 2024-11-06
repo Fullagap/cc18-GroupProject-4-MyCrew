@@ -4,7 +4,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { Pagination } from "@mui/material";
-import useAuthStore from "../../../../stroes/authSrore";
+import useAuthStore from "../../../../store/authSrore";
 import axios from "../../../../config/axios";
 
 export default function LeaveStatus() {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Profile from './component/Profile'
 import Detail from './component/Detail'
 import Footer from './component/Footer'
-import useAuthStore from '../../../stroes/authSrore';
+import useAuthStore from '../../../store/authSrore';
 import axios from "../../../config/axios";
 
 export default function Information() {

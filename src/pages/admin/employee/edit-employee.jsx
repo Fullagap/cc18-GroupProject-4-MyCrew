@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import adminStore from '../../../store/admin-store';
 import { register } from '../../../api/admin';
-import useAuthStore from '../../../stroes/authSrore';
+import useAuthStore from '../../../store/authSrore';
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import registerSchema from '../../../utils/validate'; 
