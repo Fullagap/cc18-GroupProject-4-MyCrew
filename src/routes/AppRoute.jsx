@@ -13,7 +13,8 @@ import UserLayout from "../layout/user-layout";
 import HomeAdmin from "../pages/admin/home-admin";
 import EmployeeManagement from "../pages/admin/employee/employee-management";
 import CalendarManagement from "../pages/admin/calendar/calendar-management";
-import RequestManagement from "../pages/admin/request/request-management";
+import RequestManagement from "../pages/user/request/request-management";
+import RequestItemManage from "../pages/user/request/requestItemManage";
 import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
@@ -39,9 +40,11 @@ const router = createBrowserRouter([
       { path: "profile/doccon/payslip", element: <PaySlipPage /> },
       { path: "calendar", element: <Calendar /> },
       { path: "job", element: <Job /> },
+      { path: "request-management", element: <RequestManagement /> },
       { path: "request", element: <Request /> },
       { path: "requestSth", element: <RequestSth /> },
       { path: "requestItem", element: <RequestItem /> },
+      { path: "requestItemManage", element: <RequestItemManage /> },
       { path: "unauthorized", element: <Unauthorized /> },
       { path: "*", element: <PageNotFound /> },
     ],

@@ -10,7 +10,6 @@ const Schema = Joi.object({
 });
 
 const RequestItem = () => {
-  const [itemss, setItemss] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
 
   const checkAllItem = itemStore((state) => state.checkAllItem);
