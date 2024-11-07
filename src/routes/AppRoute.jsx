@@ -22,7 +22,6 @@ import ChangePassword from "../pages/auth/Changepassword";
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
-import ManageItem from "../pages/admin/item/manageItem";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +31,7 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> },
       { path: "request-change-password", element: <RequestChangePassword /> },
       { path: "change-password/:token", element: <ChangePassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} />},
@@ -60,7 +60,6 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
-      { path: "manageItem", element: <ManageItem/> },
     ],
   },
   

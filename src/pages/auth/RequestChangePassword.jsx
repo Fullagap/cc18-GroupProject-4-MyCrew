@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../stroes/authSrore';
+import useAuthStore from '../../store/authSrore';
 
 const RequestChangePassword = () => {
     const [email, setEmail] = useState('');

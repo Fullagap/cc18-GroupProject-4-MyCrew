@@ -1,9 +1,49 @@
 import axios from "../config/axios"
 
-export const register = (form)=> axios.post('/admin/register',form)
-export const department =()=> axios.get('/admin/department')
-export const positionDepartment =(id)=> axios.get(`/admin/department-position/${id}`)
-export const EmployeeInDepartment =(id)=> axios.get(`/admin/department-employees/${id}`)
-export const allEmployees =()=> axios.get(`/admin/All-employees`)
-export const editEmployeesInfo =(id,form)=> axios.patch(`/admin/update-user/${id}`,form)
-export const allLeader =()=> axios.get('/admin/leader')
+export const register = (form,token)=> axios.post('/admin/register',form,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const department =(token)=> axios.get('/admin/department',{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const positionDepartment =(id,token)=> axios.get(`/admin/department-position/${id}`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const EmployeeInDepartment =(id,token)=> axios.get(`/admin/department-employees/${id}`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const allEmployees =(token)=> axios.get(`/admin/All-employees`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const editEmployeesInfo =(id,form,token)=> axios.patch(`/admin/update-user/${id}`,form,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const allLeader =(token)=> axios.get('/admin/leader',{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const createDepartment =(input,token)=> axios.post(`/admin/create-department`,input,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const createPosition =(positionInput,token)=> axios.post(`/admin/create-position`,positionInput,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const createOfficeSiteLocation = (form) => axios.post('/admin/site-register',form)

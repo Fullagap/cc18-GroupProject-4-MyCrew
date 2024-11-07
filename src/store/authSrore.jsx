@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { toast } from "react-toastify";
-import { login, requestChangePassword, changePassword } from "../api/auth";
+import { login, requestChangePassword, changePassword, resetPassword } from "../api/auth";
 import { persist } from "zustand/middleware";
 
 
 
-const useAuthStore = create(persist((set) => ({
+
+const useAuthStore = create(persist((set, get) => ({
     token: null,
     user: null,
 // {user:{
@@ -19,10 +20,11 @@ const useAuthStore = create(persist((set) => ({
         try {
             const resp = await login(form);
             const { token, user } = resp;
-
-
+            
+            
 
             set({ token, user });
+            localStorage.setItem('token', token);
             toast.success("Login successful!");
 
             return user;
@@ -52,6 +54,29 @@ const useAuthStore = create(persist((set) => ({
             toast.error(err.message || "Change password failed!");
         }
     },
+    actionResetPassword: async (oldPassword, newPassword) => {
+        try {
+            const token = get().token; 
+            if (!token) {
+                toast.error('No authentication token found.');
+                return;
+            }
+
+            const data = await resetPassword(oldPassword, newPassword, token);
+            toast.success(data.msg || 'Password changed successfully!');
+            return data;
+        } catch (err) {
+            console.log(err);
+            const errorMessage = err.message;
+            if (errorMessage === 'Incorrect old password') {
+                toast.error('Old password is incorrect.');
+            } else {
+                toast.error(errorMessage || 'An error occurred. Please try again.');
+            }
+        }
+    },
+    
+    
 
 
     isLoggedIn: () => set((state) => !!state.token),
@@ -60,7 +85,7 @@ const useAuthStore = create(persist((set) => ({
 
         set({ token: null, user: null });
 
-        
+
         toast.success("Logged out successfully!");
     }
 
