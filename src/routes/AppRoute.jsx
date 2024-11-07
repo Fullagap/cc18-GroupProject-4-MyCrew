@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> },
       { path: "request-change-password", element: <RequestChangePassword /> },
       { path: "change-password/:token", element: <ChangePassword /> },
-      { path: "reset-password", element: <ResetPassword /> },
+      // { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} />},

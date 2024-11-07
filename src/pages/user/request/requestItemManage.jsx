@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose } from "react-icons/md";
 import itemStore from "../../../store/item-store";
 import { changeStatusItem } from "../../../api/checkRequest";
-import useAuthStore from "../../../stroes/authSrore";
+import useAuthStore from "../../../store/authSrore";
 
 const RequestItemManage = () => {
   const [expandedId, setExpandedId] = useState(null);

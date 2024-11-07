@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose } from "react-icons/md";
 import requestStore from "../../store/checkRequest";
 import { changeStatus, changeComment } from "../../api/checkRequest";
-import useAuthStore from "../../stroes/authSrore";
+import useAuthStore from "../../store/authSrore";
 
 const LeaveRequestTable = () => {
   const [expandedId, setExpandedId] = useState(null);
