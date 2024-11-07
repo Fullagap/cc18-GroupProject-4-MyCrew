@@ -19,7 +19,7 @@ export default function Information() {
   },[])
   return (
     <div className="flex flex-col h-full">
-      <div className="flex h-3/4 gap-8 mx-4 my-4">
+      <div className="flex h-4/5 gap-8 mx-4 my-4">
         <Profile userInfo={userInfo} getUserInfo={getUserInfo} />
         <Detail userInfo={userInfo}/>
         

@@ -5,19 +5,14 @@ import { updateProfileImage } from "../../../../api/admin";
 import useAuthStore from "../../../../store/authSrore";
 
 export default function Profile({ userInfo, getUserInfo }) {
-  console.log(userInfo);
-
-  const token = useAuthStore((state) => state.token)
-  const user = useAuthStore((state) => state.user)
-  const [image, setImage] = useState({ id: user.id, photo: "" })
-  const [isLoading, setIsLoading] = useState(false)
-  const formData = new FormData()
-
-  // Create a reference for the file input
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   const hdlUpload = async (e) => {
     const file = e.target.files[0];
+    const formData = new FormData();
     formData.append("file", file);
     formData.append("id", user.id);
 
@@ -25,23 +20,22 @@ export default function Profile({ userInfo, getUserInfo }) {
 
     try {
       const resp = await updateProfileImage(formData, token);
-      console.log(resp)
-      getUserInfo()
+      console.log(resp);
+      getUserInfo();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
-  const handleAvatarClick = () => {
+  const handleFileSelection = () => {
     fileInputRef.current.click();
   };
 
   return (
-    <div className="w-1/3 rounded-3xl bg-[#F3F8FF]">
+    <div className="w-2/4 rounded-3xl bg-[#F3F8FF]">
       <div className="justify-center flex mt-4 relative">
-     
         <Box
           sx={{
             position: "relative",
@@ -49,13 +43,12 @@ export default function Profile({ userInfo, getUserInfo }) {
             height: 220,
             "&:hover .editIcon": { opacity: 1 }, // Show icon on hover
           }}
-          onClick={handleAvatarClick}
+          onClick={handleFileSelection} // Use this as the single click handler
         >
           <Avatar
             alt="Profile"
             src={
-              userInfo.profileImg ??
-              "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+              userInfo.profileImg ?? "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
             }
             sx={{
               width: 220,
@@ -78,13 +71,11 @@ export default function Profile({ userInfo, getUserInfo }) {
             />
           )}
 
-       
           <IconButton
             className="editIcon"
-            onClick={handleAvatarClick}
             sx={{
               position: "absolute",
-              top: 8,
+              top: 10,
               right: 8,
               bgcolor: "rgba(0, 0, 0, 0.6)",
               color: "white",
@@ -98,16 +89,17 @@ export default function Profile({ userInfo, getUserInfo }) {
         </Box>
       </div>
 
-      {/* Hidden file input that will be triggered by clicking the Avatar */}
+      {/* Hidden file input that will be triggered by clicking the Avatar or IconButton */}
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={hdlUpload}
       />
+
       <div className="mt-2 mx-4">
-        <div className="flex justify-center text-4xl underline">PROFILE</div>
-        <div className="flex mt-2 text-xl">
+        <div className="flex justify-center text-2xl underline">PROFILE</div>
+        <div className="flex mt-2 text-lg">
           <div className="w-1/3">
             <h3>Employee ID</h3>
             <h3>Department</h3>
