@@ -35,9 +35,22 @@ export default function HomeAdmin() {
         </Link>
 
         <Link to="/admin/attendance-management" className={classLink}>
-          <FaMapLocationDot  className="text-6xl text-blue-600 group-hover:text-white" />
-          <p className="text-center text-lg font-semibold">Attendance Management</p>
+          <FaMapLocationDot  className="text-6xl  text-blue-600 group-hover:text-white" />
+          <p className="text-center text-lg font-semibold">
+            Attendance
+            <br />
+            Management
+          </p>
         </Link>
+
+        <Link to="/admin/manageItem" className={classLink}>
+          <p className="text-center">
+            Item
+            <br />
+            Management
+          </p>
+        </Link>
+
       </div>
     </div>
   );

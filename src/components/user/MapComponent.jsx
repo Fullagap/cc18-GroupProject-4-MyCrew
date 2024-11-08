@@ -7,6 +7,7 @@ import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import Clock from '../../components/user/Clock' ;
 
 // Create custom icon for site locations
 const siteIcon = new L.Icon({
@@ -46,6 +47,8 @@ const MapComponent = ({
         if (!point1 || !point2) return null;
         return L.latLng(point1).distanceTo(point2);
     };
+    
+    
 
     useEffect(() => {
         if (currentPosition && selectedOfficeId) {
@@ -62,7 +65,8 @@ const MapComponent = ({
     }, [currentPosition, selectedOfficeId, officeLocations]);
 
     return (
-        <div style={{ height: '400px', width: '100%' }}>
+        <div style={{ height: '300px', width: '100%' }}>
+            <Clock/>
             <MapContainer 
                 center={currentPosition || [13.7563, 100.5018]} 
                 zoom={15} 
@@ -96,16 +100,19 @@ const MapComponent = ({
                         </Marker>
                         
                         {/* Radius circle */}
-                        <Circle
-                            center={[office.latitude, office.longitude]}
-                            radius={office.area}
-                            pathOptions={{
-                                fillColor: office.id === selectedOfficeId ? '#4CAF50' : '#2196F3',
-                                fillOpacity: 0.2,
-                                color: office.id === selectedOfficeId ? '#4CAF50' : '#2196F3',
-                                weight: 1,
-                            }}
-                        />
+                        
+                        {selectedOfficeId === office.id && (
+                            <Circle
+                                center={[office.latitude, office.longitude]}
+                                radius={office.area}
+                                pathOptions={{
+                                    fillColor: '#4CAF50',
+                                    fillOpacity: 0.2,
+                                    color: '#4CAF50',
+                                    weight: 1,
+                                }}
+                            />
+                        )}
                     </React.Fragment>
                 ))}
 
