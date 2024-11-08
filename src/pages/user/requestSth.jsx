@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose, MdAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import itemStore from "../../store/item-store";
+import useAuthStore from "../../store/authSrore";
 
 const RequestList = () => {
   const [expandedId, setExpandedId] = useState(null);
@@ -9,8 +10,11 @@ const RequestList = () => {
   const checkAllUserItem = itemStore((state) => state.checkAllUserItem);
   const userItems = itemStore((state) => state.userItems);
 
+  const user = useAuthStore((state) => state.user);
+  console.log("userid", user.id);
+
   useEffect(() => {
-    checkAllUserItem(2);
+    checkAllUserItem(user.id);
   }, []);
 
   const getStatusColor = (status) => {

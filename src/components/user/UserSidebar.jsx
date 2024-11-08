@@ -59,7 +59,7 @@ const UserSidebar = () => {
           </div>
         </Link>
 
-        <Link className={classLink} to="/request">
+        <Link className={classLink} to="/request-management">
           <div className="flex flex-col items-center">
             <FaFileCircleQuestion className="text-3xl mb-1" />
             <p className="text-sm font-medium">Request</p>
