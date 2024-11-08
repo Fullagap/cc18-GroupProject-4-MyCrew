@@ -41,7 +41,7 @@ export default function Profile({ userInfo, getUserInfo }) {
             position: "relative",
             width: 220,
             height: 220,
-            "&:hover .editIcon": { opacity: 1 }, // Show icon on hover
+            "&:hover .editIcon": { opacity: 1 },
           }}
           onClick={handleFileSelection} // Use this as the single click handler
         >
@@ -89,7 +89,6 @@ export default function Profile({ userInfo, getUserInfo }) {
         </Box>
       </div>
 
-      {/* Hidden file input that will be triggered by clicking the Avatar or IconButton */}
       <input
         type="file"
         ref={fileInputRef}
