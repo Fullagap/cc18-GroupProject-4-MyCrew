@@ -26,3 +26,19 @@ export const changePassword = async (token, newPassword) => {
         throw new Error(error.response.data.message || 'Change password failed');
     }
 };
+
+export const resetPassword = async (oldPassword, newPassword, token) => {
+    try {
+        const response = await axios.post('/auth/reset-password', 
+            { oldPassword, newPassword }, 
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Reset password failed');
+    }
+};

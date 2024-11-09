@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useAuthStore from '../../stroes/authSrore';
+import useAuthStore from '../../store/authSrore';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,25 @@ const Login = () => {
     });
 
     const hdlOnchange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        if (name === 'password') {
+            const numericValue = value.replace(/[^0-9]/g, '');
+            if (value !== numericValue) {
+                toast.warn('Password field accepts numbers only!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+            setForm({ ...form, [name]: numericValue });
+        } else {
+            setForm({ ...form, [name]: value });
+        }
     };
 
     const hdlSubmit = async (e) => {
@@ -31,7 +49,7 @@ const Login = () => {
 
     const roleRedirect = (role) => {
         if (role?.role === "USER") {
-            navigate("/user");
+            navigate("/attendance");
         } else if (role?.role === "ADMIN") {
             navigate("/admin");
         }

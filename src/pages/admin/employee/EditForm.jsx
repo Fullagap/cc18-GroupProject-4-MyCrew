@@ -69,11 +69,11 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
             </FormControl>
             <TextField
               margin="dense"
-              label="Without Pay Leave"
+              label="Personal Leave"
               type="number"
               fullWidth
-              value={selectedEmployee.WOPayAmount}
-              onChange={(e) => handleInputChange("WOPayAmount", e.target.value)} 
+              value={selectedEmployee.personalLeaveAmount}
+              onChange={(e) => handleInputChange("personalLeaveAmount", e.target.value)} 
             />
             <TextField
               margin="dense"
