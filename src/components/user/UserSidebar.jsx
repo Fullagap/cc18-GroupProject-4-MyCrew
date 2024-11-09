@@ -83,7 +83,7 @@ const UserSidebar = () => {
         )}
 
         {user && (
-          <div>
+          <div className="flex flex-col text-sm ">
 
             <Link to={"/request-change-password"} className={classLink}>
               <button  >

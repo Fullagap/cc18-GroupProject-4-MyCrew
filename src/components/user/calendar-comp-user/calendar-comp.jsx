@@ -2,26 +2,24 @@ import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // Import FullCalendar
 import dayGridPlugin from "@fullcalendar/daygrid"; // Import Day Grid plugin
 import interactionPlugin from "@fullcalendar/interaction";
-import EventModal from "../../user/calendar-comp-user/event-modal";
+import EventModal from "./event-modal";
 import useCalendarStore from "../../../store/calendar-store";
 import useAuthStore from "../../../stroes/authSrore";
+import { toast } from "react-toastify";
 
-export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
+export default function CalendarComp({ events, setEvents, setDateSelect }) {
   const addSession = useCalendarStore((state) => state.addSession);
   const updateSession = useCalendarStore((state) => state.updateSession);
   const deleteSession = useCalendarStore((state) => state.deleteSession);
-  const publicHoliday = useCalendarStore((state) => state.publicHoliday);
-  const editPublicHoliday = useCalendarStore((state) => state.editPublicHoliday);
   const user = useAuthStore((state) => state.user);
 
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [editEvent, setEditEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [editEvent, setEditEvent] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [checkAdd, setCheckAdd] = useState(false);
   const [checkEdit, setCheckEdit] = useState(false);
-
 
   useEffect(() => {
     if (checkAdd) {
@@ -30,71 +28,60 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
         startedDate: event.start, // เปลี่ยน key เป็น startDate
         endDate: event.end,
         description: event.title,
-        eventType: "HOLIDAY",
+        eventType: "MEMO",
         attendanceLimit: "50",
       }));
       const lastEvent = newEvents[newEvents.length - 1];
-      console.log("ข้อมูลที่เตรียมแปลงกลับ ไป add:", lastEvent);
       addSession(lastEvent);
-
-        const startedDate = new Date(lastEvent.startedDate); // แปลง startedDate ให้เป็น Date
-        const createPublicHoliday = {
-            description: lastEvent.description,
-            date: startedDate.getDate(),
-            month: startedDate.getMonth() + 1, // เดือนใน JavaScript เริ่มต้นที่ 0
-            year: startedDate.getFullYear(),
-            dateTime: startedDate.toISOString(), // แปลงเป็น ISO String
-        }
-    publicHoliday(createPublicHoliday);
-
       setCheckAdd(false);
     }
   }, [checkAdd]);
 
   useEffect(() => {
     if (checkEdit) {
-      console.log("ข้อมูลที่เตรียมแปลงกลับ ไป edit:", editEvent);
       updateSession(sessionId, editEvent);
-
-      const startedDate = new Date(editEvent.startedDate); // แปลง startedDate ให้เป็น Date
-      const updatePublicHoliday = {
-          description: editEvent.description,
-          date: startedDate.getDate(),
-          month: startedDate.getMonth() + 1, // เดือนใน JavaScript เริ่มต้นที่ 0
-          year: startedDate.getFullYear(),
-          dateTime: startedDate.toISOString(), // แปลงเป็น ISO String
-      }
-  editPublicHoliday(editEvent.id,updatePublicHoliday); 
       setCheckEdit(false);
     }
   }, [checkEdit]);
 
-  const handleDateSelect = (info) => {
-    const start = info.startStr; // ถ้าอยากได้เวลาด้วยใช้ info.start
-    let end = new Date(info.endStr);
+  const handleDateSelect = (selectInfo) => {
+    const start = selectInfo.startStr; // ถ้าอยากได้เวลาด้วยใช้ info.start
+    let end = new Date(selectInfo.endStr);
 
     end.setDate(end.getDate() - 1);
     const adjustedEnd = end.toISOString().split("T")[0];
 
-    if (info.startStr === adjustedEnd) {
+    if (selectInfo.startStr === adjustedEnd) {
       setSelectedEvent({ start, end: null, title: "" }); // ถ้าวันเดียว ให้ end เป็น null
     } else {
       setSelectedEvent({ start, end, title: "" }); // ถ้ามีหลายวัน ก็ให้ end เป็นปกติ
     }
+
     setIsEditing(false);
     setIsModalOpen(true);
+    setDateSelect({
+      start,
+      end: selectInfo.startStr === adjustedEnd ? "" : end,
+    });
   };
 
   const handleEventClick = (info) => {
-    console.log('info', info)
-    setSelectedEvent({
-      id: info.event.id,
-      title: info.event.title,
-      start: info.event.start,
-      end: info.event.end,
-    });
-    setIsEditing(true);
-    setIsModalOpen(true);
+    const clickedEvent = events.find((event) => event.id == info.event.id);
+    if (
+      clickedEvent.eventType === "HOLIDAY" ||
+      clickedEvent.eventType === "LEAVE"
+    ) {
+      toast.error("Can not Edit");
+    } else {
+      setSelectedEvent({
+        id: info.event.id,
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.end,
+      });
+      setIsEditing(true);
+      setIsModalOpen(true);
+    }
   };
 
   const handleEventSave = async (updatedEvent) => {
@@ -104,11 +91,10 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
         startedDate: updatedEvent.start, // เปลี่ยน key เป็น startDate
         endDate: updatedEvent.end,
         description: updatedEvent.title,
-        // eventType: "HOLIDAY",
-        attendanceLimit: "",
+        eventType: "MEMO",
+        attendanceLimit: "50",
       };
       const Id = updatedEvent.id;
-
       setSessionId(Id);
       setEditEvent(newEventUpDate);
       setCheckEdit(true);
@@ -124,8 +110,9 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
       await deleteSession(sessionId);
       setEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== sessionId)
-      ); // เอาไวReRender State *แต่ยังไม่ได้
+      );
     }
+    // hdlGetEvent()
   };
 
   return (
@@ -140,6 +127,7 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
         selectable={true}
         select={handleDateSelect}
       />
+
       {isModalOpen && (
         <EventModal
           event={selectedEvent}
