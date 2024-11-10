@@ -60,4 +60,11 @@ export const createOfficeSiteLocation = (form,token) =>
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
+})
+
+export const updateProfileImage =(form,token)=> axios.patch(`/admin/update-profile`,form,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+

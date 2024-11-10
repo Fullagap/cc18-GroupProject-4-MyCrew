@@ -8,6 +8,7 @@ import axios from "../../../config/axios";
 export default function Information() {
   const user = useAuthStore((state) => state.user);
   const [userInfo, setUserInfo] =useState({})
+
   const getUserInfo = async()=>{
     const resp = await axios.get(`user/${user.id}`);
     console.log(resp.data);
@@ -18,8 +19,8 @@ export default function Information() {
   },[])
   return (
     <div className="flex flex-col h-full">
-      <div className="flex h-3/4 gap-8 mx-4 my-4">
-        <Profile userInfo={userInfo} />
+      <div className="flex h-4/5 gap-8 mx-4 my-4">
+        <Profile userInfo={userInfo} getUserInfo={getUserInfo} />
         <Detail userInfo={userInfo}/>
         
       </div>

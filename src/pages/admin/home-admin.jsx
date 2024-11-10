@@ -42,6 +42,15 @@ export default function HomeAdmin() {
             Management
           </p>
         </Link>
+
+        <Link to="/admin/manageItem" className={classLink}>
+          <p className="text-center">
+            Item
+            <br />
+            Management
+          </p>
+        </Link>
+
       </div>
     </div>
   );
