@@ -56,10 +56,10 @@ const adminStore = create((set) => ({
             console.log(err)
         }
     },
-    createSiteLocation:async(form)=>{
+    createSiteLocation:async(form,token)=>{
         try{
-            const response = await createOfficeSiteLocation(form)
-            console.log(response)
+            const response = await createOfficeSiteLocation(form,token)
+            console.log('from create site location',response)
         }catch(err){
             console.log(err)
         }

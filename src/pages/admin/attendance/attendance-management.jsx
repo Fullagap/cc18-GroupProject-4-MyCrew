@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Circle, Popup, useMapEvents } from 're
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import adminStore from "../../../store/admin-store";
-
+import authStore from '../../../store/authSrore'
 // Import marker icons
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -32,6 +32,7 @@ function MapClickHandler({ onLocationSelect }) {
 }
 
 function AttendanceManagement() {
+  const {token} = authStore();
   const { createSiteLocation } = adminStore();
   const [selectedPosition, setSelectedPosition] = useState(null);
   
@@ -69,7 +70,7 @@ function AttendanceManagement() {
   const hdlSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createSiteLocation(form);
+      const response = await createSiteLocation(form,token);
       setForm(initialState);
       setSelectedPosition(null);
     } catch (err) {
