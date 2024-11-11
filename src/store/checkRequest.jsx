@@ -3,10 +3,10 @@ import {request} from '../api/checkRequest'
 
 const requestStore = create((set) => ({
     requests: [],
-    checkRequest: async(a) => {
-        console.log("a",a)
+    checkRequest: async(id) => {
+        console.log("id",id)
         try {
-            const resp = await request(a)
+            const resp = await request(id)
             console.log(resp)
             set({requests: resp.data})
         } catch (err) {

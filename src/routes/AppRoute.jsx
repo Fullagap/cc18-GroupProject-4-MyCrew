@@ -7,11 +7,16 @@ import Profile from "../pages/user/profile";
 import Calendar from "../pages/user/calendar";
 import Job from "../pages/user/job";
 import Request from "../pages/user/request";
+import RequestSth from "../pages/user/requestSth";
+import RequestItem from "../pages/user/request/requestItem";
+import CreateItem from "../pages/user/request/createItem";
+import ManageItem from "../pages/admin/item/manageItem";
 import UserLayout from "../layout/user-layout";
 import HomeAdmin from "../pages/admin/home-admin";
 import EmployeeManagement from "../pages/admin/employee/employee-management";
 import CalendarManagement from "../pages/admin/calendar/calendar-management";
-import RequestManagement from "../pages/admin/request/request-management";
+import RequestManagement from "../pages/user/request/request-management";
+import RequestItemManage from "../pages/user/request/requestItemManage";
 import Payroll from "../pages/admin/payroll/payroll";
 import EditEmployee from "../pages/admin/employee/edit-employee";
 import RequestChangePassword from "../pages/auth/RequestChangePassword";
@@ -19,17 +24,32 @@ import ChangePassword from "../pages/auth/Changepassword";
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+import ProtectRouteUser from "./ProtectRouteUser";
+import ProtectRouteAdmin from "./ProtectRouteAdmin";
 import ResetPassword from "../pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserLayout />,
+    element: <Login />,
+  },
+  {
+    path: "/reset-password", 
+    element: <ResetPassword />,
+  },
+  {
+    path: "/change-password/:token", 
+    element: <ChangePassword/>,
+  },
+  {
+    path: "/request-change-password", 
+    element: <RequestChangePassword/>,
+  },
+
+  {
+    path: "/user",
+    element: <ProtectRouteUser element={<UserLayout />} />,
     children: [
-      { index: true, element: <Login /> },
-      { path: "request-change-password", element: <RequestChangePassword /> },
-      { path: "change-password/:token", element: <ChangePassword /> },
-      { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} />},
@@ -38,15 +58,21 @@ const router = createBrowserRouter([
       { path: "profile/doccon/payslip", element: <PaySlipPage /> },
       { path: "calendar", element: <Calendar /> },
       { path: "job", element: <Job /> },
+      { path: "request-management", element: <RequestManagement /> },
       { path: "request", element: <Request /> },
+      { path: "requestSth", element: <RequestSth /> },
+      { path: "requestItem", element: <RequestItem /> },
+      { path: "createItem", element: <CreateItem /> },
+      { path: "requestItemManage", element: <RequestItemManage /> },
       { path: "unauthorized", element: <Unauthorized /> },
       { path: "*", element: <PageNotFound /> },
     ],
   },
   {
     path: "/admin",
-    element: <UserLayout />,
-    children: [{ index: true, element: <HomeAdmin /> },
+    element: <ProtectRouteAdmin element={<UserLayout/>}/>,
+    children: [
+      { index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement/> },
       { path: "all-employee", element: <AllEmployees/> },
       { path: "calendar-management", element: <CalendarManagement/> },
@@ -54,9 +80,9 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
+      { path: "manageItem", element: <ManageItem/> },
     ],
   },
-  
 ]);
 
 function AppRoute() {
