@@ -37,62 +37,62 @@ const Login = () => {
         e.preventDefault();
         try {
             const role = await actionLogin(form);
-            
             roleRedirect(role);
-            // toast.success("Login successful");
-            
         } catch (error) {
             console.error('Error:', error);
-            // toast.error("Login failed. Please try again.");
+            toast.error("Login failed. Please try again.");
         }
     };
 
     const roleRedirect = (role) => {
         if (role?.role === "USER") {
-            navigate("/attendance");
+            navigate("/user/attendance");
         } else if (role?.role === "ADMIN") {
             navigate("/admin");
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-[#E5EDF9] p-4">
-            <div className="bg-white rounded-lg shadow-lg border border-[#082777] p-6 max-w-md w-full">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#E5EDF9] to-[#C8D7EB] p-4">
+            <div className="bg-white rounded-lg shadow-2xl border border-[#082777] p-8 max-w-lg w-full">
                 <h2 className="text-[#082777] text-4xl font-bold mb-6 border-b-2 border-[#F7AC25] pb-2 text-center">
-                    Login
+                    Welcome Back
                 </h2>
-                <form onSubmit={hdlSubmit} className="w-full">
-                    <div className="mb-4">
-                        <label className="block text-[#082777] mb-1">Email:</label>
+                <p className="text-gray-500 text-center mb-6">Please login to your account</p>
+                <form onSubmit={hdlSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-[#082777] font-semibold mb-2">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={form.email}
                             onChange={hdlOnchange}
                             required
-                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#F7AC25]"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F7AC25] shadow-sm transition duration-300"
+                            placeholder="Enter your email"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-[#082777] mb-1">Password:</label>
+                    <div>
+                        <label className="block text-[#082777] font-semibold mb-2">Password</label>
                         <input
                             type="password"
                             name="password"
                             value={form.password}
                             onChange={hdlOnchange}
                             required
-                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#F7AC25]"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F7AC25] shadow-sm transition duration-300"
+                            placeholder="Enter your password"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-[#F7AC25] text-white border border-[#F7AC25] rounded p-2 font-bold shadow hover:bg-[#d89e1f] transition duration-300"
+                        className="w-full bg-[#F7AC25] text-white font-bold py-3 rounded-lg shadow-lg hover:bg-[#d89e1f] transition duration-300 transform hover:scale-105"
                     >
                         Login
                     </button>
                 </form>
-                <p className="mt-4 text-center">
-                    <Link className="text-[#082777] underline" to="/request-change-password">
+                <p className="mt-4 text-center text-gray-500">
+                    <Link className="text-[#082777] font-semibold hover:underline" to="/request-change-password">
                         Forgot Password?
                     </Link>
                 </p>

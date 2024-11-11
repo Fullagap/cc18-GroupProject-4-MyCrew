@@ -22,16 +22,27 @@ import ChangePassword from "../pages/auth/Changepassword";
 import PaySlipPage from "../pages/user/Profile/PaySlipPage";
 import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
+import ProtectRouteUser from "./ProtectRouteUser";
+import ProtectRouteAdmin from "./ProtectRouteAdmin";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserLayout />,
+    element: <Login />,
+  },
+  {
+    path: "/reset-password", 
+    element: <RequestChangePassword />,
+  },
+  {
+    path: "/request-change-password", 
+    element: <ChangePassword/>,
+  },
+
+  {
+    path: "/user",
+    element: <ProtectRouteUser element={<UserLayout />} />,
     children: [
-      { index: true, element: <Login /> },
-      { path: "request-change-password", element: <RequestChangePassword /> },
-      { path: "change-password/:token", element: <ChangePassword /> },
-      // { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} />},
@@ -51,8 +62,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <UserLayout />,
-    children: [{ index: true, element: <HomeAdmin /> },
+    element: <ProtectRouteAdmin element={<UserLayout/>}/>,
+    children: [
+      { index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement/> },
       { path: "all-employee", element: <AllEmployees/> },
       { path: "calendar-management", element: <CalendarManagement/> },
@@ -62,7 +74,6 @@ const router = createBrowserRouter([
       { path: "edit-employee", element: <EditEmployee/> },
     ],
   },
-  
 ]);
 
 function AppRoute() {

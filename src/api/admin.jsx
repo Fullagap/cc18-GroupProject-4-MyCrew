@@ -52,3 +52,14 @@ export const updateProfileImage =(form,token)=> axios.patch(`/admin/update-profi
 })
 
 export const createOfficeSiteLocation = (form) => axios.post('/admin/site-register',form)
+
+export const currentUser =(token) => axios.get(`/admin/current-user`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const currentAdmin =(token) => axios.get(`/admin/current-admin`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
