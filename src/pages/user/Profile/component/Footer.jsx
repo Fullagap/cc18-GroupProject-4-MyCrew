@@ -5,36 +5,24 @@ import IconCalendar from "./Icon/IconCalendar";
 import IconSlip from "./Icon/IconSlip";
 import { Link } from "react-router-dom";
 
-export default function Footer(props) {
-  const { info } = props;
-
+export default function Footer() {
   return (
-    <div className="flex  h-1/4 items-center justify-between ">
-      
-      <div className="w-1/4 border-4 h-full mx-4 my-4 rounded-3xl bg-[#F3F8FF] hover:underline cursor-pointer flex justify-center items-center text-4xl">
-        <Link className="flex justify-center items-center" to="/profile">
-          <IconInfo className="w-[60px]" />
-          <p>Information.</p>
+    <div className="flex flex-wrap justify-around md:justify-between items-center gap-4 p-4 pb-6">
+      {[
+        { to: "/user/profile", icon: <IconInfo className="w-10" />, label: "Information" },
+        { to: "/user/profile/leave-chart", icon: <IconLeave className="w-10" />, label: "Leave" },
+        { to: "/user/profile/req-status", icon: <IconCalendar className="w-10" />, label: "Req. Status" },
+        { to: "/user/profile/doccon", icon: <IconSlip className="w-10" />, label: "Doccon" },
+      ].map(({ to, icon, label }, index) => (
+        <Link
+          key={index}
+          to={to}
+          className="w-full max-w-[140px] flex-grow border-2 rounded-3xl bg-[#F3F8FF] hover:underline cursor-pointer flex flex-col items-center justify-center py-4 px-2 transition duration-300 shadow-md hover:bg-blue-100"
+        >
+          {icon}
+          <p className="mt-2 text-lg font-semibold">{label}</p>
         </Link>
-      </div>
-      <div className="w-1/4 border-4 h-full mx-4 my-4 rounded-3xl bg-[#F3F8FF] hover:underline cursor-pointer flex justify-center items-center text-4xl">
-        <Link className="flex justify-center items-center" to="/profile/leave-chart">
-          <IconLeave className="w-[70px]" />
-          <p>Leave</p>
-        </Link>
-      </div>
-      <div className="w-1/4 border-4 h-full mx-4 my-4 rounded-3xl bg-[#F3F8FF] hover:underline cursor-pointer flex justify-center items-center text-4xl">
-        <Link className="flex justify-center items-center" to="/profile/req-status">
-          <IconCalendar className="w-[50px]" />
-          <p> Req. Status</p>
-        </Link>
-      </div>
-      <div className="w-1/4 border-4 h-full mx-4 my-4 rounded-3xl bg-[#F3F8FF] hover:underline cursor-pointer flex justify-center items-center text-4xl">
-        <Link className="flex justify-center items-center" to="/profile/doccon">
-          <IconSlip className="w-[60px]" />
-          <p>Doccon.</p>
-        </Link>
-      </div>
+      ))}
     </div>
   );
 }

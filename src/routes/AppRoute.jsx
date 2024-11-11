@@ -9,6 +9,8 @@ import Job from "../pages/user/job";
 import Request from "../pages/user/request";
 import RequestSth from "../pages/user/requestSth";
 import RequestItem from "../pages/user/request/requestItem";
+import CreateItem from "../pages/user/request/createItem";
+import ManageItem from "../pages/admin/item/manageItem";
 import UserLayout from "../layout/user-layout";
 import HomeAdmin from "../pages/admin/home-admin";
 import EmployeeManagement from "../pages/admin/employee/employee-management";
@@ -25,16 +27,31 @@ import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
 import AttendanceManagement from "../pages/admin/attendance/attendance-management";
 import ResetPassword from "../pages/auth/ResetPassword";
 import AttendanceDashboard from "../pages/user/attendanceDashboard";
+import ProtectRouteUser from "./ProtectRouteUser";
+import ProtectRouteAdmin from "./ProtectRouteAdmin";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserLayout />,
+    element: <Login />,
+  },
+  {
+    path: "/reset-password", 
+    element: <ResetPassword />,
+  },
+  {
+    path: "/change-password/:token", 
+    element: <ChangePassword/>,
+  },
+  {
+    path: "/request-change-password", 
+    element: <RequestChangePassword/>,
+  },
+
+  {
+    path: "/user",
+    element: <ProtectRouteUser element={<UserLayout />} />,
     children: [
-      { index: true, element: <Login /> },
-      { path: "request-change-password", element: <RequestChangePassword /> },
-      { path: "change-password/:token", element: <ChangePassword /> },
-      // { path: "reset-password", element: <ResetPassword /> },
       { path: "attendance", element: <Attendance /> },
       { path: "profile", element: <Profile info={true} /> },
       { path: "profile/leave-chart", element: <Profile chart={true} /> },
@@ -48,6 +65,7 @@ const router = createBrowserRouter([
       { path: "attendance/dashboard", element: <AttendanceDashboard /> },
       { path: "requestSth", element: <RequestSth /> },
       { path: "requestItem", element: <RequestItem /> },
+      { path: "createItem", element: <CreateItem /> },
       { path: "requestItemManage", element: <RequestItemManage /> },
       { path: "unauthorized", element: <Unauthorized /> },
       { path: "*", element: <PageNotFound /> },
@@ -55,8 +73,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <UserLayout />,
-    children: [{ index: true, element: <HomeAdmin /> },
+    element: <ProtectRouteAdmin element={<UserLayout/>}/>,
+    children: [
+      { index: true, element: <HomeAdmin /> },
       { path: "employee-management", element: <EmployeeManagement/> },
       { path: "all-employee", element: <AllEmployees/> },
       { path: "calendar-management", element: <CalendarManagement/> },
@@ -65,6 +84,7 @@ const router = createBrowserRouter([
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
       { path: "attendance-management", element: <AttendanceManagement /> },
+      { path: "manageItem", element: <ManageItem/> },
     ],
   },
 ]);

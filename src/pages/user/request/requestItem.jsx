@@ -3,21 +3,28 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import itemStore from '../../../store/item-store';
-import {createRequestItem} from '../../../api/checkRequest'
+import { createRequestItem } from '../../../api/checkRequest';
+import useAuthStore from '../../../store/authSrore';
+import { useNavigate } from 'react-router-dom';
 
 const Schema = Joi.object({
   title: Joi.string().required(),
 });
 
 const RequestItem = () => {
+
+  const navigate = useNavigate();
+
   const [selectedItem, setSelectedItem] = useState(null);
 
   const checkAllItem = itemStore((state) => state.checkAllItem);
   const items = itemStore((state) => state.items);
 
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     checkAllItem();
+    console.log("user", user.id);
   }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,19 +33,22 @@ const RequestItem = () => {
   });
 
   const handleOnSubmit = (data) => {
-    if (!user) {
-      console.error("User not defined");
-      return;
-    }
-    console.log("Selected Item ID:", selectedItem);
-    console.log("Additional Information:", data.title);
-    createRequestItem(1, selectedItem, data.title);
+    createRequestItem(selectedItem, user.id, data.title);
+    navigate("/requestSth");
   };
-  
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-medium mb-6">Request Form</h1>
+      {/* Header with Title and Create Item Button */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-medium">Request Form</h1>
+        <button
+          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition-colors"
+          onClick={() => navigate("/createItem")} 
+        >
+          Create Item
+        </button>
+      </div>
 
       {/* Form Section */}
       <form onSubmit={handleSubmit(handleOnSubmit)}>

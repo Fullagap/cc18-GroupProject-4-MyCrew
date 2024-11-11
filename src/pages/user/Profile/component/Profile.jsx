@@ -10,107 +10,67 @@ export default function Profile({ userInfo, getUserInfo }) {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const hdlUpload = async (e) => {
+  const handleUpload = async (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("id", user.id);
 
     setIsLoading(true);
-
     try {
-      const resp = await updateProfileImage(formData, token);
-      console.log(resp);
+      await updateProfileImage(formData, token);
       getUserInfo();
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("Error updating profile image:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleFileSelection = () => {
-    fileInputRef.current.click();
-  };
-
   return (
-    <div className="w-2/4 rounded-3xl bg-[#F3F8FF]">
-      <div className="justify-center flex mt-4 relative">
-        <Box
+    <div className="w-full max-w-sm p-6 bg-[#F3F8FF] rounded-3xl shadow-md flex flex-col items-center mx-auto">
+      <Box className="relative group flex items-center justify-center">
+        <Avatar
+          alt="Profile"
+          src={userInfo.profileImg ?? "https://example.com/default-profile.png"}
           sx={{
-            position: "relative",
-            width: 220,
-            height: 220,
-            "&:hover .editIcon": { opacity: 1 },
+            width: 160,
+            height: 160,
+            cursor: "pointer",
+            opacity: isLoading ? 0.5 : 1,
           }}
-          onClick={handleFileSelection} // Use this as the single click handler
-        >
-          <Avatar
-            alt="Profile"
-            src={
-              userInfo.profileImg ?? "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
-            }
-            sx={{
-              width: 220,
-              height: 220,
-              cursor: "pointer",
-              opacity: isLoading ? 0.5 : 1,
-            }}
-          />
-
-          {isLoading && (
-            <CircularProgress
-              size={50}
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "primary.main",
-              }}
-            />
-          )}
-
-          <IconButton
-            className="editIcon"
+        />
+        {isLoading && (
+          <CircularProgress
+            size={48}
             sx={{
               position: "absolute",
-              top: 10,
-              right: 8,
-              bgcolor: "rgba(0, 0, 0, 0.6)",
-              color: "white",
-              opacity: 0,
-              transition: "opacity 0.3s ease",
-              "&:hover": { bgcolor: "rgba(0, 0, 0, 0.8)" },
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "primary.main",
             }}
-          >
-            <EditIcon />
-          </IconButton>
-        </Box>
-      </div>
+          />
+        )}
+     
+        <IconButton
+          className="absolute bottom-2 right-2 bg-gray-800 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => fileInputRef.current.click()}
+        >
+          <EditIcon />
+        </IconButton>
+      </Box>
+      <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleUpload} />
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={hdlUpload}
-      />
-
-      <div className="mt-2 mx-4">
-        <div className="flex justify-center text-2xl underline">PROFILE</div>
-        <div className="flex mt-2 text-lg">
-          <div className="w-1/3">
-            <h3>Employee ID</h3>
-            <h3>Department</h3>
-            <h3>Position</h3>
-            <h3>Supervisor</h3>
-          </div>
-          <div className="w-2/3">
-            <h3>: {userInfo?.id}</h3>
-            <h3>: {userInfo?.Department?.departmentName}</h3>
-            <h3>: {userInfo?.position?.positionName}</h3>
-            <h3>: {userInfo?.supId ?? "employee"}</h3>
-          </div>
+      <div className="mt-4 text-center w-full">
+        <h2 className="text-2xl font-semibold underline">PROFILE</h2>
+        <div className="mt-2 text-lg space-y-2">
+          <p><strong>Employee ID:</strong> {userInfo?.id ?? "N/A"}</p>
+          <p><strong>Department:</strong> {userInfo?.Department?.departmentName ?? "N/A"}</p>
+          <p><strong>Position:</strong> {userInfo?.position?.positionName ?? "N/A"}</p>
+          <p><strong>Supervisor:</strong> {userInfo?.supId ?? "Employee"}</p>
         </div>
       </div>
     </div>

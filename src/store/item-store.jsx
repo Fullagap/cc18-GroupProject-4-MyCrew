@@ -1,11 +1,12 @@
 import React from 'react'
-import { checkAllItem , checkAllItemManage, checkUserAllItem } from '../api/checkRequest'
+import { checkAllCategory, checkAllItem , checkAllItemManage, checkUserAllItem } from '../api/checkRequest'
 import {create} from 'zustand'
 
 const itemStore = create((set) => ({
     items: [],
     supItems: [],
     userItems: [],
+    categories: [],
     checkAllItem: async () => {
         try {
             const resp = await checkAllItem()
@@ -32,7 +33,15 @@ const itemStore = create((set) => ({
         } catch (err) {
             console.log(err)
         }
-    }
-
+    },
+    checkAllCategory : async () => {
+        try {
+            const resp = await checkAllCategory()
+            console.log(resp)
+            set({ categories: resp.data })
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }))
 export default itemStore

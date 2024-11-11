@@ -6,15 +6,15 @@ export default function RequestManagement() {
   const navigate = useNavigate();
 
   const hdlLeaveRecordClick = () => {
-    navigate("/request");
+    navigate("/user/request");
   }
 
   const hdlRequestItemClick = () => {
-    navigate("/requestItemManage");
+    navigate("/user/requestItemManage");
   }
 
   const hdlNewRequestClick = () => {
-    navigate("/requestSth");
+    navigate("/user/requestSth");
   }
 
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import adminStore from '../../../store/admin-store';
 import { register } from '../../../api/admin';
+import { toast } from 'react-toastify';
 import useAuthStore from '../../../store/authSrore';
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -40,10 +41,11 @@ export default function EditEmployee() {
     const onSubmit = async (data) => {
         try {
             const resp = await register(data, token);
-            console.log(resp);
+            toast.success(resp.data);
             reset();
         } catch (err) {
-            console.log(err);
+            toast.error("fail to register");
+            console.log(err)
         }
     };
 
