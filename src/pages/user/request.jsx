@@ -3,32 +3,38 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose } from "react-
 import requestStore from "../../store/checkRequest";
 import { changeStatus, changeComment } from "../../api/checkRequest";
 import useAuthStore from "../../store/authSrore";
-import { ref } from "joi";
 
 const LeaveRequestTable = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [comments, setComments] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const checkRequest = requestStore((state) => state.checkRequest);
   const requests = requestStore((state) => state.requests);
-
   const user = useAuthStore((state) => state.user);
-  console.log("user",user.id)
 
+  const fetchRequests = async () => {
+    try {
+      await checkRequest(user.id);
+      setComments(
+        requests.reduce((acc, request) => {
+          acc[request.id] = request.comment || "";
+          return acc;
+        }, {})
+      );
+      setHasError(false); // reset error state on success
+    } catch (error) {
+      console.error("Failed to fetch requests:", error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    
-    checkRequest(user.id).then(() => {
-      const initialComments = {};
-      requests.forEach((request) => {
-        initialComments[request.id] = request.comment || "";  // Assuming 'comment' is a field in request
-      });
-      setComments(initialComments);
-      
-      setIsLoading(false);
-    });
-  }, []);
+    fetchRequests();
+  }, [user.id]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -65,21 +71,18 @@ const LeaveRequestTable = () => {
   const handleApprove = async (id) => {
     await changeStatus(id, "APPROVE");
     await changeComment(id, comments[id]);
-    await checkRequest(user.id);
-    setIsLoading(false);
+    await fetchRequests();
   };
 
   const handleReject = async (id) => {
     await changeStatus(id, "REJECT");
     await changeComment(id, comments[id]);
-    await checkRequest(user.id);
-    setIsLoading(false);
+    await fetchRequests();
   };
 
   const handleBackToWaiting = async (id) => {
     await changeStatus(id, "WAITING");
-    await checkRequest(user.id);
-    setIsLoading(false);
+    await fetchRequests();
   };
 
   const calculateLeaveDays = (startDate, endDate) => {
@@ -89,16 +92,29 @@ const LeaveRequestTable = () => {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
   };
 
+  if (hasError) {
+    return (
+      <div className="text-center">
+        <p className="text-red-500 text-xl mb-4">There was an error loading the data</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md"
+        >
+          Refresh Page
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="p-10 bg-white rounded-lg shadow-lg max-w-7xl mx-auto">
       {isLoading ? (
         <p className="text-gray-500 text-xl">Loading data...</p>
+      ) : requests.length === 0 ? (
+        <p className="text-center text-gray-500">No leave requests available</p>
       ) : (
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-8">
-            Leave Approval Requests
-          </h2>
-
+          <h2 className="text-2xl font-semibold text-gray-800 mb-8">Leave Approval Requests</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full border text-left text-lg">
               <thead>
@@ -154,7 +170,6 @@ const LeaveRequestTable = () => {
                                 <span className="font-semibold">Reason:</span> {leave.description}
                               </p>
                             </div>
-
                             <div className="space-y-6 flex flex-col">
                               <h3 className="font-semibold text-xl text-gray-800">
                                 {leave.status === "WAITING" ? "Manage Status" : "Details"}
