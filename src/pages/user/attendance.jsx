@@ -20,8 +20,9 @@ import Select from "@mui/material/Select";
 
 import userStore from "../../store/user-store";
 import MapComponent from "../../components/user/MapComponent";
-
+import authStore from '../../store/authSrore'
 const Attendance = () => {
+  const {token} = authStore();
   const [currentPosition, setCurrentPosition] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -111,9 +112,9 @@ const Attendance = () => {
       let apiResponse;
 
       if (type === "in") {
-        apiResponse = await createClockIn(latitude, longitude, location);
+        apiResponse = await createClockIn(latitude, longitude, location,token);
       } else {
-        apiResponse = await createClockOut(latitude, longitude, location);
+        apiResponse = await createClockOut(latitude, longitude, location,token);
       }
 
       if (apiResponse?.data?.ok) {
