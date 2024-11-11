@@ -3,6 +3,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdCheck, MdClose } from "react-
 import requestStore from "../../store/checkRequest";
 import { changeStatus, changeComment } from "../../api/checkRequest";
 import useAuthStore from "../../store/authSrore";
+import { ref } from "joi";
 
 const LeaveRequestTable = () => {
   const [expandedId, setExpandedId] = useState(null);
@@ -15,16 +16,19 @@ const LeaveRequestTable = () => {
   const user = useAuthStore((state) => state.user);
   console.log("user",user.id)
 
+
   useEffect(() => {
+    
     checkRequest(user.id).then(() => {
       const initialComments = {};
       requests.forEach((request) => {
         initialComments[request.id] = request.comment || "";  // Assuming 'comment' is a field in request
       });
       setComments(initialComments);
+      
       setIsLoading(false);
     });
-  }, [isLoading]);
+  }, []);
 
   const getStatusColor = (status) => {
     switch (status) {

@@ -1,12 +1,13 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import itemStore from '../../../store/item-store';
+import { addItem } from '../../../api/checkRequest';
 
 const Schema = Joi.object({
     title: Joi.string().required().messages({ 'string.empty': 'กรุณากรอกหัวข้อ' }),
     price: Joi.number().required().messages({ 'number.base': 'กรุณากรอกราคา', 'any.required': 'กรุณากรอกราคา' }),
+    category: Joi.string().required().messages({ 'string.empty': 'กรุณาเลือกหมวดหมู่' }),  // เพิ่มฟิลด์ category
 });
 
 const RequestItem = () => {
@@ -14,22 +15,43 @@ const RequestItem = () => {
 
   const checkAllItem = itemStore((state) => state.checkAllItem);
   const items = itemStore((state) => state.items);
-  
+  const checkAllCategory = itemStore((state) => state.checkAllCategory);
+  const categories = itemStore((state) => state.categories);  // ดึงข้อมูล categories
+
+  console.log("items",items)
+
   useEffect(() => {
       checkAllItem();
-      console.log("items",items);
+      checkAllCategory();  // โหลด categories เมื่อ component ถูก mount
   }, []);
 
-
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
-    resolver: joiResolver(Schema),
     mode: 'onSubmit',
   });
 
+  // ฟังก์ชันตรวจสอบข้อมูลก่อนส่ง
+  const validateForm = (data) => {
+    const { error } = Schema.validate(data, { abortEarly: false });
+    if (error) {
+      const newErrors = {};
+      error.details.forEach((err) => {
+        newErrors[err.path[0]] = err.message;
+      });
+      return newErrors;
+    }
+    return {};
+  };
+
   const onSubmit = (data) => {
-    setItems([...items, { id: items.length + 1, ...data }]);
-    setIsCreating(false);
+    const formErrors = validateForm(data);
+    if (Object.keys(formErrors).length > 0) {
+      return; // ถ้ามีข้อผิดพลาดจะไม่ส่งข้อมูล
+    }
+    console.log("title",data.title, "price",data.price, "category",data.category)
+    addItem(data.title, data.price, data.category);
     reset();
+    checkAllItem();
+    checkAllCategory(); 
   };
 
   return (
@@ -57,6 +79,23 @@ const RequestItem = () => {
                 placeholder="กรอกหัวข้อที่ต้องการ..."
               />
               {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+            </div>
+
+            {/* Dropdown สำหรับหมวดหมู่ */}
+            <div className="mb-4">
+              <label className="block text-sm mb-2">หมวดหมู่</label>
+              <select
+                {...register("category")}
+                className="w-full px-4 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">เลือกหมวดหมู่</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.categoryName}
+                  </option>
+                ))}
+              </select>
+              {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
             </div>
 
             <div className="mb-4">
@@ -97,6 +136,7 @@ const RequestItem = () => {
             <tr className="bg-gray-100">
               <th className="p-2 border">หัวข้อ</th>
               <th className="p-2 border">ราคา</th>
+              <th className="p-2 border">หมวดหมู่</th>
             </tr>
           </thead>
           <tbody>
@@ -104,6 +144,7 @@ const RequestItem = () => {
               <tr key={item.id} className="text-center">
                 <td className="p-2 border">{item.itemName}</td>
                 <td className="p-2 border">{item.cost}</td>
+                <td className="p-2 border">{item.category.categoryName}</td> {/* แสดงหมวดหมู่ */}
               </tr>
             ))}
           </tbody>

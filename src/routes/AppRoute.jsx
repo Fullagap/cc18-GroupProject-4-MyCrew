@@ -9,6 +9,8 @@ import Job from "../pages/user/job";
 import Request from "../pages/user/request";
 import RequestSth from "../pages/user/requestSth";
 import RequestItem from "../pages/user/request/requestItem";
+import CreateItem from "../pages/user/request/createItem";
+import ManageItem from "../pages/admin/item/manageItem";
 import UserLayout from "../layout/user-layout";
 import HomeAdmin from "../pages/admin/home-admin";
 import EmployeeManagement from "../pages/admin/employee/employee-management";
@@ -44,6 +46,7 @@ const router = createBrowserRouter([
       { path: "request", element: <Request /> },
       { path: "requestSth", element: <RequestSth /> },
       { path: "requestItem", element: <RequestItem /> },
+      { path: "createItem", element: <CreateItem /> },
       { path: "requestItemManage", element: <RequestItemManage /> },
       { path: "unauthorized", element: <Unauthorized /> },
       { path: "*", element: <PageNotFound /> },
@@ -60,6 +63,7 @@ const router = createBrowserRouter([
       { path: "request-management", element: <RequestManagement/> },
       { path: "payroll", element: <Payroll/> },
       { path: "edit-employee", element: <EditEmployee/> },
+      { path: "manageItem", element: <ManageItem/> },
     ],
   },
   
