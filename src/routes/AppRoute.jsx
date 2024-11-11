@@ -26,6 +26,7 @@ import AllEmployees from "../pages/admin/employee/AllEmployees";
 import DepartmentPosition from "../pages/admin/employee/DepartmentPosition";
 import ProtectRouteUser from "./ProtectRouteUser";
 import ProtectRouteAdmin from "./ProtectRouteAdmin";
+import ResetPassword from "../pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -34,11 +35,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/reset-password", 
-    element: <RequestChangePassword />,
+    element: <ResetPassword />,
+  },
+  {
+    path: "/change-password/:token", 
+    element: <ChangePassword/>,
   },
   {
     path: "/request-change-password", 
-    element: <ChangePassword/>,
+    element: <RequestChangePassword/>,
   },
 
   {
