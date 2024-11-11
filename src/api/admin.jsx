@@ -45,5 +45,21 @@ export const createPosition =(positionInput,token)=> axios.post(`/admin/create-p
         Authorization: `Bearer ${token}`
     }
 })
+export const updateProfileImage =(form,token)=> axios.patch(`/admin/update-profile`,form,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 export const createOfficeSiteLocation = (form) => axios.post('/admin/site-register',form)
+
+export const currentUser =(token) => axios.get(`/admin/current-user`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+export const currentAdmin =(token) => axios.get(`/admin/current-admin`,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})

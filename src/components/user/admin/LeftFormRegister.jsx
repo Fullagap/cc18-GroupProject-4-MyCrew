@@ -1,6 +1,10 @@
 import React from 'react'
+import useAuthStore from '../../../store/authSrore';
 
-function LeftFormRegister({registerField,errors,positions,employees,leader}) {
+function LeftFormRegister({registerField,errors,positions,employees,leader,positionInDepartment,employeeInEachDepartment,departments})
+
+{
+    const token = useAuthStore((state) => state.token);
   return (
     <div>
     <div className="mb-3">
@@ -34,12 +38,24 @@ function LeftFormRegister({registerField,errors,positions,employees,leader}) {
         {errors.phoneNumber && <span className="text-red-500 text-xs">{errors.phoneNumber.message}</span>}
     </div>
 
-    <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Identity Card Number</label>
-        <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
-            {...registerField("identicalNumber")}
-        />
-        {errors.identicalNumber && <span className="text-red-500 text-xs">{errors.identicalNumber.message}</span>}
+   <div className="mb-3">
+        <label className="block text-gray-700 text-sm">Department</label>
+        <select
+            {...registerField("departmentId")}
+            onChange={(e) => {
+                const departmentId = e.target.value;
+                positionInDepartment(departmentId, token);
+                employeeInEachDepartment(departmentId, token);
+            }}
+            className="border rounded w-full py-1 px-2 text-gray-700"
+        >
+            <option disabled value="">Please select</option>
+            {departments.map((el) => (
+                <option key={el.id} value={el.id}>
+                    {el.departmentName}
+                </option>
+            ))}
+        </select>
     </div>
 
     <div className="mb-3">

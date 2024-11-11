@@ -49,25 +49,26 @@ function DepartmentPosition() {
   };
 
   return (
-    <div className="flex justify-center items-start space-x-6 p-6 w-full">
+    <div className="flex flex-col md:flex-row justify-center items-start md:space-x-6 space-y-6 md:space-y-0 p-6 w-full">
 
-      <AddDepartment
-        input={input}
-        hdlOnChange={hdlOnChange}
-        hdlCreateDepartment={hdlCreateDepartment}
-        departments={departments}
-        hdlPosition={hdlPosition} 
-      />
-
-      <AddPosition
-        hdlPositionOnChange={hdlPositionOnChange}
-        positionInDepartment={positionInDepartment}
-        positionInput={positionInput}
-        departments={departments}
-        hdlCreatePosition={hdlCreatePosition}
-        positions={positions}
-      />
-    </div>
+    <AddDepartment
+      input={input}
+      hdlOnChange={hdlOnChange}
+      hdlCreateDepartment={hdlCreateDepartment}
+      departments={departments}
+      hdlPosition={hdlPosition}
+    />
+  
+    <AddPosition
+      hdlPositionOnChange={hdlPositionOnChange}
+      positionInDepartment={positionInDepartment}
+      positionInput={positionInput}
+      departments={departments}
+      hdlCreatePosition={hdlCreatePosition}
+      positions={positions}
+    />
+  </div>
+  
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import adminStore from '../../../store/admin-store';
 import { register } from '../../../api/admin';
+import { toast } from 'react-toastify';
 import useAuthStore from '../../../store/authSrore';
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -40,10 +41,11 @@ export default function EditEmployee() {
     const onSubmit = async (data) => {
         try {
             const resp = await register(data, token);
-            console.log(resp);
+            toast.success(resp.data);
             reset();
         } catch (err) {
-            console.log(err);
+            toast.error("fail to register");
+            console.log(err)
         }
     };
 
@@ -51,13 +53,13 @@ export default function EditEmployee() {
         <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
             <form className="bg-white p-6 rounded shadow-md w-full max-w-3xl" onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">Add New User Information</h2>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* Left side form inputs */}
-                    <LeftFormRegister registerField={registerField} errors={errors} positions={positions} employees={employees} leader={leader}/>
+                    <LeftFormRegister registerField={registerField} errors={errors} positions={positions} employees={employees} leader={leader} positionInDepartment={positionInDepartment} employeeInEachDepartment={employeeInEachDepartment} departments={departments}/>
 
                     {/* Right side form inputs */}
-                    <RightFormRegister errors={errors} registerField={registerField} positionInDepartment={positionInDepartment} employeeInEachDepartment={employeeInEachDepartment} departments={departments}/>
+                    <RightFormRegister errors={errors} registerField={registerField} />
                 </div>
                 <div className="flex justify-center mt-6">
                     <button className="bg-blue-500 text-white font-semibold py-1.5 px-4 rounded hover:bg-blue-600">

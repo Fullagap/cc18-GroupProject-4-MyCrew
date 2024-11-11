@@ -140,7 +140,7 @@ const Attendance = () => {
 
   return (
     <Container maxWidth="sm" sx={{ pt: 4 }}>
-      <Box sx={{ mb: 2, height: "400px" }}>
+      <Box sx={{ mb: 3, height: "400px" }}>
         <MapComponent
           currentPosition={currentPosition}
           officeLocations={locationData}
@@ -150,8 +150,11 @@ const Attendance = () => {
       </Box>
       <Card>
         <CardContent>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom >
+            <h1 className="text-center font-bold">
+
             Attendance System
+            </h1>
           </Typography>
 
           {/* Status and Error Messages */}
@@ -179,7 +182,7 @@ const Attendance = () => {
 
           {/* select */}
 
-          <FormControl sx={{ m: 1, mb: 2, minWidth: 200 }} size="small">
+          <FormControl sx={{ m: 1, mb: 2, minWidth: 500 }} size="small">
             <InputLabel id="demo-select-small-label">Location</InputLabel>
             <Select
               labelId="demo-select-small-label"
@@ -191,7 +194,7 @@ const Attendance = () => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {locationData.map((item) => {
+              {locationData?.map((item) => {
                 return (
                   <MenuItem key={item.id} value={item.id}>
                     {item.siteName}

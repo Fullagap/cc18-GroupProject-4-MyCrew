@@ -1,34 +1,76 @@
-import { Avatar } from "@mui/material";
-import React from "react";
+import { Avatar, CircularProgress, Box, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import React, { useState, useRef } from "react";
+import { updateProfileImage } from "../../../../api/admin";
+import useAuthStore from "../../../../store/authSrore";
 
-export default function Profile({userInfo}) {
-  console.log(userInfo)
+export default function Profile({ userInfo, getUserInfo }) {
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("id", user.id);
+
+    setIsLoading(true);
+    try {
+      await updateProfileImage(formData, token);
+      getUserInfo();
+    } catch (error) {
+      console.error("Error updating profile image:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="w-1/3 rounded-3xl bg-[#F3F8FF]">
-      <div className="justify-center flex mt-4">
+    <div className="w-full max-w-sm p-6 bg-[#F3F8FF] rounded-3xl shadow-md flex flex-col items-center mx-auto">
+      <Box className="relative group flex items-center justify-center">
         <Avatar
           alt="Profile"
-          src={userInfo.profileImg??"https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"}
-          sx={{ width: 220, height: 220 }}
+          src={userInfo.profileImg ?? "https://example.com/default-profile.png"}
+          sx={{
+            width: 160,
+            height: 160,
+            cursor: "pointer",
+            opacity: isLoading ? 0.5 : 1,
+          }}
         />
-      </div>
-      <div className="mt-2 mx-4">
-        <div className="flex  justify-center text-4xl underline">
-          PROFILE
-        </div>
-        <div className="flex mt-2 text-xl">
-          <div className="w-1/3">
-            <h3>Employee ID  </h3>
-            <h3>Department   </h3>
-            <h3>Position     </h3>
-            <h3>SuperVisor   </h3>
-          </div>
-          <div className="w-2/3">
-            <h3>: {userInfo?.id}</h3>
-            <h3>: {userInfo?.Department?.departmentName}</h3>
-            <h3>: {userInfo?.position?.positionName}</h3>
-            <h3>: {userInfo?.supId ?? "employee"}</h3>
-          </div>
+        {isLoading && (
+          <CircularProgress
+            size={48}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "primary.main",
+            }}
+          />
+        )}
+     
+        <IconButton
+          className="absolute bottom-2 right-2 bg-gray-800 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => fileInputRef.current.click()}
+        >
+          <EditIcon />
+        </IconButton>
+      </Box>
+      <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleUpload} />
+
+      <div className="mt-4 text-center w-full">
+        <h2 className="text-2xl font-semibold underline">PROFILE</h2>
+        <div className="mt-2 text-lg space-y-2">
+          <p><strong>Employee ID:</strong> {userInfo?.id ?? "N/A"}</p>
+          <p><strong>Department:</strong> {userInfo?.Department?.departmentName ?? "N/A"}</p>
+          <p><strong>Position:</strong> {userInfo?.position?.positionName ?? "N/A"}</p>
+          <p><strong>Supervisor:</strong> {userInfo?.supId ?? "Employee"}</p>
         </div>
       </div>
     </div>

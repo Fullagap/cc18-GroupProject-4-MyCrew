@@ -1,8 +1,8 @@
 import React from 'react'
-import useAuthStore from '../../../store/authSrore';;
 
-function RightFormRegister({errors,registerField,positionInDepartment,employeeInEachDepartment,departments}) {
-    const token = useAuthStore((state) => state.token);
+
+function RightFormRegister({errors,registerField}) {
+  
   return (
     <div>
     <div className="mb-3">
@@ -21,24 +21,13 @@ function RightFormRegister({errors,registerField,positionInDepartment,employeeIn
         {errors.bookBank && <span className="text-red-500 text-xs">{errors.bookBank.message}</span>}
     </div>
 
-    <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Department</label>
-        <select
-            {...registerField("departmentId")}
-            onChange={(e) => {
-                const departmentId = e.target.value;
-                positionInDepartment(departmentId, token);
-                employeeInEachDepartment(departmentId, token);
-            }}
-            className="border rounded w-full py-1 px-2 text-gray-700"
-        >
-            <option disabled value="">Please select</option>
-            {departments.map((el) => (
-                <option key={el.id} value={el.id}>
-                    {el.departmentName}
-                </option>
-            ))}
-        </select>
+   
+      <div className="mb-3">
+        <label className="block text-gray-700 text-sm">Identity Card Number</label>
+        <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
+            {...registerField("identicalNumber")}
+        />
+        {errors.identicalNumber && <span className="text-red-500 text-xs">{errors.identicalNumber.message}</span>}
     </div>
 
     <div className="mb-3">
