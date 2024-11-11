@@ -62,6 +62,19 @@ export const createOfficeSiteLocation = (form,token) =>
     },
 })
 
+export const editOfficeSiteLocation = (form,token) =>
+  axios.post("/admin/site-edit", form, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+})
+export const deleteOfficeSiteLocation = (form,token) =>
+  axios.post("/admin/site-delete", form, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+})
+
 export const updateProfileImage =(form,token)=> axios.patch(`/admin/update-profile`,form,{
     headers: {
         Authorization: `Bearer ${token}`

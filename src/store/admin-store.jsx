@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {allEmployees, allLeader, department, EmployeeInDepartment, positionDepartment,createOfficeSiteLocation} from "../api/admin";
+import {allEmployees, allLeader, department, EmployeeInDepartment, positionDepartment,createOfficeSiteLocation,editOfficeSiteLocation,deleteOfficeSiteLocation} from "../api/admin";
 
 
 
@@ -60,6 +60,22 @@ const adminStore = create((set) => ({
         try{
             const response = await createOfficeSiteLocation(form,token)
             console.log('from create site location',response)
+        }catch(err){
+            console.log(err)
+        }
+    },
+    editSiteLocation:async(form,token)=>{
+        try{
+            const response = await editOfficeSiteLocation(form,token)
+            console.log('from edit site location',response)
+        }catch(err){
+            console.log(err)
+        }
+    },
+    deleteSiteLocation:async(form,token)=>{
+        try{
+            const response = await deleteOfficeSiteLocation(form,token)
+            console.log('from delete site location',response)
         }catch(err){
             console.log(err)
         }
