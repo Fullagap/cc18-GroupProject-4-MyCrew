@@ -24,9 +24,9 @@ export default function HomeAdmin() {
           <p className="text-center text-lg font-semibold">Calendar Management</p>
         </Link>
 
-        <Link to="/admin/request-management" className={classLink}>
+        <Link to="/admin/manageItem" className={classLink}>
           <VscGitPullRequestGoToChanges className="text-6xl text-blue-600 group-hover:text-white" />
-          <p className="text-center text-lg font-semibold">Request Management</p>
+          <p className="text-center text-lg font-semibold">Item Management</p>
         </Link>
 
         <Link to="/admin/payroll" className={classLink}>
@@ -43,13 +43,7 @@ export default function HomeAdmin() {
           </p>
         </Link>
 
-        <Link to="/admin/manageItem" className={classLink}>
-          <p className="text-center">
-            Item
-            <br />
-            Management
-          </p>
-        </Link>
+        
 
       </div>
     </div>

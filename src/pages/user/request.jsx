@@ -114,7 +114,7 @@ const LeaveRequestTable = () => {
         <p className="text-center text-gray-500">No leave requests available</p>
       ) : (
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-8">Leave Approval Requests</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-8">Leave Approval Requests Management</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full border text-left text-lg">
               <thead>
