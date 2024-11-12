@@ -19,7 +19,6 @@ function App() {
       pauseOnHover
       theme="dark"
       />
-
     </div>
   )
 }

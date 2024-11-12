@@ -12,7 +12,7 @@ export const changeStatus = (id,status) => {
 }
 
 export const changeComment = (id,comment) => {
-    return axios.patch(`http://localhost:8890/changeComment/${id}` ,{
+    return  axios.patch(`http://localhost:8890/changeComment/${id}` ,{
         comment
     });
 }

@@ -80,7 +80,7 @@ const RequestItem = () => {
         <h1 className="text-2xl font-medium">Request Form</h1>
         <button
           onClick={() => setIsCreating(true)}
-          className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition-colors"
+          className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
         >
           Create Item
         </button>
@@ -178,10 +178,10 @@ const RequestItem = () => {
                   <button
                     onClick={() => toggleHideShow(item.id, item.isHide)}
                     className={`px-4 py-1 rounded ${
-                      hiddenItems[item.id] || item.isHide ? "bg-gray-500" : "bg-green-500"
+                      hiddenItems[item.id] || item.isHide ? "bg-gray-500" : "bg-blue-500"
                     } text-white`}
                   >
-                    {hiddenItems[item.id] || item.isHide ? "Hide" : "Show"}
+                    {hiddenItems[item.id] || item.isHide ? "Hidden" : "Active"}
                   </button>
                 </td>
               </tr>

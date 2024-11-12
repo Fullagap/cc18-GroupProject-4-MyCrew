@@ -1,9 +1,10 @@
 import {create} from 'zustand'
-import {clockIn,clockOut,getSiteLocation,getAttendanceData} from '../api/user'
+import {clockIn,clockOut,getLeaderEachSupIdApi,getSiteLocation} from '../api/user'
 
 const userStore = create((set) => ({
     response: [],
-    createClockIn: async (latitude, longitude,location,token) => {
+    LeaderEachSupId: [],
+    createClockIn: async (latitude, longitude,location) => {
         try {
             const apiResponse = await clockIn(latitude, longitude,location,token)
             set({ response: apiResponse }) // Update store state
@@ -39,7 +40,16 @@ const userStore = create((set) => ({
         }catch(err){
             console.log(err)
         }
-    }
+    },
+    getLeaderEachSupId:async(id,token)=>{
+        try{
+            const response = await getLeaderEachSupIdApi(id,token)
+            set({LeaderEachSupId:response.data})
+        }catch(err){
+            console.log(err)
+        }
+    },
+    
 
 }))
 
