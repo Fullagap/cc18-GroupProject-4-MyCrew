@@ -8,7 +8,7 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
   return (
     <div>
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Firstname</label>
+        <label className="block text-gray-700 text-sm">First name :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("firstName")}
         />
@@ -16,14 +16,14 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Start Date</label>
+        <label className="block text-gray-700 text-sm">Start Date :</label>
         <input type="date" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("dateStart")}
         />
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">E-mail</label>
+        <label className="block text-gray-700 text-sm">E-mail :</label>
         <input type="email" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("email")}
         />
@@ -31,15 +31,22 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Phone Number</label>
+        <label className="block text-gray-700 text-sm">Phone Number :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("phoneNumber")}
         />
         {errors.phoneNumber && <span className="text-red-500 text-xs">{errors.phoneNumber.message}</span>}
     </div>
 
+    <div className="mb-3">
+        <label className="block text-gray-700 text-sm">Address :</label>
+        <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
+            {...registerField("address")}
+        />
+    </div>
+
    <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Department</label>
+        <label className="block text-gray-700 text-sm">Department :</label>
         <select
             {...registerField("departmentId")}
             onChange={(e) => {
@@ -59,7 +66,7 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Position</label>
+        <label className="block text-gray-700 text-sm">Position :</label>
         <select className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("positionId")}
         >
@@ -73,7 +80,7 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Supervisor ID</label>
+        <label className="block text-gray-700 text-sm">Supervisor ID :</label>
         <select className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("supId")}
         >
