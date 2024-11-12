@@ -65,12 +65,12 @@ export default function Profile({ userInfo, getUserInfo }) {
       <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleUpload} />
 
       <div className="mt-4 text-center w-full">
-        <h2 className="text-2xl font-semibold underline">PROFILE</h2>
+        <h2 className="text-xl font-semibold underline mb-6 text-blue-900">PROFILE</h2>
         <div className="mt-2 text-lg space-y-2">
           <p><strong>Employee ID:</strong> {userInfo?.id ?? "N/A"}</p>
           <p><strong>Department:</strong> {userInfo?.Department?.departmentName ?? "N/A"}</p>
           <p><strong>Position:</strong> {userInfo?.position?.positionName ?? "N/A"}</p>
-          <p><strong>Supervisor:</strong> {userInfo?.supId ?? "Employee"}</p>
+          <p><strong>Supervisor:</strong> {userInfo?.supId ?? "-"}</p>
         </div>
       </div>
     </div>

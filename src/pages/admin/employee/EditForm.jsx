@@ -2,6 +2,9 @@ import React from 'react';
 import { DialogContent, TextField, MenuItem, Select, InputLabel, FormControl, Typography } from '@mui/material';
 
 function EditForm({ selectedEmployee, departments, positions, employees, handleInputChange }) {
+
+
+
   return (
     <div>
       <DialogContent>
@@ -54,7 +57,9 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
                 ))}
               </Select>
             </FormControl>
-            <FormControl fullWidth margin="dense">
+            {
+              selectedEmployee.id !== 1 && 
+              <FormControl fullWidth margin="dense">
               <InputLabel>Supervisor</InputLabel>
               <Select
                 value={selectedEmployee.supId || ""}
@@ -67,6 +72,8 @@ function EditForm({ selectedEmployee, departments, positions, employees, handleI
                 ))}
               </Select>
             </FormControl>
+            }
+           
             <TextField
               margin="dense"
               label="Personal Leave"

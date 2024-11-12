@@ -62,7 +62,7 @@ const router = createBrowserRouter([
       { path: "job", element: <Job /> },
       { path: "request-management", element: <RequestManagement /> },
       { path: "request", element: <Request /> },
-      { path: "attendance/dashboard", element: <AttendanceDashboard /> },
+      { path: "attendance-dashboard", element: <AttendanceDashboard /> },
       { path: "requestSth", element: <RequestSth /> },
       { path: "requestItem", element: <RequestItem /> },
       { path: "createItem", element: <CreateItem /> },

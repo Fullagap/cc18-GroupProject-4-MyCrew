@@ -10,7 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
 const columns = [
-  { field: "id", headerName: "ID", width: 50 },
+  { field: "userId", headerName: "User ID", width: 100},
   { field: "firstName", headerName: "First Name", width: 180 },
   { field: "lastName", headerName: "Last Name", width: 180 },
   { field: "siteName", headerName: "Office", width: 180 },
