@@ -7,8 +7,9 @@ const requestStore = create((set) => ({
         console.log("id",id)
         try {
             const resp = await request(id)
-            console.log(resp)
+            console.log("resp",resp)
             set({requests: resp.data})
+            return resp.data
         } catch (err) {
             console.log(err)
         }
