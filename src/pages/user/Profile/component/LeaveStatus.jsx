@@ -12,7 +12,7 @@ export default function LeaveStatus() {
   const [leaveRecord, setLeaveRecord] = useState([]);
 
   const getLeaveRecord = async () => {
-    const resp = await axios.get(`user/leave-record/${2}`);
+    const resp = await axios.get(`user/leave-record/${user.id}`);
     setLeaveRecord(resp.data);
     
   };

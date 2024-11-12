@@ -36,10 +36,11 @@ const UserSidebar = () => {
   const classLink =
     "flex justify-center items-center px-3 py-2 gap-2 text-white rounded-xl hover:bg-[#2453CA] hover:scale-105 transition duration-200";
 
-  const activeClass = "bg-[#2453CA] scale-105"; //the active link styles
+  const activeClass = "bg-[#2453CA] scale-105"; // The active link styles
 
   return (
-    <div className="bg-[#082777] min-w-[200px] p-4 flex flex-col text-white shadow-lg rounded-lg">
+    <div className="bg-[#082777] min-w-[160px] md:w-60 p-4 flex flex-col text-white shadow-lg rounded-lg md:min-h-screen">
+
       <div className="flex flex-col items-center gap-2 py-6">
         <div className="text-center">
           <p className="font-bold text-2xl text-[#f9f9f9]">MY CREW</p>
@@ -108,22 +109,24 @@ const UserSidebar = () => {
             <p className="text-sm font-medium">Request</p>
           </div>
         </NavLink>
+
+        
+        {user?.role === "ADMIN" && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              `${classLink} ${isActive ? activeClass : ""}`
+            }
+          >
+            <div className="flex flex-col items-center">
+              <MdOutlineAdminPanelSettings className="text-3xl mb-1" />
+              <p className="text-sm font-medium">Admin</p>
+            </div>
+          </NavLink>
+        )}
       </div>
 
-      {user?.role === "ADMIN" && (
-        <NavLink
-          to="/admin"
-          className={({ isActive }) =>
-            `${classLink} ${isActive ? activeClass : ""}`
-          }
-        >
-          <div className="flex flex-col items-center">
-            <MdOutlineAdminPanelSettings className="text-3xl mb-1" />
-            <p className="text-sm font-medium">Admin</p>
-          </div>
-        </NavLink>
-      )}
-
+      {/* User Options Dropdown */}
       {user && (
         <div className="relative mt-4 group">
           <button
@@ -133,7 +136,8 @@ const UserSidebar = () => {
             <MdExpandMore className="text-lg" />
           </button>
 
-          <div className="absolute top-[-70px] right-[-150px] w-45 bg-[#2c3e50] p-2 rounded-lg shadow-lg hidden group-hover:flex flex-col">
+          {/* Dropdown Content */}
+          <div className="absolute top-[-70px] right-[-150px] w-45 bg-[#2c3e50] p-2 rounded-lg shadow-lg hidden group-hover:flex flex-col z-10">
             <NavLink
               to="/reset-password"
               className={({ isActive }) =>
