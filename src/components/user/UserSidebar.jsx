@@ -1,24 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { LuCalendarDays } from "react-icons/lu";
+import { FaSitemap } from "react-icons/fa";
 import { GrWorkshop } from "react-icons/gr";
 import { FaFileCircleQuestion, FaLocationDot } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings, MdExpandMore } from "react-icons/md";
 import useAuthStore from "../../store/authSrore";
+import userStore from "../../store/user-store";
 
 const UserSidebar = () => {
   const navigate = useNavigate();
   const actionLogout = useAuthStore((state) => state.actionLogout);
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+  const { getSupData } = userStore();
+  const [supData, setSupData] = useState([]);
+  const fetchSupData = async (date = null) => {
+    try {
+      const result = await getSupData(token);
 
+      setSupData(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchSupData();
+  }, []);
   const hdlLogout = () => {
     actionLogout();
     navigate("/");
   };
 
   const classLink =
-    "flex justify-center items-center px-3 py-2 gap-2 text-white rounded-lg hover:bg-[#2453CA] hover:scale-105 transition duration-200";
+    "flex justify-center items-center px-3 py-2 gap-2 text-white rounded-xl hover:bg-[#2453CA] hover:scale-105 transition duration-200";
 
   const activeClass = "bg-[#2453CA] scale-105"; // The active link styles
 
@@ -31,7 +47,6 @@ const UserSidebar = () => {
         </div>
       </div>
 
-     
       <div className="flex-1 py-4 space-y-2">
         <NavLink
           to="/user/attendance"
@@ -44,6 +59,20 @@ const UserSidebar = () => {
             <p className="text-sm font-medium">Attendance</p>
           </div>
         </NavLink>
+
+        {supData && (
+          <NavLink
+            to="/user/attendance-dashboard"
+            className={({ isActive }) =>
+              `${classLink} ${isActive ? activeClass : ""}`
+            }
+          >
+            <div className="flex flex-col items-center">
+              <FaSitemap className="text-3xl mb-1" />
+              <p className="text-sm font-medium">Attendance Dashboard</p>
+            </div>
+          </NavLink>
+        )}
 
         <NavLink
           to="/user/calendar"
@@ -100,7 +129,9 @@ const UserSidebar = () => {
       {/* User Options Dropdown */}
       {user && (
         <div className="relative mt-4 group">
-          <button className={`${classLink} w-full flex justify-between items-center`}>
+          <button
+            className={`${classLink} w-full flex justify-between items-center`}
+          >
             <span>User Options</span>
             <MdExpandMore className="text-lg" />
           </button>
@@ -110,12 +141,17 @@ const UserSidebar = () => {
             <NavLink
               to="/reset-password"
               className={({ isActive }) =>
-                `text-white hover:bg-[#2453CA] px-3 py-2 rounded font-medium ${isActive ? activeClass : ""}`
+                `text-white hover:bg-[#2453CA] px-3 py-2 rounded font-medium ${
+                  isActive ? activeClass : ""
+                }`
               }
             >
               Change Password
             </NavLink>
-            <button onClick={hdlLogout} className="text-white hover:bg-[#2453CA] px-3 py-2 w-full text-left rounded">
+            <button
+              onClick={hdlLogout}
+              className="text-white hover:bg-[#2453CA] px-3 py-2 w-full text-left rounded"
+            >
               Logout
             </button>
           </div>

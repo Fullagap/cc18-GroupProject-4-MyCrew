@@ -17,8 +17,22 @@ export const changeComment = (id,comment) => {
     });
 }
 
-export const addItem = (item) => {
-    return axios.post(`http://localhost:8890/createItem`, item);
+export const addItem = (name,cost,categoryId) => {
+    return axios.post(`http://localhost:8890/createItem`, {
+        name,
+        cost,
+        categoryId
+    });
+}
+
+export const checkAllCategory = () => {
+    return axios.get(`http://localhost:8890/checkCategory`);
+}
+
+export const editIsHide = (id,isHide) => {
+    return axios.post(`http://localhost:8890/editIsHide/${id}`,{
+        isHide
+    });
 }
 
 export const checkAllItem = () => {
@@ -39,6 +53,10 @@ export const checkUserAllItem = (id) => {
     return axios.get(`http://localhost:8890/checkUserRequestItem/${id}`);
 }
 
-export const createRequestItem = (userId,itemId,description) => {
-    return axios.post(`http://localhost:8890/createRequestItem`, userId, itemId, description);
+export const createRequestItem = (itemId, userId, description) => {
+    return axios.post(`http://localhost:8890/createRequestItem`, {
+        itemId: itemId,
+        userId: userId,
+        description: description
+    });
 }
