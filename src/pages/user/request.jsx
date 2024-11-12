@@ -15,10 +15,13 @@ const LeaveRequestTable = () => {
   const user = useAuthStore((state) => state.user);
 
   const fetchRequests = async () => {
+    console.log("fetchRequests")
     try {
-      await checkRequest(user.id);
-      setComments(
-        requests.reduce((acc, request) => {
+      console.log("fetchRequests1")
+      const result = await checkRequest(user.id);
+      console.log("result",result)
+      await setComments(
+        result.reduce((acc, request) => {
           acc[request.id] = request.comment || "";
           return acc;
         }, {})
@@ -34,7 +37,7 @@ const LeaveRequestTable = () => {
 
   useEffect(() => {
     fetchRequests();
-  }, [user.id]);
+  }, []);
 
   const getStatusColor = (status) => {
     switch (status) {
