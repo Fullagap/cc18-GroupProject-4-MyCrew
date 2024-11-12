@@ -31,6 +31,10 @@ export const getAttendanceData = (token) =>
   });
 export const getSiteLocation = () => axios.get("/user/getsitelocation");
 
+export const getLeaderEachSupIdApi = (id,token) => axios.get(`/admin/leader-superId/${id}`,{
+  headers: { 
+    Authorization: `Bearer ${token}`,
+  }});;
 export const getSupData = (token) =>
   axios.get("/user/checkissup", {
     headers: {
