@@ -12,7 +12,7 @@ export const changeStatus = (id,status) => {
 }
 
 export const changeComment = (id,comment) => {
-    return axios.patch(`http://localhost:8890/changeComment/${id}` ,{
+    return  axios.patch(`http://localhost:8890/changeComment/${id}` ,{
         comment
     });
 }
@@ -27,6 +27,12 @@ export const addItem = (name,cost,categoryId) => {
 
 export const checkAllCategory = () => {
     return axios.get(`http://localhost:8890/checkCategory`);
+}
+
+export const editIsHide = (id,isHide) => {
+    return axios.post(`http://localhost:8890/editIsHide/${id}`,{
+        isHide
+    });
 }
 
 export const checkAllItem = () => {

@@ -29,7 +29,8 @@ export default function EditEmployee() {
             dateStart: "",
             annualLeaveAmount: "",
             sickLeaveAmount: "",
-            personalLeaveAmount: ""
+            personalLeaveAmount: "",
+            address: ""
         }
     });
 

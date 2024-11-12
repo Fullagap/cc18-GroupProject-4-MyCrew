@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 const updateUserSchema = Joi.object({
     email: Joi.string()
-        .email({ tlds: { allow: false } })   
+        .email({ tlds: { allow: false } })
         .required()
         .messages({
             "string.empty": "Email is required",
@@ -15,18 +15,17 @@ const updateUserSchema = Joi.object({
             "string.empty": "Phone number is required",
             "string.pattern.base": "Phone number must be 10 to 15 digits and can start with +",
         }),
-        positionId: Joi.number()
+    positionId: Joi.number()
         .required()
-        .message({
-          "number.base": "Please select position",
-        })
-        ,
+        .messages({
+            "number.base": "Please select position",
+            "any.required": "Position is required",
+        }),
     bookBank: Joi.string()
         .required()
         .messages({
             "string.empty": "BookBank is required",
         }),
- 
     salary: Joi.number()
         .positive()
         .required()
@@ -36,6 +35,5 @@ const updateUserSchema = Joi.object({
             "any.required": "Salary is required",
         }),
 }).unknown(true);
- 
 
 export default updateUserSchema;
