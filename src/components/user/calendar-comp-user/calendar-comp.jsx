@@ -4,10 +4,10 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // Import Day Grid plugin
 import interactionPlugin from "@fullcalendar/interaction";
 import EventModal from "./event-modal";
 import useCalendarStore from "../../../store/calendar-store";
-import useAuthStore from "../../../stroes/authSrore";
+import useAuthStore from "../../../store/authSrore";
 import { toast } from "react-toastify";
 
-export default function CalendarComp({ events, setEvents, setDateSelect }) {
+export default function CalendarComp({ events, setEvents, setDateSelect,setShowInfo }) {
   const addSession = useCalendarStore((state) => state.addSession);
   const updateSession = useCalendarStore((state) => state.updateSession);
   const deleteSession = useCalendarStore((state) => state.deleteSession);
@@ -20,6 +20,10 @@ export default function CalendarComp({ events, setEvents, setDateSelect }) {
   const [sessionId, setSessionId] = useState(null);
   const [checkAdd, setCheckAdd] = useState(false);
   const [checkEdit, setCheckEdit] = useState(false);
+
+  useEffect(() => {
+    console.log("Loaded Events calendar-comp: ", events);
+}, [events]);
 
   useEffect(() => {
     if (checkAdd) {
@@ -45,6 +49,15 @@ export default function CalendarComp({ events, setEvents, setDateSelect }) {
   }, [checkEdit]);
 
   const handleDateSelect = (selectInfo) => {
+
+    const eventsOnSelectedDate = events.filter(event => {
+      const eventDate = new Date(event.start).toISOString().split("T")[0];
+      const selectedDate = selectInfo.startStr;
+      return eventDate === selectedDate;
+    });
+  
+    setShowInfo(eventsOnSelectedDate); // ตั้งค่าอีเวนต์ที่พบในวันนั้น
+
     const start = selectInfo.startStr; // ถ้าอยากได้เวลาด้วยใช้ info.start
     let end = new Date(selectInfo.endStr);
 
@@ -71,7 +84,7 @@ export default function CalendarComp({ events, setEvents, setDateSelect }) {
       clickedEvent.eventType === "HOLIDAY" ||
       clickedEvent.eventType === "LEAVE"
     ) {
-      toast.error("Can not Edit");
+      toast.error("Cannot Edit");
     } else {
       setSelectedEvent({
         id: info.event.id,

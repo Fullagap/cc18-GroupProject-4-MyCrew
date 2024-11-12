@@ -20,15 +20,14 @@ const hdlGetEvent=async()=>{
     title: event.description, 
     start: event.startedDate, // เปลี่ยนเป็น startDate
     end: event.endDate,
-    color : el.eventType === "HOLIDAY"?"green":"yellow"
+    color : event.eventType === "HOLIDAY"?"green":"yellow"
   }));
   setEvents(filterResult)
 }
 
   return (
     <div className="flex p-8">
-      Admin
-      <div className="border rounded-xl bg-[#F3F8FF] p-8 w-[50%]">
+      <div className="border rounded-xl bg-[#F3F8FF] p-8 ">
         <CalendarAdminComp hdlGetEvent={hdlGetEvent} events={events} setEvents={setEvents} />
       </div>
     </div>

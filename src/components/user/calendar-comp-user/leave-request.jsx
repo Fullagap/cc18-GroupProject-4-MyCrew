@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useAuthStore from "../../../stroes/authSrore";
+import useAuthStore from "../../../store/authSrore";
 import { toast } from "react-toastify";
 import useCalendarStore from "../../../store/calendar-store";
 
@@ -43,9 +43,6 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
 
   useEffect(() => {
     if (dateSelect) {
-      // const formattedEndDate = dateSelect.end instanceof Date
-      // ? dateSelect.end.toISOString().split('T')[0]  // แปลง Date เป็น 'yyyy-mm-dd'
-      // : dateSelect.end;
       const formattedEndDate = dateSelect.end 
       ? dateSelect.end instanceof Date 
         ? dateSelect.end.toISOString().split('T')[0]
@@ -58,7 +55,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
         startDate: dateSelect.start,
         endDate: formattedEndDate ,
       }));
-      setIsOpen(true)
+      // setIsOpen(true)   กดแล้วให้ dropdown ลงมา 
     }
   }, [dateSelect]);
 

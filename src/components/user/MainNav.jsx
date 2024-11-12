@@ -16,7 +16,7 @@ export default function MainNav() {
       getUserInfo()
     },[])
 
-  console.log(userInfo)
+  // console.log(userInfo)
   return (
     <nav className="bg-white text-[#082777] h-14 shadow-lg">
         <div className="flex justify-end items-center px-4">
@@ -27,7 +27,7 @@ export default function MainNav() {
               className="flex items-center space-x-2 bg-yellow-400 px-4 py-2 rounded-full hover:bg-yellow-300  transition duration-300"
             >
               <img
-                src={ userInfo.profileImg  || "default-avatar.png"}
+                src={ userInfo.profileImg  ||  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
                 alt="User Avatar"
                 className="w-8 h-8 rounded-full"
               />
