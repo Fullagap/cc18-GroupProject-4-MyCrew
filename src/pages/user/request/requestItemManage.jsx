@@ -81,7 +81,7 @@ const RequestItemManage = () => {
                     >
                       <td className="py-6 px-6 text-gray-700">{request.item.itemName}</td>
                       <td className="py-6 px-6 text-gray-700">{request.user.firstName}</td>
-                      <td className="py-6 px-6 text-gray-700">${request.item.cost}</td>
+                      <td className="py-6 px-6 text-gray-700">{request.item.cost} bath</td>
                       <td className="py-6 px-6">
                         <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(request.status)}`}>
                           {request.status}

@@ -6,7 +6,7 @@ const userStore = create((set) => ({
     LeaderEachSupId: [],
     createClockIn: async (latitude, longitude,location) => {
         try {
-            const apiResponse = await clockIn(latitude, longitude,location)
+            const apiResponse = await clockIn(latitude, longitude,location,token)
             set({ response: apiResponse }) // Update store state
             return apiResponse // Return the response to the component
         } catch(err) {
@@ -14,9 +14,9 @@ const userStore = create((set) => ({
             throw err // Rethrow error to be caught in the component
         }
     },
-    createClockOut: async (latitude, longitude,location) => {
+    createClockOut: async (latitude, longitude,location,token) => {
         try {
-            const apiResponse = await clockOut(latitude, longitude,location)
+            const apiResponse = await clockOut(latitude, longitude,location,token)
             set({ response: apiResponse }) // Update store state
             return apiResponse // Return the response to the component
         } catch(err) {
@@ -24,6 +24,15 @@ const userStore = create((set) => ({
             throw err // Rethrow error to be caught in the component
         }
     },
+    getAttendanceData:async(token)=>{
+        try{
+            const response = await getAttendanceData(token)
+            return response.data
+        }catch(err){
+            console.log(err)
+        }
+    }
+    ,
     getSiteLocationData:async()=>{
         try{
             const response = await getSiteLocation()
