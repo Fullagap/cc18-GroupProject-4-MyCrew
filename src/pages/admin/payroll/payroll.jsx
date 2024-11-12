@@ -1,196 +1,182 @@
-import React, { useState, useEffect } from 'react';
-import { FormControl, InputLabel, NativeSelect } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import axios from 'axios'; // ใช้ axios สำหรับการดึงข้อมูลจาก API
+import React, { useState } from 'react';
+import { fetchPayrollData, submitPayrollData, fetchAllPayrollData } from '../../../api/payroll';
 
-const Payroll = () => {
-  const [selectedMonth, setSelectedMonth] = useState(11);
-  const [selectedYear, setSelectedYear] = useState(2024);
+const PayrollPage = ({ token }) => {
+  const [formData, setFormData] = useState({ month: '', year: '' });
+  const [payrollData, setPayrollData] = useState([]);
+  const [allPayrollData, setAllPayrollData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [showAll, setShowAll] = useState(false);
-  const [employees, setEmployees] = useState([]); // ข้อมูลพนักงานที่ดึงมาจาก API
 
-  // ดึง token จาก localStorage หรือจาก cookies
-  const token = localStorage.getItem('token'); // หรือใช้ sessionStorage หรือ cookie ตามที่เก็บไว้
-
-  // ตรวจสอบว่า token มีอยู่ไหม
-  if (!token) {
-    // ถ้าไม่มี token ควร redirect หรือแจ้งผู้ใช้ให้ login ใหม่
-    console.log('No token found. Please login.');
-    return <div>Please login to view payroll details.</div>;
-  }
-
-  // ดึงข้อมูลพนักงานจาก API
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await axios.get('/api/payroll', {
-          headers: {
-            Authorization: `Bearer ${token}`, // ส่ง token ไปใน header
-          },
-        });
-        setEmployees(response.data);
-      } catch (error) {
-        console.error('Error fetching payroll data:', error);
-      }
-    };
-    fetchEmployees();
-  }, [token]); // ดึงข้อมูลเมื่อ token มีการเปลี่ยนแปลง
-
-  // ฟังก์ชันสำหรับการกรองข้อมูลตามเดือนและปี
-  const filteredEmployees = employees.filter(employee => {
-    const date = new Date(employee.salaryDate);
-    if (showAll) {
-      return true;
-    }
-    return date.getMonth() + 1 === selectedMonth && date.getFullYear() === selectedYear;
-  }).sort((a, b) => new Date(b.salaryDate) - new Date(a.salaryDate));
-
-  // ฟังก์ชันสำหรับการส่งข้อมูลไปยัง Backend
-  const handleSendData = async (employeeId, netSalary, salaryDate) => {
+  const handleFetchPayrollData = async () => {
+    setLoading(true);
+    setError('');
+    setSuccessMessage('');
     try {
-      const response = await axios.post('/api/payroll/submit', {
-        userId: employeeId,
-        paidAmount: netSalary,
-        paidDate: salaryDate,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`, // ส่ง token ไปใน header
-        },
-      });
-      alert('Data successfully submitted');
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('Failed to submit data');
+      const data = await fetchPayrollData(formData.month, formData.year, token); // ใช้แค่ month และ year
+      setPayrollData(data);
+    } catch (err) {
+      setError('กรุณากรอกข้อมูลให้ครบ');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitPayroll = async () => {
+    setLoading(true);
+    setError('');
+    setSuccessMessage('');
+    try {
+      await submitPayrollData(formData, token);
+      setSuccessMessage('ส่งข้อมูลเงินเดือนเรียบร้อยแล้ว');
+      setFormData({ month: '', year: '' });
+    } catch (err) {
+      setError('เกิดข้อผิดพลาดในการส่งข้อมูลเงินเดือน');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFetchAllPayrollData = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const data = await fetchAllPayrollData(token);
+      setAllPayrollData(data);
+    } catch (err) {
+      setError('เกิดข้อผิดพลาดในการดึงข้อมูลเงินเดือนทั้งหมด');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleShowAll = () => {
+    if (showAll) {
+      setShowAll(false);
+    } else {
+      handleFetchAllPayrollData();
+      setShowAll(true);
     }
   };
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl text-center mb-6">Payroll Details</h2>
+    <div className="max-w-screen-lg mx-auto p-6 bg-gray-100 rounded-lg">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">การจัดการเงินเดือน</h1>
 
-      {/* ปุ่ม Show All */}
-      <button 
-        className="my-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 transition-colors" 
-        onClick={() => setShowAll(!showAll)}
-      >
-        {showAll ? "Show Filtered" : "Show All"}
-      </button>
-
-      {/* Filter */}
-      {!showAll && (
-        <div className="flex justify-center gap-6 mb-6">
-          <FormControl fullWidth>
-            <InputLabel htmlFor="month-native">Month</InputLabel>
-            <NativeSelect
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(Number(e.target.value))}
-              inputProps={{
-                name: 'month',
-                id: 'month-native',
-              }}
-            >
-              <option value={1}>January</option>
-              <option value={2}>February</option>
-              <option value={3}>March</option>
-              <option value={4}>April</option>
-              <option value={5}>May</option>
-              <option value={6}>June</option>
-              <option value={7}>July</option>
-              <option value={8}>August</option>
-              <option value={9}>September</option>
-              <option value={10}>October</option>
-              <option value={11}>November</option>
-              <option value={12}>December</option>
-            </NativeSelect>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel htmlFor="year-native">Year</InputLabel>
-            <NativeSelect
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(Number(e.target.value))}
-              inputProps={{
-                name: 'year',
-                id: 'year-native',
-              }}
-            >
-              <option value={2023}>2023</option>
-              <option value={2024}>2024</option>
-              <option value={2025}>2025</option>
-            </NativeSelect>
-          </FormControl>
+      {/* Input และปุ่มสำหรับ Fetch และ Submit */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">ดึงและส่งข้อมูลเงินเดือน</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <input
+            type="number"
+            placeholder="เดือน"
+            value={formData.month}
+            onChange={(e) => setFormData({ ...formData, month: e.target.value })}
+            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="number"
+            placeholder="ปี"
+            value={formData.year}
+            onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button
+            onClick={handleFetchPayrollData}
+            disabled={loading}
+            className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none disabled:bg-gray-300"
+          >
+            {loading ? 'กำลังดึงข้อมูล...' : 'ดึงข้อมูล'}
+          </button>
+          <button
+            onClick={handleSubmitPayroll}
+            disabled={loading}
+            className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none disabled:bg-gray-300"
+          >
+            {loading ? 'กำลังส่ง...' : 'ส่งข้อมูล'}
+          </button>
+        </div>
+        {successMessage && <p className="text-green-500 text-sm mt-2">{successMessage}</p>}
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      </div>
+
+      {/* แสดงข้อมูลที่ดึงมา */}
+      {payrollData.length > 0 ? (
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">ข้อมูลเงินเดือน</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 table-auto">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="px-6 py-3 border-b text-left font-medium text-gray-600">User ID</th>
+                  <th className="px-6 py-3 border-b text-left font-medium text-gray-600">Month</th>
+                  <th className="px-6 py-3 border-b text-left font-medium text-gray-600">Year</th>
+                  <th className="px-6 py-3 border-b text-left font-medium text-gray-600">Salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {payrollData.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 border-b text-gray-700">{item.userId}</td>
+                    <td className="px-6 py-4 border-b text-gray-700">{item.month}</td>
+                    <td className="px-6 py-4 border-b text-gray-700">{item.year}</td>
+                    <td className="px-6 py-4 border-b text-gray-700">{item.salary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        payrollData.length === 0 && <p className="text-gray-500 mt-4">ไม่มีข้อมูลเงินเดือนในเดือนและปีที่เลือก</p>
       )}
 
-      {/* ตารางข้อมูลพนักงาน */}
-      <div className="overflow-x-auto rounded-lg shadow-md bg-white">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="payroll table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Position</TableCell>
-                <TableCell align="center">Salary</TableCell>
-                <TableCell align="center">Income</TableCell>
-                <TableCell align="center">Compensation</TableCell>
-                <TableCell align="center">Social Security Fund</TableCell>
-                <TableCell align="center">Provident Fund</TableCell>
-                <TableCell align="center">Tax</TableCell>
-                <TableCell align="center">Net Income</TableCell>
-                <TableCell align="center">Net Salary</TableCell>
-                <TableCell align="center">Salary Date</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredEmployees.length > 0 ? (
-                filteredEmployees.map((employee) => {
-                  const netIncome = employee.income - (employee.tax + employee.socialSecurityFund + employee.providentFund);
-                  const netSalary = employee.salary + netIncome;
-
-                  return (
-                    <TableRow key={employee.id}>
-                      <TableCell align="center">{employee.id}</TableCell>
-                      <TableCell align="center">{employee.name}</TableCell>
-                      <TableCell align="center">{employee.position}</TableCell>
-                      <TableCell align="center">{employee.salary}</TableCell>
-                      <TableCell align="center">{employee.income}</TableCell>
-                      <TableCell align="center">{employee.compensation}</TableCell>
-                      <TableCell align="center">{employee.socialSecurityFund}</TableCell>
-                      <TableCell align="center">{employee.providentFund}</TableCell>
-                      <TableCell align="center">{employee.tax}</TableCell>
-                      <TableCell align="center">{netIncome}</TableCell>
-                      <TableCell align="center">{netSalary}</TableCell>
-                      <TableCell align="center">{employee.salaryDate}</TableCell>
-                      <TableCell align="center">
-                        <button
-                          onClick={() => handleSendData(employee.id, netSalary, employee.salaryDate)}
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
-                        >
-                          Submit
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={13} align="center" className="py-4 text-gray-500">No data available for this month/year.</TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      {/* ปุ่มแสดงข้อมูลทั้งหมด */}
+      <div className="mb-6">
+        <button
+          onClick={toggleShowAll}
+          disabled={loading}
+          className={`w-full mt-3 p-3 text-white rounded-md hover:bg-opacity-80 focus:outline-none ${showAll ? 'bg-red-500' : 'bg-blue-500'} disabled:bg-gray-300`}
+        >
+          {loading ? 'กำลังโหลด...' : showAll ? 'ซ่อนข้อมูลทั้งหมด' : 'แสดงข้อมูลทั้งหมด'}
+        </button>
+        {showAll && allPayrollData.length > 0 ? (
+          <div className="mt-4">
+            <table className="min-w-full table-auto border-collapse">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="px-4 py-2 border-b text-left">User ID</th>
+                  <th className="px-4 py-2 border-b text-left">Month</th>
+                  <th className="px-4 py-2 border-b text-left">Year</th>
+                  <th className="px-4 py-2 border-b text-left">Net Income</th>
+                  <th className="px-4 py-2 border-b text-left">Income</th>
+                  <th className="px-4 py-2 border-b text-left">Salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allPayrollData.map((payroll, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2 border-b">{payroll.userId}</td>
+                    <td className="px-4 py-2 border-b">{payroll.month}</td>
+                    <td className="px-4 py-2 border-b">{payroll.year}</td>
+                    <td className="px-4 py-2 border-b">{payroll.netIncome}</td>
+                    <td className="px-4 py-2 border-b">{payroll.income}</td>
+                    <td className="px-4 py-2 border-b">{payroll.salary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          showAll && <p className="text-gray-500 mt-4">ไม่มีข้อมูลเงินเดือนทั้งหมด</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default Payroll;
+export default PayrollPage;
