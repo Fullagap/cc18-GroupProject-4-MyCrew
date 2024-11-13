@@ -81,8 +81,7 @@ export const checkPayrollDataDuplicate = async (data, token) => {
   try {
     
     const allData = await fetchAllPayrollData(token);
-    console.log("data", data);
-    console.log("token", token);
+   
     
    
     const month = String(data.month).padStart(2, '0'); 

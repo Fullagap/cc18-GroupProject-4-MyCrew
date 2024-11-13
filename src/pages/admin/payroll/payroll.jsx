@@ -144,7 +144,7 @@ const PayrollPage = ({ token }) => {
             disabled={loading || inputError.month || inputError.year}
             className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none disabled:bg-gray-300"
           >
-            {loading ? 'Submitting...' : 'Submit Data'}
+            {loading ? 'Submitting...' : 'Generate payroll'}
           </button>
         </div>
         {successMessage && <p className="text-green-500 text-sm mt-2">{successMessage}</p>}
