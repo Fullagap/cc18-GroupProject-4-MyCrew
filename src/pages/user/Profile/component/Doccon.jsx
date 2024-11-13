@@ -9,7 +9,7 @@ export default function Doccon() {
     <div className="w-full h-full ">
       <p className="text-4xl font-bold p-4">Document Request</p>
       <div className="flex flex-wrap justify-center px-4 gap-4 ">
-        <Link to="/profile/doccon/payslip" className={classLink}>
+        <Link to="/user/profile/doccon/payslip" className={classLink}>
           <IconPaySlip />
           <p className="text-center">
             PaySlip
