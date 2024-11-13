@@ -10,8 +10,6 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
   const userById = useCalendarStore((state)=>state.userById)
   const addLeaveRequest = useCalendarStore((state)=>state.addLeaveRequest)
 
-
-
   // console.log('dateSelect', dateSelect)
   //************************* ต้องเอาข้อมูล limit leave จาก User ถ้าหยุดเกิดกำหนด Leave Request ไม่ได้ **************************
   
@@ -26,16 +24,24 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
     status: "WAITING",
     description: "",
   });
+
   const initialState = {
     userId: user.id,
     requestDate: new Date(),
     startDate: "",
     endDate: "",
     leaveTypeId: "",
-    supId: "", // ค่าจาก User
+    supId: userById?.supId || "", // ค่าจาก User
     status: "WAITING",
     description: "",
   }
+
+  useEffect(() => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      supId: userById?.supId || "",  // เติม `supId` หาก `userById.supId` มีค่า
+    }));
+  }, [userById]);
 
   useEffect(()=>{
     getUserById(user.id,token)
@@ -79,8 +85,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
       toast.error("Please select a leave type.");
     } else {
       if (window.confirm("Please confirm that you want to send this leave request")){
-        const result = await addLeaveRequest(form)
-        console.log(result)
+        await addLeaveRequest(form)
         await hdlGetEvent()        
       }
     }

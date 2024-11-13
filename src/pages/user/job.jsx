@@ -14,17 +14,27 @@ export default function job() {
   const user = useAuthStore((state) => state.user);
 console.log('LeaderEachSupId', LeaderEachSupId)
 
-  const [projects, setProjects] = useState([]);
+//ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
+const loadProjects = () => {
+  const savedProjects = localStorage.getItem("projects");
+  return savedProjects ? JSON.parse(savedProjects) : [];
+};
+
+  const [projects, setProjects] = useState(loadProjects); //ถ้าไม่ใช้ local ใส่เป็น []
   const [newProject, setNewProject] = useState({ name: "", description: "" });
   const [isOpen, setIsOpen] = useState(false);
 
   const currentUser = allEmployees.find((employee) => employee.id === user.id); //โชว์ข้อมูลทุกอย่างของไอดีนี้
+
+
   const addProject = () => {
     if (!newProject.name || !newProject.description) {
       toast.error("Please fill in both the name and description.");
       return;
     } 
-    setProjects([...projects, { ...newProject, id: projects.length + 1 }]);
+    const newProjects = [...projects, { ...newProject, id: projects.length + 1 }];
+    setProjects(newProjects);
+    localStorage.setItem("projects", JSON.stringify(newProjects));//ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
     setNewProject({ name: "", description: "" });
   };
 
@@ -33,6 +43,7 @@ console.log('LeaderEachSupId', LeaderEachSupId)
     if (window.confirm("Please confirm to delete this project")) {
       const notDeleteId = projects.filter((el) => el.id !== id);
       setProjects(notDeleteId);
+      localStorage.setItem("projects", JSON.stringify(notDeleteId));//ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
     }
      }
   };

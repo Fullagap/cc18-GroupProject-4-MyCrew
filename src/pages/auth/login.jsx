@@ -54,7 +54,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+        <div className="flex flex-col md:flex-row h-screen bg-[#E5EDF9]">
            
             <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-700 to-blue-500 flex flex-col items-center justify-center p-6 text-center text-white">
                 <div className="text-4xl md:text-5xl font-bold mb-4 flex items-center">

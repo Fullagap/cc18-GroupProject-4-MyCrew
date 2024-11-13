@@ -21,7 +21,7 @@ const UserLayout = () => {
 
         <MainNav/>
         }
-        <div className="flex-1 p-2 min-h-0 overflow-auto bg-[#E5EDF9]">
+        <div className="flex-1 min-h-0 overflow-auto bg-[#E5EDF9]">
           <Outlet />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {clockIn,clockOut,getLeaderEachSupIdApi,getSiteLocation} from '../api/user'
+import {clockIn,clockOut,getAttendanceDataApi,getLeaderEachSupIdApi,getSiteLocation} from '../api/user'
 
 const userStore = create((set) => ({
     response: [],
@@ -26,7 +26,7 @@ const userStore = create((set) => ({
     },
     getAttendanceData:async(token)=>{
         try{
-            const response = await getAttendanceData(token)
+            const response = await getAttendanceDataApi(token)
             return response.data
         }catch(err){
             console.log(err)
