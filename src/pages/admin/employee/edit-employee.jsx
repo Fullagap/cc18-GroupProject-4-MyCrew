@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import adminStore from '../../../store/admin-store';
 import { register } from '../../../api/admin';
 import { toast } from 'react-toastify';
@@ -33,6 +33,7 @@ export default function EditEmployee() {
             address: ""
         }
     });
+    const [resetSelect, setResetSelect] = useState(false);
 
     useEffect(() => {
         employeeDepartment(token);
@@ -44,6 +45,7 @@ export default function EditEmployee() {
             const resp = await register(data, token);
             toast.success(resp.data);
             reset();
+            setResetSelect(prev => !prev);
         } catch (err) {
             toast.error("fail to register");
             console.log(err)
@@ -60,7 +62,7 @@ export default function EditEmployee() {
                     <LeftFormRegister registerField={registerField} errors={errors} positions={positions} employees={employees} leader={leader} positionInDepartment={positionInDepartment} employeeInEachDepartment={employeeInEachDepartment} departments={departments}/>
 
                     {/* Right side form inputs */}
-                    <RightFormRegister errors={errors} registerField={registerField} />
+                    <RightFormRegister errors={errors} registerField={registerField} resetSelect={resetSelect} />
                 </div>
                 <div className="flex justify-center mt-6">
                     <button className="bg-blue-500 text-white font-semibold py-1.5 px-4 rounded hover:bg-blue-600">
