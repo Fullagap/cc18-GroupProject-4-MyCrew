@@ -29,6 +29,12 @@ export const checkAllCategory = () => {
     return axios.get(`http://localhost:8890/checkCategory`);
 }
 
+export const addCategory = (name) => {
+    return axios.post(`http://localhost:8890/createCategory`, {
+        name
+    });
+}
+
 export const editIsHide = (id,isHide) => {
     return axios.post(`http://localhost:8890/editIsHide/${id}`,{
         isHide

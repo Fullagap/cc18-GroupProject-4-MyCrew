@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Joi from "joi";
 import itemStore from "../../../store/item-store";
-import { addItem, editIsHide } from "../../../api/checkRequest";
+import { addItem, addCategory, editIsHide } from "../../../api/checkRequest";
 
 const Schema = Joi.object({
   title: Joi.string()
@@ -21,7 +21,9 @@ const Schema = Joi.object({
 
 const RequestItem = () => {
   const [isCreating, setIsCreating] = useState(false);
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false); // State for category creation
   const [hiddenItems, setHiddenItems] = useState({}); // Toggle hide/show status
+  const [newCategory, setNewCategory] = useState(""); // State for new category input
 
   const checkAllItem = itemStore((state) => state.checkAllItem);
   const items = itemStore((state) => state.items);
@@ -32,7 +34,6 @@ const RequestItem = () => {
     checkAllItem();
     checkAllCategory();
   }, []);
-  console.log(items);
 
   const {
     register,
@@ -55,7 +56,7 @@ const RequestItem = () => {
     return {};
   };
 
-  const onSubmit = async (data) => {
+  const onSubmitItem = async (data) => {
     const formErrors = validateForm(data);
     if (Object.keys(formErrors).length > 0) return;
 
@@ -65,31 +66,56 @@ const RequestItem = () => {
     await checkAllCategory();
   };
 
+  const onCreateCategory = async () => {
+    if (newCategory.trim()) {
+      await addCategory(newCategory);
+      setNewCategory("");
+      setIsCreatingCategory(false);
+      await checkAllCategory();
+    }
+  };
+
   const toggleHideShow = async (id, isHide) => {
     const newIsHide = !isHide;
-  
     await setHiddenItems((prev) => ({ ...prev, [id]: newIsHide }));
-  
     await editIsHide(id, newIsHide);
     await checkAllItem();
   };
-  
+
+  const toggleCreateForm = (type) => {
+    if (type === "item") {
+      setIsCreating((prev) => !prev);
+      setIsCreatingCategory(false); // Close category form if it's open
+    } else if (type === "category") {
+      setIsCreatingCategory((prev) => !prev);
+      setIsCreating(false); // Close item form if it's open
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-medium">Request Form</h1>
-        <button
-          onClick={() => setIsCreating(true)}
-          className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
-        >
-          Create Item
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => toggleCreateForm("item")}
+            className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
+          >
+            {isCreating ? "Create Item" : "Create Item"}
+          </button>
+          <button
+            onClick={() => toggleCreateForm("category")}
+            className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+          >
+            {isCreatingCategory ? "Create Category" : "Create Category"}
+          </button>
+        </div>
       </div>
 
       {isCreating && (
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h2 className="text-xl font-medium mb-4">Create New Item</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitItem)}>
             <div className="mb-4">
               <label className="block text-sm mb-2">Title</label>
               <input
@@ -136,7 +162,7 @@ const RequestItem = () => {
             <div className="flex justify-end gap-4">
               <button
                 type="button"
-                onClick={() => setIsCreating(false)}
+                onClick={() => toggleCreateForm("item")}
                 className="px-4 py-2 bg-gray-300 rounded-md text-gray-700 hover:bg-gray-200"
               >
                 Cancel
@@ -149,6 +175,37 @@ const RequestItem = () => {
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {isCreatingCategory && (
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <h2 className="text-xl font-medium mb-4">Create New Category</h2>
+          <div className="mb-4">
+            <label className="block text-sm mb-2">Category Name</label>
+            <input
+              type="text"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter new category name..."
+            />
+          </div>
+          <div className="flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => toggleCreateForm("category")}
+              className="px-4 py-2 bg-gray-300 rounded-md text-gray-700 hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onCreateCategory}
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition-colors"
+            >
+              Save Category
+            </button>
+          </div>
         </div>
       )}
 
