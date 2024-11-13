@@ -16,6 +16,7 @@ const UserSidebar = () => {
   const token = useAuthStore((state) => state.token);
   const { getSupData } = userStore();
   const [supData, setSupData] = useState([]);
+
   const fetchSupData = async (date = null) => {
     try {
       const result = await getSupData(token);
@@ -25,6 +26,7 @@ const UserSidebar = () => {
       console.log(err);
     }
   };
+  
   useEffect(() => {
     fetchSupData();
   }, []);
