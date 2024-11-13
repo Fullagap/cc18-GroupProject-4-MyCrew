@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const API_URL = '/payroll';
 
-// Fetch payroll data based on userId, month, and year
-export const fetchPayrollData = async ( month, year, token) => {
+
+export const fetchPayrollData = async (month, year) => {
+  const token = localStorage.getItem('token'); 
   try {
     const response = await axios.get(API_URL, {
       params: { month, year },
@@ -17,23 +18,35 @@ export const fetchPayrollData = async ( month, year, token) => {
   }
 };
 
-// Submit payroll data for a single user
-export const submitPayrollData = async (data, token) => {
-  console.log('ข้อมูลที่กรอก:', data);
+
+export const submitPayrollData = async (data) => {
+  const token = localStorage.getItem('token'); 
+  console.log('Data being sent:', data);
   console.log('Token:', token);
-  // try {
-  //   const response = await axios.post(`${API_URL}/submit`, data, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //   return response.data;
-  // } catch (error) {
-  //   throw new Error('Error submitting payroll data');
-  // }
+
+  try {
+   
+    const duplicateCheck = await checkPayrollDataDuplicate(data, token);
+    if (duplicateCheck === 'No duplicate data') {
+      
+      const response = await axios.post('/salary', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } else {
+      
+      throw new Error(`Unable to submit data: ${duplicateCheck}`);
+    }
+  } catch (error) {
+    console.error('Error submitting payroll data:', error);
+    throw new Error('Error submitting payroll data');
+  }
 };
 
-// Fetch all payroll data (no filters)
+
 export const fetchAllPayrollData = async (token) => {
   try {
     const response = await axios.get(`${API_URL}/all`, {
@@ -47,8 +60,9 @@ export const fetchAllPayrollData = async (token) => {
   }
 };
 
-// Submit all payroll data in bulk
-export const submitAllPayrollData = async (allPayrollData, token) => {
+
+export const submitAllPayrollData = async (allPayrollData) => {
+  const token = localStorage.getItem('token'); 
   try {
     const response = await axios.post(`${API_URL}/submitAll`, allPayrollData, {
       headers: {
@@ -59,5 +73,37 @@ export const submitAllPayrollData = async (allPayrollData, token) => {
     return response.data;
   } catch (error) {
     throw new Error('Error submitting all payroll data');
+  }
+};
+
+
+export const checkPayrollDataDuplicate = async (data, token) => {
+  try {
+    
+    const allData = await fetchAllPayrollData(token);
+    console.log("data", data);
+    console.log("token", token);
+    
+   
+    const month = String(data.month).padStart(2, '0'); 
+    const year = String(data.year); 
+
+   
+    const duplicate = allData.some(
+      (entry) => String(entry.month).padStart(2, '0') === month && String(entry.year) === year
+    );
+
+    console.log("duplicate", duplicate); 
+    
+    
+    if (duplicate) {
+      return `Payroll data for month ${data.month} year ${data.year} already exists`;
+    }
+
+    
+    return 'No duplicate data';
+    
+  } catch (error) {
+    throw new Error(error.message || 'Error occurred while checking data');
   }
 };
