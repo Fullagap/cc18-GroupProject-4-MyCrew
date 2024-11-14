@@ -72,7 +72,7 @@ export default function Calendar() {
       
       <div className="flex flex-col items-center w-[50%]">
 
-        <Link className="border p-2 rounded-xl mb-1 w-[50%] font-bold text-xl bg-[#082777] hover:bg-blue-700" to="/calendar/leave-record">
+        <Link className="border p-2 rounded-xl mb-1 w-[50%] font-bold text-xl bg-[#082777] hover:bg-blue-700" to="/user/calendar/leave-record">
         <p className="text-3xl font-bold text-white text-center">Leave Record</p>
         </Link>
 
