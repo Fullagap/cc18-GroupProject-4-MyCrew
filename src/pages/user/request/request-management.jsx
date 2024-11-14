@@ -17,7 +17,7 @@ export default function RequestManagement() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#F3F8FF]">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl flex flex-col md:flex-row h-96">
         {/* Left Column */}
         <div className="flex flex-col items-center justify-center p-5 border-r border-gray-200 transform transition-transform duration-300 hover:scale-105">

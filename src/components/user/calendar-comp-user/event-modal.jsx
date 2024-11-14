@@ -17,13 +17,13 @@ export default function EventModal({ event, onClose, onSave, onDelete }) {
   };
 
   return (
-    <div className="modal flex flex-col gap-2">
+    <div className="modal flex gap-2 pt-4">
         <h2>{event.id ? "Edit Event" : "Add Event"}</h2>
 
-      <div className="flex gap-10">
+      <div className="flex gap-6">
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
 
-      <div className="flex gap-5">
+      <div className="flex gap-2">
         <button className={buttonStyle} onClick={handleSave}>Save</button>
         <button className={buttonStyle} onClick={handleDelete}>Delete</button>
         <button className={buttonStyle} onClick={onClose}>Close</button>
