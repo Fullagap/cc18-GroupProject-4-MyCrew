@@ -167,7 +167,7 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col border rounded-xl bg-[#F3F8FF] p-4 h-[calc(100vh-60px)]">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -177,7 +177,9 @@ export default function CalendarAdminComp({ hdlGetEvent, events, setEvents }) {
         displayEventTime={false}
         selectable={true}
         select={handleDateSelect}
-        contentHeight="auto"
+        // contentHeight="auto"
+         height="100%"  
+         contentHeight="100%"
       />
 
       {isModalOpen && (

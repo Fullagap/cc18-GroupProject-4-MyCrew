@@ -64,23 +64,19 @@ export default function Calendar() {
   };
 
   return (
-    <div className="flex h-full p-6">
+    <div className="flex h-full w-full p-2">
 
-      <div className="border rounded-xl bg-[#F3F8FF] p-8 w-[50%]">
+      <div className="w-full">
         <CalendarComp events={events} setEvents={setEvents} setDateSelect={setDateSelect} hdlGetEvent={hdlGetEvent} setShowInfo={setShowInfo}/>
       </div>
       
-      <div className="flex flex-col items-center w-[50%]">
-
-        <Link className="border p-2 rounded-xl mb-1 w-[50%] font-bold text-xl bg-[#082777] hover:bg-blue-700" to="/user/calendar/leave-record">
-        <p className="text-3xl font-bold text-white text-center">Leave Record</p>
-        </Link>
+      <div className="w-[300px] px-4">
 
         <div className="w-[50%]">
         <CalendarDetailModal showInfo={showInfo}/>
         </div>
 
-        <div className="w-[50%]">
+        <div className=" w-full">
         <LeaveRequest dateSelect={dateSelect} hdlGetEvent={hdlGetEvent}/>
         </div>
       </div>

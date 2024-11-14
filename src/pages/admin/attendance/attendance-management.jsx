@@ -262,7 +262,7 @@ function AttendanceManagement() {
                 </div>
                 <div className="flex justify-center mt-6">
                   <button
-                    className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                    className="bg-[#082777] text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
                     // disabled={!selectedPosition || !form.siteName || !form.area}
                   >
                     Add Location
@@ -689,7 +689,7 @@ function AttendanceManagement() {
           <button
             className={`font-semibold py-2 px-4 rounded transition-colors ${
               pageStatus === "create"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#082777] hover:bg-blue-700 text-white"
                 : "bg-blue-100 text-blue-600 hover:bg-blue-200"
             }`}
             onClick={() => setPageStatus("create")}
