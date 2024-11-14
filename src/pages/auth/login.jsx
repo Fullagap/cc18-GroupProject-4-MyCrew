@@ -3,6 +3,7 @@ import useAuthStore from '../../store/authSrore';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { motion } from 'framer-motion';  // Import motion from Framer Motion
 
 const Login = () => {
     const navigate = useNavigate();
@@ -54,8 +55,8 @@ const Login = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-screen bg-[#E5EDF9]">
-           
+        <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+       
             <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-700 to-blue-500 flex flex-col items-center justify-center p-6 text-center text-white">
                 <div className="text-4xl md:text-5xl font-bold mb-4 flex items-center">
                     <FaMapMarkerAlt className="mr-3" />
@@ -64,13 +65,19 @@ const Login = () => {
                 <p className="text-lg md:text-xl opacity-90 mb-6">
                     Empowering your workforce with efficiency and connectivity.
                 </p>
-                <img
+           
+                <motion.img
                     src="https://i0.wp.com/www.collegehippo.com/blog/wp-content/uploads/2020/09/human-resource-management-transparent-png-download-for-free-human-resource-management-png-920_582.jpg?fit=920%2C582&ssl=1"
+                    alt="Human Resources"
                     className="w-3/4 md:w-2/3 rounded-lg shadow-lg"
+                    initial={{ opacity: 0, x: -50 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    transition={{ duration: 1 }}   
+                    whileHover={{ scale: 1.05 }}
                 />
             </div>
 
-           
+            {/* Right Side (Login Form) */}
             <div className="w-full md:w-1/2 flex items-center justify-center p-6">
                 <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-2xl">
                     <h2 className="text-3xl md:text-3xl font-bold text-blue-600 mb-4 text-center">Log In</h2>

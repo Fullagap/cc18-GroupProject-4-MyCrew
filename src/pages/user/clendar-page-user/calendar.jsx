@@ -72,7 +72,8 @@ export default function Calendar() {
       
       <div className="w-[300px] px-4">
 
-        <div className="w-full">
+
+        <div className="w-[50%]">
         <CalendarDetailModal showInfo={showInfo}/>
         </div>
 

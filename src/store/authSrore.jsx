@@ -3,41 +3,28 @@ import { toast } from "react-toastify";
 import { login, requestChangePassword, changePassword, resetPassword } from "../api/auth";
 import { persist } from "zustand/middleware";
 
-
-
-
 const useAuthStore = create(persist((set, get) => ({
     token: null,
     user: null,
-// {user:{
-//   "id": 1,
-//   "email": "dummy@codecamp.com",
-//   "role": "ADMIN"
-// }}
-
 
     actionLogin: async (form) => {
         try {
             const resp = await login(form);
             const { token, user } = resp;
             
-            
-
             set({ token, user });
-            localStorage.setItem('token', token);
+            localStorage.setItem('token', token);  // เก็บ token ใน localStorage
             toast.success("Login successful!");
 
             return user;
         } catch (err) {
-
             toast.error(err.response?.data?.message || "Login failed!");
         }
     },
+
     actionRequestChangePassword: async (email) => {
         try {
-            // console.log("check email", email)
             const resp = await requestChangePassword(email);
-            // console.log("check1", resp)
             toast.success("Request to change password sent!");
             return resp;
         } catch (err) {
@@ -45,6 +32,7 @@ const useAuthStore = create(persist((set, get) => ({
             console.log(err)
         }
     },
+
     actionChangePassword: async (token, newPassword) => {
         try {
             const resp = await changePassword(token, newPassword);
@@ -54,9 +42,10 @@ const useAuthStore = create(persist((set, get) => ({
             toast.error(err.message || "Change password failed!");
         }
     },
+
     actionResetPassword: async (oldPassword, newPassword) => {
         try {
-            const token = get().token; 
+            const token = get().token;
             if (!token) {
                 toast.error('No authentication token found.');
                 return;
@@ -75,25 +64,19 @@ const useAuthStore = create(persist((set, get) => ({
             }
         }
     },
-    
-    
-
 
     isLoggedIn: () => set((state) => !!state.token),
 
     actionLogout: () => {
-
         set({ token: null, user: null });
-
-
+        localStorage.removeItem('token');  // เคลียร์ token จาก localStorage
         toast.success("Logged out successfully!");
     }
 
 }),
     {
-        name: 'user&token'
+        name: 'user&token'  // ใช้ชื่อ 'user&token' เพื่อเก็บ state ใน localStorage ด้วย zustand
     }
-
 ));
 
 export default useAuthStore;

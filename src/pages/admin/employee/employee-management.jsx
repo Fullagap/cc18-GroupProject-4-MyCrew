@@ -16,7 +16,7 @@ function EmployeeManagement() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center h-full bg-gray-100 p-4">
       <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-4xl flex flex-col md:flex-row md:h-96">
         <div className="flex-1 flex flex-col items-center justify-center p-4 border-b md:border-b-0 md:border-r border-gray-200 hover:scale-105 transition-transform duration-300">
           <FaRegEdit className="text-4xl sm:text-6xl mb-4" />

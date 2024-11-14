@@ -23,16 +23,23 @@ export default function Information() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 rounded-md">
-      <div className="flex flex-col lg:flex-row flex-grow gap-4 lg:gap-8 p-4">
-        {/* Profile and Detail sections */}
-        <div className="flex flex-col lg:flex-row gap-4 w-full">
-          <Profile userInfo={userInfo} getUserInfo={getUserInfo} className="lg:w-1/3" />
-          <Detail userInfo={userInfo} className="lg:w-2/3" />
+   
+    <div className="flex flex-col min-h-screen bg-gray-100 p-6">
+    <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto">
+      
+      {/* Profile and Detail Section */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-1/3 bg-white rounded-3xl shadow-md p-6">
+          <Profile userInfo={userInfo} getUserInfo={getUserInfo} />
+        </div>
+        <div className="lg:w-2/3 bg-white rounded-3xl shadow-md p-6">
+          <Detail userInfo={userInfo} />
         </div>
       </div>
-      {/* Footer section */}
-      <Footer className="mt-auto p-4" />
+      
+      {/* Footer Section */}
+      <Footer className="w-full bg-white rounded-3xl shadow-md p-6" />
     </div>
+  </div>
   );
 }
