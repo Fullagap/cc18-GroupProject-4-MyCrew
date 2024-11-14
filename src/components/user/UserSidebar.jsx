@@ -92,7 +92,7 @@ const UserSidebar = () => {
         )}
       </div>
 
-      {user && (
+      {/* {user && (
         <div className="hidden md:block relative mt-4 group">
           <button className={`${classLink} w-full flex justify-between items-center`}>
             <span className="hidden md:block">User Options</span>
@@ -108,7 +108,7 @@ const UserSidebar = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
