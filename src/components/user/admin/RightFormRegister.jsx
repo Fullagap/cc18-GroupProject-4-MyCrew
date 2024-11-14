@@ -30,7 +30,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
   return (
     <div>
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Lastname</label>
+        <label className="block text-gray-700 text-sm">Lastname :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("lastName")}
         />
@@ -38,7 +38,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Book Bank Number</label>
+        <label className="block text-gray-700 text-sm">Book Bank Number :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("bookBank")}
         />
@@ -47,7 +47,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
 
    
       <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Identity Card Number</label>
+        <label className="block text-gray-700 text-sm">Identity Card Number :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("identicalNumber")}
         />
@@ -55,7 +55,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
     </div>
 
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">Salary</label>
+        <label className="block text-gray-700 text-sm">Salary :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("salary")}
         />
@@ -64,7 +64,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
 
   
             <div className="mb-3">
-                <label className="block text-gray-700 text-sm">Sick Leave</label>
+                <label className="block text-gray-700 text-sm">Sick Leave :</label>
                 {!isSickLeaveOther ? (
                     <select
                         className="border rounded w-full py-1 px-2 text-gray-700"
@@ -91,7 +91,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
 
 
         <div className="mb-3">
-                <label className="block text-gray-700 text-sm">Personal Leave</label>
+                <label className="block text-gray-700 text-sm">Personal Leave :</label>
                 {!isPersonalLeaveOther ? (
                     <select
                         className="border rounded w-full py-1 px-2 text-gray-700"
@@ -118,7 +118,7 @@ function RightFormRegister({errors,registerField,resetSelect}) {
 
     
             <div className="mb-3">
-                <label className="block text-gray-700 text-sm">Annual Leave</label>
+                <label className="block text-gray-700 text-sm">Annual Leave :</label>
                 {!isAnnualLeaveOther ? (
                     <select
                         className="border rounded w-full py-1 px-2 text-gray-700"

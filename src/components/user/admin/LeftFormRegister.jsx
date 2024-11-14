@@ -8,7 +8,7 @@ function LeftFormRegister({registerField,errors,positions,employees,leader,posit
   return (
     <div>
     <div className="mb-3">
-        <label className="block text-gray-700 text-sm">First name :</label>
+        <label className="block text-gray-700 text-sm">Firstname :</label>
         <input type="text" className="border rounded w-full py-1 px-2 text-gray-700"
             {...registerField("firstName")}
         />
