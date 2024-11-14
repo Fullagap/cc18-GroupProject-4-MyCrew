@@ -97,7 +97,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
         className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] hover:bg-blue-700"
         onClick={toggleDropdown}
       >
-        <p className="text-3xl font-bold text-white">Leave Request</p>
+        <p className="text-xl font-bold text-white">Leave Request</p>
       </button>
 
       <div
