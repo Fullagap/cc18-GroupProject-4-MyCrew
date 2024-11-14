@@ -21,11 +21,6 @@ const updateUserSchema = Joi.object({
             "number.base": "Please select position",
             "any.required": "Position is required",
         }),
-    bookBank: Joi.string()
-        .required()
-        .messages({
-            "string.empty": "BookBank is required",
-        }),
     salary: Joi.number()
         .positive()
         .required()
