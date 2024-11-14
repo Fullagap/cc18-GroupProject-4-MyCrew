@@ -22,14 +22,19 @@ const UserLayout = () => {
         <div className="flex-1 p-2 overflow-y-auto bg-[#E5EDF9]">
           <Outlet />
         </div>
-      </div>
-      
-      {/* Sidebar for mobile */}
-      {user && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+        {user && (
+        <div className="md:hidden">
           <UserSidebar />
         </div>
       )}
+      </div>
+      
+      {/* Sidebar for mobile */}
+      {/* {user && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+          <UserSidebar />
+        </div>
+      )} */}
     </div>
   );
 };
