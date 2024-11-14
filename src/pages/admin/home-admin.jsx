@@ -9,7 +9,6 @@ import { motion } from "framer-motion";  // Import motion from Framer Motion
 
 export default function HomeAdmin() {
   const classLink =
-    // "group flex flex-col w-[250px] h-[150px] border w-32 rounded-xl bg-[#F3F8FF] p-4 hover:bg-[#082777] hover:text-white hover:scale-105 hover:duration-200 active:bg-green-400 rounded-xl px-3 py-2 gap-2";
     "group text-white flex flex-col w-[250px] h-[150px] border w-32 rounded-xl bg-[#082777] hover:bg-blue-700 p-4 hover:text-white hover:scale-105 hover:duration-200 active:bg-green-400 rounded-xl px-3 py-2 gap-2";
   
   return (
