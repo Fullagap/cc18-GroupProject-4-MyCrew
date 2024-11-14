@@ -108,8 +108,8 @@ export default function FilteredAttendanceDashboard() {
             startIcon={<LuCalendar />}
             onClick={() => setShowDatePicker(!showDatePicker)}
             sx={{ 
-              bgcolor: "#3f51b5",
-              '&:hover': { bgcolor: "#303f9f" }
+              bgcolor: "#082777",
+              '&:hover': { bgcolor: "#1d4ed8" }
             }}
           >
             {selectedDate ? formatDate(selectedDate) : 'Select Date'}

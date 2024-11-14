@@ -235,7 +235,7 @@ const RequestItem = () => {
                   <button
                     onClick={() => toggleHideShow(item.id, item.isHide)}
                     className={`px-4 py-1 rounded ${
-                      hiddenItems[item.id] || item.isHide ? "bg-gray-500" : "bg-blue-500"
+                      hiddenItems[item.id] || item.isHide ? "bg-gray-500" : "bg-[#082777]"
                     } text-white`}
                   >
                     {hiddenItems[item.id] || item.isHide ? "Hidden" : "Active"}
