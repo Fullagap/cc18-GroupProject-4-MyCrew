@@ -125,14 +125,22 @@ export default function CreateJob({
                 </div>
               )}
             </div>
+            <div>
+                <textarea
+                  className="p-2 border rounded-xl"
+                  name="user"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows="4" // จำนวนแถว
+                  cols="50" // จำนวนคอลัมน์
+                  placeholder="Comment"
+                />
+              </div>
             <hr />
-           
-            <div className="flex justify-between">
 
+            <div className="flex justify-between">  
 
               <div className="flex flex-col gap-2">
-
-
                 {comment.length > 0 && (
                   <div className="border rounded-xl p-2">
                     <p className="text-red-500 font-semibold">Comment</p>
@@ -146,43 +154,41 @@ export default function CreateJob({
                 >
                   {statusComplete}
                 </button>
-                </div>
-
-                {modalComplete && userId === leader?.id && (
-                  <div className="flex flex-col gap-5 items-end">
-                    <div>
-                      <textarea
-                        className="p-2 border rounded-xl"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        rows="4" // จำนวนแถว
-                        cols="50" // จำนวนคอลัมน์
-                        placeholder="Reject Comment"
-                      />
-                    </div>
-
-                    <div className="flex gap-5">
-                      <button
-                        className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
-                        onClick={() => hdlProjectUpdateClick("Approved")}
-                      >
-                        Approved
-                      </button>
-                      <button
-                        className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-                        onClick={() => hdlProjectUpdateClick("Reject")}
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                
               
 
+              {modalComplete && userId === leader?.id && (
+                <div className="flex flex-col gap-2 items-end">
+                  <div>
+                    <textarea
+                    name="sup"
+                      className="p-2 border rounded-xl"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      rows="4" // จำนวนแถว
+                      cols="50" // จำนวนคอลัมน์
+                      placeholder="Reject Comment"
+                    />
+                  </div>
 
+                  <div className="flex gap-5">
+                    <button
+                      className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
+                      onClick={() => hdlProjectUpdateClick("Approved")}
+                    >
+                      Approved
+                    </button>
+                    <button
+                      className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
+                      onClick={() => hdlProjectUpdateClick("Reject")}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              )}
+              </div>
             </div>
+
           </div>
         </div>
 
