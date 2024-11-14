@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 export default function CalendarDetailModal({ showInfo }) {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   useEffect(() => {
     if (showInfo && showInfo.length > 0) {
@@ -18,8 +18,8 @@ export default function CalendarDetailModal({ showInfo }) {
     <div>
       <div>
         <button
-          className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] hover:bg-blue-700"
-          onClick={toggleDropdown}
+          className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] "
+          // onClick={toggleDropdown}
         >
           <p className="text-3xl font-bold text-white">Calendar Detail</p>
         </button>

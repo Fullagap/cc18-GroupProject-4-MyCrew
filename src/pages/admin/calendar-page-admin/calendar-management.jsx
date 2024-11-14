@@ -26,8 +26,8 @@ const hdlGetEvent=async()=>{
 }
 
   return (
-    <div className="flex p-8">
-      <div className="border rounded-xl bg-[#F3F8FF] p-8 ">
+    <div className="flex">
+      <div className="w-full ">
         <CalendarAdminComp hdlGetEvent={hdlGetEvent} events={events} setEvents={setEvents} />
       </div>
     </div>

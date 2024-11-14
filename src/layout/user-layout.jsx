@@ -16,14 +16,15 @@ const UserLayout = () => {
         </div>
       )}
       
-      <div className="flex flex-col flex-1 h-full">
+      <div className="flex flex-col flex-1 h-full ">
         {user && <MainNav />}
         
-        <div className="flex-1 p-2 overflow-y-auto bg-[#E5EDF9]">
+        <div className="flex-1 p-2 overflow-y-auto bg-[#E5EDF9] ">
           <Outlet />
         </div>
+
         {user && (
-        <div className="md:hidden">
+        <div className="md:hidden ">
           <UserSidebar />
         </div>
       )}
