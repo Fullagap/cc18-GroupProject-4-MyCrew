@@ -17,15 +17,15 @@ export default function RequestManagement() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#F3F8FF]">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl flex flex-col md:flex-row h-96">
+    <div className="flex flex-col items-center justify-center h-full bg-gray-100 ">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl flex flex-col md:flex-row h-96 ">
         {/* Left Column */}
-        <div className="flex flex-col items-center justify-center p-5 border-r border-gray-200 transform transition-transform duration-300 hover:scale-105">
+        <div className="flex flex-col items-center justify-center p-5 border-r border-gray-200 transform transition-transform duration-300 hover:scale-105 ">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Leave Record Management
           </h2>
           <button
-            className="bg-blue-500 text-white py-3 px-8 rounded-lg shadow-lg hover:shadow-xl hover:bg-blue-600 transition-all duration-300"
+            className="bg-[#082777] text-white hover:bg-blue-700 py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             onClick={hdlLeaveRecordClick}
           >
             All Requests
