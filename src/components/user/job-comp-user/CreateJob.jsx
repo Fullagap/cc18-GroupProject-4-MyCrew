@@ -13,6 +13,9 @@ export default function CreateJob({
   const [modalComplete, setModalComplete] = useState(false);
   const [statusComplete, setStatusComplete] = useState("Submit for Approval");
   const [comment, setComment] = useState("");
+
+  console.log("comment", comment);
+
   const [userInfo, setUserInfo] = useState(() => {
     const savedUserInfo = localStorage.getItem("userInfo");
     return savedUserInfo ? JSON.parse(savedUserInfo) : [];
@@ -62,6 +65,7 @@ export default function CreateJob({
       //API Update complete(id,IsComplete)
       setModalComplete(false);
       setStatusComplete("Complete");
+      setComment("");
     }
     if (message === "Reject") {
       //API เรียกProjectมาใช้ เช่น
@@ -122,47 +126,62 @@ export default function CreateJob({
               )}
             </div>
             <hr />
+           
             <div className="flex justify-between">
-              <div>
+
+
+              <div className="flex flex-col gap-2">
+
+
+                {comment.length > 0 && (
+                  <div className="border rounded-xl p-2">
+                    <p className="text-red-500 font-semibold">Comment</p>
+                    <p>{comment}</p>
+                  </div>
+                )}
+
                 <button
-                  className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
+                  className="bg-green-500 text-white w-48 py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
                   onClick={() => hdlProjectUpdateClick("Complete")}
                 >
                   {statusComplete}
                 </button>
-              </div>
-
-              {modalComplete && userId === leader?.id && (
-                <div className="flex flex-col gap-5">
-                  <div>
-                    <textarea
-                      className="p-2 border rounded-xl"
-                      value={comment}
-                      onChange={(e) =>
-                        setComment(e.target.value,)
-                      }
-                      rows="4" // จำนวนแถว
-                      cols="50" // จำนวนคอลัมน์
-                      placeholder="Comment"
-                    />
-                  </div>
-
-                  <div className="flex justify-end gap-5">
-                    <button
-                      className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
-                      onClick={() => hdlProjectUpdateClick("Approved")}
-                    >
-                      Approved
-                    </button>
-                    <button
-                      className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
-                      onClick={() => hdlProjectUpdateClick("Reject")}
-                    >
-                      Reject
-                    </button>
-                  </div>
                 </div>
-              )}
+
+                {modalComplete && userId === leader?.id && (
+                  <div className="flex flex-col gap-5 items-end">
+                    <div>
+                      <textarea
+                        className="p-2 border rounded-xl"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        rows="4" // จำนวนแถว
+                        cols="50" // จำนวนคอลัมน์
+                        placeholder="Reject Comment"
+                      />
+                    </div>
+
+                    <div className="flex gap-5">
+                      <button
+                        className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
+                        onClick={() => hdlProjectUpdateClick("Approved")}
+                      >
+                        Approved
+                      </button>
+                      <button
+                        className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
+                        onClick={() => hdlProjectUpdateClick("Reject")}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                
+              
+
+
             </div>
           </div>
         </div>
