@@ -19,7 +19,6 @@ const UserLayout = () => {
       <div className="flex flex-col flex-1 h-full">
         {user && <MainNav />}
         
-        {/* Outlet container with responsive scrolling */}
         <div className="flex-1 p-2 overflow-y-auto bg-[#E5EDF9]">
           <Outlet />
         </div>
