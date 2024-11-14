@@ -26,7 +26,7 @@ const userStore = create((set) => ({
     },
     getAttendanceData:async(token)=>{
         try{
-            const response = await getAttendanceDataApi(token)
+            const response = await getAttendanceData(token)
             return response.data
         }catch(err){
             console.log(err)

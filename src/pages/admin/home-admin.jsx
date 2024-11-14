@@ -11,9 +11,9 @@ export default function HomeAdmin() {
     "group flex flex-col w-[250px] h-[150px] border w-32 rounded-xl bg-[#F3F8FF] p-4 hover:bg-[#082777] hover:text-white hover:scale-105 hover:duration-200 active:bg-green-400 rounded-xl px-3 py-2 gap-2";
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-[#E5EDF9] p-8">
       <p className="text-4xl font-bold mb-8 text-gray-800">Admin Management</p>
-      <div className="flex flex-wrap gap-20 p-10">
+      <div className="flex flex-wrap gap-20 p-10 ">
         <Link to="/admin/employee-management" className={classLink}>
           <MdManageAccounts className="text-6xl text-blue-600 group-hover:text-white" />
           <p className="text-center text-lg font-semibold">Employee Management</p>

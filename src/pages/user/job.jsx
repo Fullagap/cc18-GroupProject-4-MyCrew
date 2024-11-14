@@ -6,13 +6,12 @@ import { toast } from "react-toastify";
 import userStore from "../../store/user-store";
 
 export default function job() {
-  const getAllEmployees = adminStore((state) => state.getAllEmployees);
-  const getLeaderEachSupId = userStore((state) => state.getLeaderEachSupId);
-  const LeaderEachSupId = userStore((state) => state.LeaderEachSupId);
-  const allEmployees = adminStore((state) => state.allEmployees);
+  const getAllEmployees = adminStore((state) => state.getAllEmployees); //เรียก
+  const allEmployees = adminStore((state) => state.allEmployees);       //ใช้
+  const getLeaderEachSupId = userStore((state) => state.getLeaderEachSupId);//เรียก
+  const LeaderEachSupId = userStore((state) => state.LeaderEachSupId);      //ใช้
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
-console.log('LeaderEachSupId', LeaderEachSupId)
 
 //ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
 const loadProjects = () => {
@@ -21,21 +20,31 @@ const loadProjects = () => {
 };
 
   const [projects, setProjects] = useState(loadProjects); //ถ้าไม่ใช้ local ใส่เป็น []
-  const [newProject, setNewProject] = useState({ name: "", description: "" });
+  const [newProject, setNewProject] = useState({
+    title: "",
+    description: "",
+    dueDate: "",
+    completeDate: "",
+    isCompleteDate: "",
+    comment: "",
+  });
+  console.log('projects', projects)
+
   const [isOpen, setIsOpen] = useState(false);
 
   const currentUser = allEmployees.find((employee) => employee.id === user.id); //โชว์ข้อมูลทุกอย่างของไอดีนี้
 
 
   const addProject = () => {
-    if (!newProject.name || !newProject.description) {
+    if (!newProject.title || !newProject.description) {
       toast.error("Please fill in both the name and description.");
       return;
     } 
     const newProjects = [...projects, { ...newProject, id: projects.length + 1 }];
     setProjects(newProjects);
+    // API Create (projects)
     localStorage.setItem("projects", JSON.stringify(newProjects));//ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
-    setNewProject({ name: "", description: "" });
+    setNewProject({ title: "", description: "" });
   };
 
   const deleteProject = (id) => {
@@ -43,6 +52,7 @@ const loadProjects = () => {
     if (window.confirm("Please confirm to delete this project")) {
       const notDeleteId = projects.filter((el) => el.id !== id);
       setProjects(notDeleteId);
+      //API Delete (id)
       localStorage.setItem("projects", JSON.stringify(notDeleteId));//ใช้ Local ถ้าใช้DB ลบทิ้งได้เลย
     }
      }
@@ -66,7 +76,7 @@ const loadProjects = () => {
         {currentUser?.departmentId === 1 ? "Engineer" : "Purchaser"}
         {/* ถ้ามีแผนกมากกว่านี้ ต้องดึงชื่อในDBมาโช ทำ if else แบบนี้ไม่ได้  */}
       </div>
-
+    
       <button
         className="border p-2 rounded-xl w-full font-bold text-xl bg-[#082777] hover:bg-blue-700"
         onClick={toggleDropdown}
@@ -84,9 +94,9 @@ const loadProjects = () => {
           <input
             className="px-2"
             placeholder="Project Name"
-            value={newProject.name}
+            value={newProject.title}
             onChange={(e) =>
-              setNewProject({ ...newProject, name: e.target.value })
+              setNewProject({ ...newProject, title: e.target.value })
             }
           />
 
@@ -100,6 +110,15 @@ const loadProjects = () => {
             cols="50" // จำนวนคอลัมน์
             placeholder="Project Description"
           />
+
+          Due date
+          <input type="date"
+          value={newProject.dueDate}
+          onChange={(e) =>
+            setNewProject({ ...newProject, dueDate: e.target.value })
+          }
+          />
+          
 
           <button
             className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"

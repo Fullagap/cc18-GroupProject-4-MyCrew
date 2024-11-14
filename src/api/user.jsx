@@ -23,7 +23,7 @@ export const clockOut = (latitude, longitude, location, token) => {
   );
 };
 
-export const getAttendanceDataApi = (token) =>
+export const getAttendanceData = (token) =>
   axios.get("/get-attendance-data", {
     headers: {
       Authorization: `Bearer ${token}`,

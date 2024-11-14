@@ -39,7 +39,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
   useEffect(() => {
     setForm((prevForm) => ({
       ...prevForm,
-      supId: userById?.supId || "",  // เติม `supId` หาก `userById.supId` มีค่า
+      supId: userById?.supId || "",  
     }));
   }, [userById]);
 
