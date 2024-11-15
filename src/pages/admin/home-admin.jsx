@@ -12,7 +12,7 @@ export default function HomeAdmin() {
     "group text-white flex flex-col w-[250px] h-[150px] border w-32 rounded-xl bg-[#082777] hover:bg-blue-700 p-4 hover:text-white hover:scale-105 hover:duration-200 active:bg-green-400 rounded-xl px-3 py-2 gap-2";
   
   return (
-    <div className="h-full bg-gray-100 p-8">
+    <div className="h-full bg-[#E5EDF9] p-8">
       <p className="text-4xl font-bold mb-8 text-gray-800">Admin Management</p>
       <div className="flex flex-wrap gap-20 p-10">
         <motion.div
