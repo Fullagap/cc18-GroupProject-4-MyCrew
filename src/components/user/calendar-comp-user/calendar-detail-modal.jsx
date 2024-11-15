@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 
 export default function CalendarDetailModal({ showInfo }) {
@@ -33,10 +34,10 @@ export default function CalendarDetailModal({ showInfo }) {
             {showInfo.map((event, index) => (
               <div key={index} className="event-item">
                 <h3>{event.title}</h3>
-                <p>Start: {new Date(event.start).toLocaleString()}</p>
+                <p>Start: {dayjs(new Date(event.start).toLocaleString()).format("DD/MM/YY hh:mm:ss")}</p>
                 
                 {event.end && new Date(event.end).getFullYear() !== 1970 && ( //เวลาไม่ได้ตั้งค่า end มันจะใช้ปี1970 เลยเอามาเป็นเงื่อนไข
-                  <p>End: {new Date(event.end).toLocaleString()}</p>
+                  <p>End: {dayjs(new Date(event.end).toLocaleString()).format("DD/MM/YY hh:mm:ss")}</p>
                 )}
               </div>
             ))}
