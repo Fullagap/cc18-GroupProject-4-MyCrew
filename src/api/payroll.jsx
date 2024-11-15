@@ -54,6 +54,7 @@ export const fetchAllPayrollData = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    
     return response.data;
   } catch (error) {
     throw new Error('Error fetching all payroll data');
