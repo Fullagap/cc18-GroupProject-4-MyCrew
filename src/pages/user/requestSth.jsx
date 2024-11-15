@@ -53,6 +53,22 @@ const RequestList = () => {
 
   {userItems.length === 0 ? (
     <div className="flex flex-col items-center justify-center py-14 text-center">
+      <div className="p-6 bg-gray-100 rounded-full shadow-lg mb-6">
+        <svg
+          className="w-28 h-28 text-blue-500" 
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 12h6m2 4H7m8-8H7m12 10V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2z"
+          />
+        </svg>
+      </div>
       <p className="text-gray-700 text-3xl font-extrabold mb-2">No Requests Available</p>
       <p className="text-gray-500 text-lg mb-4">It looks like there aren’t any requests yet.</p>
     </div>
