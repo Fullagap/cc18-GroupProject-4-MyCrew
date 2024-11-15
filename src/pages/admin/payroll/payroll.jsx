@@ -94,7 +94,7 @@ const PayrollPage = ({ token }) => {
       </Typography>
 
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>Submit Payroll Data</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>Generate Payroll Data</Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <input
             placeholder="Month"
