@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function EventModal({ event, onClose, onSave, onDelete }) {
   const [title, setTitle] = useState(event.title || "");
 
-    const buttonStyle = "border rounded bg-green-400 w-[30%] px-2"
+    const buttonStyle = "bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
 
   useEffect(() => {
     setTitle(event.title || "");

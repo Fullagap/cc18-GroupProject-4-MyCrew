@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import useAuthStore from "../../../store/authSrore";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 export default function CreateJob({
   project,
   allEmployees,
   deleteProject,
-  leader,
+  subordinates,
   userId,
 }) {
   const [modal, setModal] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
   const [statusComplete, setStatusComplete] = useState("Submit for Approval");
   const [comment, setComment] = useState("");
+
+  console.log("comment", comment);
+
   const [userInfo, setUserInfo] = useState(() => {
     const savedUserInfo = localStorage.getItem("userInfo");
     return savedUserInfo ? JSON.parse(savedUserInfo) : [];
   });
 
   const openEdit = () => {
-    if (userId === leader?.id) {
+    if (subordinates?.length > 0) {
       setModal(!modal);
     }
   };
 
   const hdlAddClick = (id, name, img) => {
-    if (userId === leader?.id) {
+    if (subordinates?.length > 0) {
       if (userInfo.some((user) => user.id === id)) {
         toast.error("Already Added");
       } else {
@@ -40,7 +44,7 @@ export default function CreateJob({
   };
 
   const hdlDelClick = (id) => {
-    if (userId === leader?.id) {
+    if (subordinates?.length > 0) {
       const delUserInfo = userInfo.filter((user) => user.id !== id);
       setUserInfo(delUserInfo);
       localStorage.setItem("userInfo", JSON.stringify(delUserInfo)); // อัปเดตใน localStorage ด้วย เพื่อให้ข้อมูลไม่หายเมื่อรีเฟรช
@@ -62,6 +66,7 @@ export default function CreateJob({
       //API Update complete(id,IsComplete)
       setModalComplete(false);
       setStatusComplete("Complete");
+      setComment("");
     }
     if (message === "Reject") {
       //API เรียกProjectมาใช้ เช่น
@@ -80,7 +85,7 @@ export default function CreateJob({
         <div className="border rounded-xl p-4 bg-[#F3F8FF] h-min w-[850px]">
           <p className="text-3xl pb-4">{project.title}</p>
           <p className="pb-4">{project.description}</p>
-          <p>Due date : {project.dueDate}</p>
+          <p>Due date : {dayjs(new Date(project.dueDate).toLocaleString()).format("DD/MM/YYYY")}</p>
 
           <div className="flex flex-col gap-6 mt-5 p-4 rounded-xl bg-white ">
             <p>User</p>
@@ -103,7 +108,7 @@ export default function CreateJob({
                 ))}
               </div>
 
-              {userId === leader?.id && (
+              {subordinates?.length > 0 && (
                 <div className="flex gap-5 items-start">
                   <button
                     className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
@@ -121,33 +126,52 @@ export default function CreateJob({
                 </div>
               )}
             </div>
+            {/* <div>
+                <textarea
+                  className="p-2 border rounded-xl"
+                  name="user"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows="4" // จำนวนแถว
+                  cols="50" // จำนวนคอลัมน์
+                  placeholder="Comment"
+                />
+              </div> */}
             <hr />
-            <div className="flex justify-between">
-              <div>
+
+            <div className="flex justify-between">  
+
+              <div className="flex flex-col gap-2">
+                {comment.length > 0 && (
+                  <div className="border rounded-xl p-2">
+                    <p className="text-red-500 font-semibold">Comment</p>
+                    <p>{comment}</p>
+                  </div>
+                )}
+
                 <button
-                  className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
+                  className="bg-green-500 text-white w-48 py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
                   onClick={() => hdlProjectUpdateClick("Complete")}
                 >
                   {statusComplete}
                 </button>
-              </div>
+              
 
-              {modalComplete && userId === leader?.id && (
-                <div className="flex flex-col gap-5">
+              {modalComplete && subordinates?.length > 0 && (
+                <div className="flex flex-col gap-2 items-end">
                   <div>
                     <textarea
+                    name="sup"
                       className="p-2 border rounded-xl"
                       value={comment}
-                      onChange={(e) =>
-                        setComment(e.target.value,)
-                      }
+                      onChange={(e) => setComment(e.target.value)}
                       rows="4" // จำนวนแถว
                       cols="50" // จำนวนคอลัมน์
-                      placeholder="Comment"
+                      placeholder="Reject Comment"
                     />
                   </div>
 
-                  <div className="flex justify-end gap-5">
+                  <div className="flex gap-5">
                     <button
                       className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
                       onClick={() => hdlProjectUpdateClick("Approved")}
@@ -163,7 +187,9 @@ export default function CreateJob({
                   </div>
                 </div>
               )}
+              </div>
             </div>
+
           </div>
         </div>
 

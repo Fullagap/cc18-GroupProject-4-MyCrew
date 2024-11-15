@@ -39,7 +39,7 @@ const UserSidebar = () => {
   const activeClass = "bg-[#2453CA] scale-105";
 
   return (
-    <div className="bg-[#082777] md:p-4 p-2 flex md:flex-col text-white shadow-lg md:rounded-lg md:min-h-screen">
+    <div className="bg-[#082777] md:p-4 p-2 flex md:flex-col text-white shadow-lg md:min-h-screen">
       <div className="hidden md:flex flex-col items-center gap-2 py-6">
         <NavLink to='/user/profile'  className="font-bold text-2xl text-[#f9f9f9]">MY CREW</NavLink>
       </div>
