@@ -129,7 +129,7 @@ export default function CalendarComp({ events, setEvents, setDateSelect,setShowI
   };
 
   return (
-    <div>
+    <div className="flex flex-col rounded-xl p-4 bg-[#F3F8FF] w-full h-[calc(100vh-75px)]">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -139,8 +139,11 @@ export default function CalendarComp({ events, setEvents, setDateSelect,setShowI
         displayEventTime={false}
         selectable={true}
         select={handleDateSelect}
+        // contentHeight="auto"
+        height="100%"  
+         contentHeight="100%"
       />
-
+      
       {isModalOpen && (
         <EventModal
           event={selectedEvent}

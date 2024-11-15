@@ -31,10 +31,17 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import AttendanceDashboard from "../pages/user/attendanceDashboard";
 import ProtectRouteUser from "./ProtectRouteUser";
 import ProtectRouteAdmin from "./ProtectRouteAdmin";
+import HomePage from "../pages/user/home/home-page";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <HomePage/>,
+    // element: <Login />,
+  },
+  {
+    path: "/login",
+    // element: <HomePage/>,
     element: <Login />,
   },
   {

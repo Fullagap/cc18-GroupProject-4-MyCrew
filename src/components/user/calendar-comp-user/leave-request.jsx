@@ -10,8 +10,6 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
   const userById = useCalendarStore((state)=>state.userById)
   const addLeaveRequest = useCalendarStore((state)=>state.addLeaveRequest)
 
-
-
   // console.log('dateSelect', dateSelect)
   //************************* ต้องเอาข้อมูล limit leave จาก User ถ้าหยุดเกิดกำหนด Leave Request ไม่ได้ **************************
   
@@ -26,16 +24,24 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
     status: "WAITING",
     description: "",
   });
+
   const initialState = {
     userId: user.id,
     requestDate: new Date(),
     startDate: "",
     endDate: "",
     leaveTypeId: "",
-    supId: "", // ค่าจาก User
+    supId: userById?.supId || "", // ค่าจาก User
     status: "WAITING",
     description: "",
   }
+
+  useEffect(() => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      supId: userById?.supId || "",  
+    }));
+  }, [userById]);
 
   useEffect(()=>{
     getUserById(user.id,token)
@@ -79,8 +85,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
       toast.error("Please select a leave type.");
     } else {
       if (window.confirm("Please confirm that you want to send this leave request")){
-        const result = await addLeaveRequest(form)
-        console.log(result)
+        await addLeaveRequest(form)
         await hdlGetEvent()        
       }
     }
@@ -89,10 +94,11 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
   return (
     <div >
       <button
-        className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] hover:bg-blue-700"
+        // className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] hover:bg-blue-700"
+        className="bg-blue-500 text-white w-full mb-1 py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
         onClick={toggleDropdown}
       >
-        <p className="text-3xl font-bold text-white">Leave Request</p>
+        <p className="text-xl font-bold text-white">Leave Request</p>
       </button>
 
       <div
@@ -163,7 +169,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
             ></textarea>
 
             <button
-              className="border rounded-xl p-2 bg-green-400"
+                className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
               onClick={handleSubmit}
             >
               Submit

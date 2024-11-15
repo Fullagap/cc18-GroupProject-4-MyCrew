@@ -20,9 +20,9 @@ import Select from "@mui/material/Select";
 
 import userStore from "../../store/user-store";
 import MapComponent from "../../components/user/MapComponent";
-import authStore from '../../store/authSrore'
+import authStore from "../../store/authSrore";
 const Attendance = () => {
-  const {token} = authStore();
+  const { token } = authStore();
   const [currentPosition, setCurrentPosition] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -112,9 +112,14 @@ const Attendance = () => {
       let apiResponse;
 
       if (type === "in") {
-        apiResponse = await createClockIn(latitude, longitude, location,token);
+        apiResponse = await createClockIn(latitude, longitude, location, token);
       } else {
-        apiResponse = await createClockOut(latitude, longitude, location,token);
+        apiResponse = await createClockOut(
+          latitude,
+          longitude,
+          location,
+          token
+        );
       }
 
       if (apiResponse?.data?.ok) {
@@ -149,13 +154,11 @@ const Attendance = () => {
           onDistanceChange={handleDistanceChange}
         />
       </Box>
+
       <Card>
         <CardContent>
-          <Typography variant="h5" component="h2" gutterBottom >
-            <h1 className="text-center font-bold">
-
-            Attendance System
-            </h1>
+          <Typography variant="h5" component="h2" gutterBottom>
+            <h1 className="text-center font-bold">Attendance System</h1>
           </Typography>
 
           {/* Status and Error Messages */}
