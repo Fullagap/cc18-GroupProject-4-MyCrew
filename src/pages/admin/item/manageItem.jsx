@@ -99,13 +99,13 @@ const RequestItem = () => {
         <div className="flex gap-4">
           <button
             onClick={() => toggleCreateForm("item")}
-            className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
+            className="px-6 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 transition-colors"
           >
             {isCreating ? "Create Item" : "Create Item"}
           </button>
           <button
             onClick={() => toggleCreateForm("category")}
-            className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+            className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition-colors"
           >
             {isCreatingCategory ? "Create Category" : "Create Category"}
           </button>

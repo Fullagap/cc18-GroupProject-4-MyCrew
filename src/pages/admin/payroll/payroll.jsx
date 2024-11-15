@@ -142,7 +142,7 @@ const PayrollPage = ({ token }) => {
           <button
             onClick={handleSubmitPayroll}
             disabled={loading || inputError.month || inputError.year}
-            className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none disabled:bg-gray-300"
+            className="w-full p-3 bg-green-600 text-white rounded-md hover:bg-green-500 focus:outline-none disabled:bg-gray-300"
           >
             {loading ? 'Submitting...' : 'Generate payroll'}
           </button>

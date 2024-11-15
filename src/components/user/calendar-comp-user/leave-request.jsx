@@ -98,7 +98,7 @@ export default function LeaveRequest({ dateSelect, hdlGetEvent }) {
         className="bg-blue-500 text-white w-full mb-1 py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
         onClick={toggleDropdown}
       >
-        <p className="text-2xl font-normal text-white">Leave Request</p>
+        <p className="text-xl font-bold text-white">Leave Request</p>
       </button>
 
       <div
