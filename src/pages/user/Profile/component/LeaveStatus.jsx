@@ -92,11 +92,11 @@ export default function LeaveStatus() {
       },
     },
     enableStickyHeader: true,
-
+    
     muiPaginationProps: {
       rowsPerPageOptions: [5],
     },
-    enableRowSelection: true, //enable some features
+    enableRowSelection: false, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
     // enableBottomToolbar : false

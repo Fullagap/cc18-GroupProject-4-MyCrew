@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { updateProfileImage } from "../../../../api/admin";
 import useAuthStore from "../../../../store/authSrore";
 
-export default function Profile({ userInfo, getUserInfo }) {
+export default function Profile({ userInfo, getUserInfo,supInfo }) {
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [isLoading, setIsLoading] = useState(false);
