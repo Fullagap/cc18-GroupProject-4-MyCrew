@@ -3,6 +3,7 @@ import { MaterialReactTable } from "material-react-table";
 import { LinearProgress, Box, Typography, IconButton, Dialog, DialogActions, DialogTitle, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import adminStore from '../../../store/admin-store';
+import { toast } from 'react-toastify';
 import { editEmployeesInfo } from '../../../api/admin';
 import { LuUserSquare2 } from "react-icons/lu";
 import { CiCirclePlus } from "react-icons/ci";
@@ -52,10 +53,11 @@ const AllEmployees = () => {
     const handleSaveChanges = async () => {
         try {
             const resp = await editEmployeesInfo(selectedEmployee.id, selectedEmployee,token);
-            console.log(resp);
+            toast.success(resp.data);
             await getAllEmployees(token);
             setOpenModal(false);
         } catch (error) {
+            toast.error("fail to update");
             console.log(error);
         }
     };

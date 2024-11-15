@@ -39,9 +39,9 @@ const UserSidebar = () => {
   const activeClass = "bg-[#2453CA] scale-105";
 
   return (
-    <div className="bg-[#082777] md:p-4 p-2 flex md:flex-col text-white shadow-lg md:rounded-lg md:min-h-screen">
+    <div className="bg-[#082777] md:p-4 p-2 flex md:flex-col text-white shadow-lg md:min-h-screen">
       <div className="hidden md:flex flex-col items-center gap-2 py-6">
-        <p className="font-bold text-2xl text-[#f9f9f9]">MY CREW</p>
+        <NavLink to='/user/profile'  className="font-bold text-2xl text-[#f9f9f9]">MY CREW</NavLink>
       </div>
 
       <div className="flex md:flex-col flex-row justify-around md:justify-start md:py-4 md:space-y-2 md:space-x-0 space-x-2 flex-1">
@@ -92,7 +92,7 @@ const UserSidebar = () => {
         )}
       </div>
 
-      {user && (
+      {/* {user && (
         <div className="hidden md:block relative mt-4 group">
           <button className={`${classLink} w-full flex justify-between items-center`}>
             <span className="hidden md:block">User Options</span>
@@ -108,7 +108,7 @@ const UserSidebar = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

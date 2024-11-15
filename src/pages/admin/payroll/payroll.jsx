@@ -135,14 +135,14 @@ const PayrollPage = ({ token }) => {
           <button
             onClick={handleFetchPayrollData}
             disabled={loading || inputError.month || inputError.year}
-            className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none disabled:bg-gray-300"
+            className="w-full p-3 bg-[#082777] text-white rounded-md hover:bg-blue-600 focus:outline-none disabled:bg-gray-300"
           >
             {loading ? 'Fetching Data...' : 'Pay Period'}
           </button>
           <button
             onClick={handleSubmitPayroll}
             disabled={loading || inputError.month || inputError.year}
-            className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none disabled:bg-gray-300"
+            className="w-full p-3 bg-green-600 text-white rounded-md hover:bg-green-500 focus:outline-none disabled:bg-gray-300"
           >
             {loading ? 'Submitting...' : 'Generate payroll'}
           </button>
@@ -188,7 +188,7 @@ const PayrollPage = ({ token }) => {
         <button
           onClick={toggleShowAll}
           disabled={loading}
-          className={`w-full mt-3 p-3 text-white rounded-md hover:bg-opacity-80 focus:outline-none ${showAll ? 'bg-red-500' : 'bg-blue-500'} disabled:bg-gray-300`}
+          className={`w-full mt-3 p-3 text-white rounded-md hover:bg-blue-700 focus:outline-none ${showAll ? 'bg-red-500' : 'bg-[#082777]'} disabled:bg-gray-300`}
         >
           {loading ? 'Loading...' : showAll ? 'Hide All Data' : 'Show All Data'}
         </button>
