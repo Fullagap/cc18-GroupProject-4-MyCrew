@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import React from "react";
 
@@ -27,11 +28,11 @@ function Clock() {
   const bkkDate = time.toLocaleString("en-US", {
     timeZone: "Asia/Bangkok",
     weekday: "long",
-    month: "numeric",
     day: "numeric",
+    month: "numeric",
     year: "numeric",
   });
-
+  console.log('bkkDate', bkkDate)
   return (
     <div className="w-full bg-black bg-opacity-50 text-white p-4">
       <div className="text-center">

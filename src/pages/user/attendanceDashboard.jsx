@@ -8,6 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   { field: "userId", headerName: "User ID", width: 100},
@@ -25,6 +26,12 @@ export default function FilteredAttendanceDashboard() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const { getAttendanceData } = userStore();
   const { token } = authStore();
+  const navigate = useNavigate();
+
+
+  const goToHierarchy = () =>{
+    navigate('/user/hierarchy')
+  }
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -113,6 +120,17 @@ export default function FilteredAttendanceDashboard() {
             }}
           >
             {selectedDate ? formatDate(selectedDate) : 'Select Date'}
+          </Button>
+          
+          <Button
+          variant="contained"
+          onClick={() => goToHierarchy()}
+          sx={{ 
+            bgcolor: "#082777",
+            '&:hover': { bgcolor: "#1d4ed8" }
+          }}
+          >
+          Hierarchy
           </Button>
           
           {selectedDate && (

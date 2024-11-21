@@ -24,7 +24,7 @@ export default function Information() {
 
   return (
    
-    <div className="flex flex-col min-h-screen bg-gray-100 p-6">
+    <div className="flex flex-col min-h-screen bg-[#E5EDF9] p-6">
     <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto">
       
       {/* Profile and Detail Section */}

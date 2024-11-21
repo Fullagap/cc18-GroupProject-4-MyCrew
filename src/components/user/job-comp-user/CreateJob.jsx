@@ -85,7 +85,7 @@ export default function CreateJob({
         <div className="border rounded-xl p-4 bg-[#F3F8FF] h-min w-[850px]">
           <p className="text-3xl pb-4">{project.title}</p>
           <p className="pb-4">{project.description}</p>
-          <p>Due date : {dayjs(new Date(project.dueDate).toLocaleString()).format("DD/MM/YYYY")}</p>
+          <p>Due date : {project.dueDate?dayjs(new Date(project.dueDate).toLocaleString()).format("DD/MM/YYYY") : "-"} </p>
 
           <div className="flex flex-col gap-6 mt-5 p-4 rounded-xl bg-white ">
             <p>User</p>
