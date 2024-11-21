@@ -14,7 +14,7 @@ export default function HomeAdmin() {
   return (
     <div className="h-full bg-[#E5EDF9] p-8">
       <p className="text-4xl font-bold mb-8 text-gray-800">Admin Management</p>
-      <div className="flex flex-wrap gap-20 p-10">
+      <div className="flex flex-wrap gap-10 p-10">
         <motion.div
           className={classLink}
           whileHover={{ scale: 1.05 }}  // Scale the item on hover

@@ -15,7 +15,7 @@ export default function Footer() {
 
   return (
     <div className="flex justify-center p-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full max-w-4xl p-6 bg-gray-50 rounded-lg shadow-md">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full max-w-4xl p-6 bg-[#F3F8FF] rounded-lg shadow-md">
         {footerItems.map(({ to, icon, label, description }, index) => (
           <Link
             key={index}

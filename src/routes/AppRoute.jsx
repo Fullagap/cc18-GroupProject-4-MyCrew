@@ -32,6 +32,7 @@ import AttendanceDashboard from "../pages/user/attendanceDashboard";
 import ProtectRouteUser from "./ProtectRouteUser";
 import ProtectRouteAdmin from "./ProtectRouteAdmin";
 import HomePage from "../pages/user/home/home-page";
+import Hierarchy from "../pages/user/hierarchy ";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
       { path: "profile/req-status", element: <Profile req={true} /> },
       { path: "profile/doccon", element: <Profile dcc={true} /> },
       { path: "profile/doccon/payslip", element: <PaySlipPage /> },
+      { path: "hierarchy", element: <Hierarchy/> },
       { path: "calendar", element: <Calendar /> },
       { path: "calendar/leave-record", element: <LeaveRecord/> },
       { path: "job", element: <Job /> },

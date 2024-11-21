@@ -193,7 +193,10 @@ const PayrollPage = ({ token }) => {
           {loading ? 'Loading...' : showAll ? 'Hide All Data' : 'Show All Data'}
         </button>
         {showAll && allPayrollData.length > 0 ? (
+
           <div className="mt-4">
+
+
             <table className="min-w-full table-auto border-collapse">
               <thead>
                 <tr className="bg-gray-200">
@@ -216,6 +219,8 @@ const PayrollPage = ({ token }) => {
                 ))}
               </tbody>
             </table>
+
+
           </div>
         ) : (
           showAll && <p className="text-gray-500 mt-4">No payroll data available</p>

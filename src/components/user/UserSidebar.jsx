@@ -41,7 +41,7 @@ const UserSidebar = () => {
   return (
     <div className="bg-[#082777] md:p-4 p-2 flex md:flex-col text-white shadow-lg md:min-h-screen">
       <div className="hidden md:flex flex-col items-center gap-2 py-6">
-        <NavLink to='/user/profile'  className="font-bold text-2xl text-[#f9f9f9]">MY CREW</NavLink>
+        <NavLink to='/user/profile'  className="font-normal text-2xl text-[#f9f9f9]">MY CREW</NavLink>
       </div>
 
       <div className="flex md:flex-col flex-row justify-around md:justify-start md:py-4 md:space-y-2 md:space-x-0 space-x-2 flex-1">
