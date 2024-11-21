@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { updateProfileImage } from "../../../../api/admin";
 import useAuthStore from "../../../../store/authSrore";
 
-export default function Profile({ userInfo, getUserInfo }) {
+export default function Profile({ userInfo, getUserInfo,supInfo }) {
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ export default function Profile({ userInfo, getUserInfo }) {
 
   return (
     <div className="flex flex-col items-center">
-      <Box className="relative group flex items-center justify-center mb-4">
+      <Box className="relative group flex items-center justify-center mb-4 pl-11">
         <Avatar
           alt="Profile"
           src={userInfo.profileImg ?? "https://example.com/default-profile.png"}

@@ -40,7 +40,7 @@ export default function RequestManagement() {
             Item Management
             </h2>
           <button
-            className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition duration-300"
+            className="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-500 transition duration-300"
             onClick={hdlRequestItemClick}
           >
             All Requests
@@ -53,7 +53,7 @@ export default function RequestManagement() {
             Request Item
             </h2> 
           <button
-            className="bg-yellow-500 text-white py-3 px-6 rounded-lg hover:bg-yellow-600 transition duration-300"
+            className="bg-yellow-600 text-white py-3 px-6 rounded-lg hover:bg-yellow-500 transition duration-300"
             onClick={hdlNewRequestClick}
           >
             Create Request

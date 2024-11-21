@@ -33,7 +33,7 @@ function EmployeeManagement() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center">View All Employees</h2>
           <button 
             onClick={hdlAllEmployees} 
-            className="bg-green-500 text-white py-2 px-4 sm:py-3 sm:px-6 rounded-lg hover:bg-green-600 transition duration-300"
+            className="bg-green-600 text-white py-2 px-4 sm:py-3 sm:px-6 rounded-lg hover:bg-green-500 transition duration-300"
           >
             All Employees
           </button>

@@ -274,6 +274,7 @@ const LeaveRequestTable = () => {
                                   >
                                     Return to Waiting
                                   </button>
+                                
                                 )}
                               </div>
                             </div>

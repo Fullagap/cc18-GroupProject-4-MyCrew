@@ -19,11 +19,10 @@ export default function CalendarDetailModal({ showInfo }) {
     <div>
       <div>
         <button
-          // className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] "
-          className="bg-blue-500 text-white w-full mb-1 py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
+          className="border p-2 rounded-xl mb-1 w-full font-bold text-xl bg-[#082777] hover:bg-blue-700 "
           // onClick={toggleDropdown}
         >
-          <p className="text-2xl font-normal text-white">Calendar Detail</p>
+          <p className="text-xl font-bold text-white">Calendar Detail</p>
         </button>
 
         <div

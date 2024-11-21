@@ -435,7 +435,7 @@ function AttendanceManagement() {
                 </div>
                 <div className="flex justify-center mt-6">
                   <button
-                    className="bg-red-600 text-white font-semibold py-2 px-6 rounded hover:bg-red-800 transition-colors"
+                    className="bg-red-600 text-white font-semibold py-2 px-6 rounded hover:bg-red-500 transition-colors"
                     // disabled={!selectedPosition || !form.siteName || !form.area}
                   >
                     Delete Location
@@ -607,7 +607,7 @@ function AttendanceManagement() {
                 </div>
                 <div className="flex justify-center mt-6">
                   <button
-                    className="bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-800 transition-colors"
+                    className="bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-500 transition-colors"
                     // disabled={!selectedPosition || !form.siteName || !form.area}
                   >
                     Edit Location

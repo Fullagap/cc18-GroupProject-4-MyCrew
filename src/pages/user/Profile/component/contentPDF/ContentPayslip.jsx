@@ -9,8 +9,12 @@ import {
   Font
 } from "@react-pdf/renderer";
 
-export default function ContentPayslip() {
+export default function ContentPayslip(props) {
   
+  const {payroll,...restProp} = props
+  const {paidDate,income,netIncome,socialSecurityFund:socialFund,tax,providentFund,user} = payroll
+
+ 
   return (
     <Document title="payslip">
       <Page
@@ -38,22 +42,42 @@ export default function ContentPayslip() {
           <Text
             style={{ position: "relative", top: 95, left: 160, fontSize: 12, color:"red"}}
           >
-            firstName
+            {user?.firstName + " " + user?.lastName}
           </Text>
           <Text
-            style={{ position: "relative", top: 110, left: 105, fontSize: 12, color:"red" }}
+            style={{ position: "relative", top: 110, left: 85, fontSize: 12, color:"red" }}
           >
-            EmpID
+            {user?.id}
           </Text>
           <Text
-            style={{ position: "relative", top: 95, left: 420, fontSize: 12, color:"red" }}
+            style={{ position: "relative", top: 110, left: 370, fontSize: 12, color:"red" }}
           >
-            Date
+            {paidDate?paidDate.split("T")[0]:null}
           </Text>
           <Text
-            style={{ position: "relative", top: 280, left: 400, fontSize: 12, color:"red" }}
+            style={{ position: "relative", top: 280, left: -10, fontSize: 12, color:"red" }}
           >
-            Salary
+            {providentFund + " " + "THB"}
+          </Text>
+          <Text
+            style={{ position: "relative", top: 280, left: 300, fontSize: 12, color:"red" }}
+          >
+            {income + " " + "THB"}
+          </Text>
+          <Text
+            style={{ position: "relative", top: 280, left: 100, fontSize: 12, color:"red" }}
+          >
+            {socialFund + " " + "THB"}
+          </Text>
+          <Text
+            style={{ position: "relative", top: 320, left: 50, fontSize: 12, color:"red" }}
+          >
+            {tax + " " + "THB"}
+          </Text>
+          <Text
+            style={{ position: "relative", top: 320, left: 130, fontSize: 12, color:"red" }}
+          >
+            {netIncome + " " + "THB"}
           </Text>
         </View>
       </Page>
